@@ -58,7 +58,8 @@
     "import:rail": "node scripts/run-python.mjs rail",
     "model:whisper": "node scripts/run-python.mjs whisper",
     "test:setup": "node --test scripts/odins-setup.test.mjs",
-    "test:imports": "node scripts/run-python.mjs test"
+    "test:imports": "node scripts/run-python.mjs test",
+    "test:travel": "node --test server/providers/travel-input.test.mjs"
   },
   "dependencies": {
     "@jtarrio/signals": "^0.10.0",

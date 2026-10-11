@@ -40,3 +40,12 @@
 ## Kvarstående CI-arbete – issue #6
 
 Installations-CI passerar, men bredare CI stoppar på äldre runtimefilers formatering. Den lokala paketgränskontrollen stoppar även på radio-provider och dess oägda sweden-garden.json. Detta följs upp i [#6](https://github.com/Flaxx83/ODINS_EYE/issues/6); hela CI ska därför inte beskrivas som grön.
+
+
+## Reseformuleringar – del av issue #4
+
+Tidstolkningen stöder nu även hela timmar och svenska tidsuttryck som `vid 07 tiden`, `vid 7-tiden`, `kl 7` och `klockan 7`. Uttrycket används som avgångstid 07:00. Ogiltiga eller ofullständiga explicit angivna tider ger ett förtydligande i stället för att sökningen tyst använder aktuell tid. `Imorgon` beräknas som nästa kalenderdag i Stockholm även vid övergång till sommartid.
+
+Liveprov 2026-10-11: `Jag vill resa från Göteborg central till Vällingby T-bana imorgon vid 07 tiden.` sökte avgång 2026-10-12 07:00 och gav tre ResRobot-förslag. Första förslaget avgick 07:11 och anlände 11:34. Dessa är testets tidtabellsuppgifter och inte fasta framtida reserekommendationer.
+
+Fyra regressionstester finns i `server/providers/travel-input.test.mjs` och körs med `npm run test:travel` samt i installations-CI. Övriga delar av #4, såsom önskad ankomsttid och bredare datum-/följdfrågetolkning, återstår.
