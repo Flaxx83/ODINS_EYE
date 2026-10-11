@@ -38,10 +38,16 @@ export default defineConfig(({ command, mode }) => {
       mcfPlugin(),
       krisPlugin(),
       slPlugin(),
-      ...['ul','otraf','varm','skane','jlt'].map(operator=>slPlugin({operator,route:`/api/regional/${operator}`})),
+      ...['ul', 'otraf', 'varm', 'skane', 'jlt'].map((operator) =>
+        slPlugin({ operator, route: `/api/regional/${operator}` }),
+      ),
       timetablePlugin(),
       vasttrafikPlugin(),
-      localVoicePlugin(), localAiPlugin(), airQualityPlugin(), policePlugin(), topographyPlugin(),
+      localVoicePlugin(),
+      localAiPlugin(),
+      airQualityPlugin(),
+      policePlugin(),
+      topographyPlugin(),
       ...localProviderPlugins({ realtime: { tools: standaloneVoiceTools() } }),
       localMcpPlugin(),
       apiNotFoundPlugin(),
@@ -55,7 +61,3 @@ export default defineConfig(({ command, mode }) => {
     command,
   });
 });
-
-
-
-

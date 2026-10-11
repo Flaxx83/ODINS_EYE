@@ -94,14 +94,22 @@ export function createRealtimeBackend({
       if (!response.ok) {
         const detail = await response.json().catch(() => null);
         const code = detail?.error?.code;
-        const safeCode = typeof code === 'string' && /^[a-z0-9_]{1,100}$/i.test(code) ? code : null;
+        const safeCode =
+          typeof code === 'string' && /^[a-z0-9_]{1,100}$/i.test(code)
+            ? code
+            : null;
         const reasons = {
-          insufficient_quota: 'API-krediter eller användningskvot saknas. Kontrollera OpenAI-kontots fakturering och gränser.',
+          insufficient_quota:
+            'API-krediter eller användningskvot saknas. Kontrollera OpenAI-kontots fakturering och gränser.',
           credit_balance_exhausted: 'OpenAI-kontots API-krediter är slut.',
-          rate_limit_exceeded: 'Tillfällig anropsgräns nådd. Vänta innan du försöker igen.',
-          subscription_sharing_usage_limit_exceeded: 'Användningsgränsen för den anslutna ChatGPT-planen är nådd.',
+          rate_limit_exceeded:
+            'Tillfällig anropsgräns nådd. Vänta innan du försöker igen.',
+          subscription_sharing_usage_limit_exceeded:
+            'Användningsgränsen för den anslutna ChatGPT-planen är nådd.',
         };
-        throw new Error(`Realtime SDP failed: HTTP ${response.status}${safeCode ? ' [' + safeCode + ']' : ''}${reasons[safeCode] ? ' · ' + reasons[safeCode] : ''}`);
+        throw new Error(
+          `Realtime SDP failed: HTTP ${response.status}${safeCode ? ' [' + safeCode + ']' : ''}${reasons[safeCode] ? ' · ' + reasons[safeCode] : ''}`,
+        );
       }
       const answer = await response.text();
       signal.throwIfAborted();

@@ -1,7 +1,170 @@
-import {token} from './vasttrafik.js';
-import {swedenStops} from './local-sl-trip.js';import {distanceKm} from './local-ai-data.js';
-export function departureStatus(d){if(d.canceled)return'cancelled';if(!d.is_realtime||!Number.isFinite(d.delay))return'unknown';return d.delay>60?'late':d.delay< -60?'early':'onTime';}
-export async function trafficAnswer(message,area,base){if(!/avgång|försen|sena|tidiga|i tid|trafikläge/i.test(message))return null;if(!area)throw Error('Kartpositionen saknas');let center=area;if(/stockholm|\bsl\b/i.test(message))center={lat:59.33,lon:18.06};if(/göteborg/i.test(message))center={lat:57.708,lon:11.974};const rows=await swedenStops(base);const name=message.match(/(?:vid|hållplats(?:en)?|från)\s+(.+?)[?!.]*$/i)?.[1]?.trim();const near=rows.map(s=>({s,d:distanceKm(center,s)})).filter(x=>x.d<=10).sort((a,b)=>a.d-b.d);let selected=name?near.filter(x=>x.s.name.toLocaleLowerCase('sv').includes(name.toLocaleLowerCase('sv'))).slice(0,3):near.slice(0,5);if(!selected.length&&name&&!/^SL:|stockholm/i.test(message)){const r=await fetch('https://ext-api.vasttrafik.se/pr/v4/locations/by-text?'+new URLSearchParams({q:name,types:'stoparea',limit:'10'}),{headers:{Authorization:'Bearer '+await token()}});if(r.ok)selected=(await r.json()).results.filter(l=>l.gid&&l.locationType==='stoparea'&&l.name.toLocaleLowerCase('sv').includes(name.toLocaleLowerCase('sv'))&&distanceKm(center,{lat:l.latitude,lon:l.longitude})<=10).slice(0,3).map(l=>({s:{id:l.gid,name:l.name,lat:l.latitude,lon:l.longitude}}));}if(!selected.length)return{answer:'Ingen matchande hållplats hittades inom 10 km. Ange ett hållplatsnamn eller flytta kartan.'};const results=await Promise.all(selected.map(async({s})=>{try{if(!/^SL:|stockholm/i.test(message)){const headers={Authorization:'Bearer '+await token()};const search=await fetch('https://ext-api.vasttrafik.se/pr/v4/locations/by-text?'+new URLSearchParams({q:s.name,limit:'10',types:'stoparea'}),{headers});if(!search.ok)throw Error();const locations=(await search.json()).results.filter(l=>l.gid&&l.locationType==='stoparea'&&distanceKm(s,{lat:l.latitude,lon:l.longitude})<1).sort((a,b)=>distanceKm(s,{lat:a.latitude,lon:a.longitude})-distanceKm(s,{lat:b.latitude,lon:b.longitude}));if(!locations.length)throw Error();const r=await fetch('https://ext-api.vasttrafik.se/pr/v4/stop-areas/'+locations[0].gid+'/departures?limit=30',{headers});if(!r.ok)throw Error();const d=await r.json();return{s,data:{departures:(d.results||[]).map(x=>({canceled:x.isCancelled,is_realtime:x.serviceJourney?.line?.isRealtimeJourney===true&&Boolean(x.estimatedTime),delay:x.estimatedTime?(Date.parse(x.estimatedTime)-Date.parse(x.plannedTime))/1000:null,route:{transport_mode:x.serviceJourney?.line?.transportMode?.toUpperCase()},trip:{trip_id:x.detailsReference}}))}};}const r=await fetch(base+'/api/timetable/departures?id='+s.id,{signal:AbortSignal.timeout(25000)});if(!r.ok)throw Error();return{s,data:await r.json()};}catch{return{s,error:true};}}));const totals={late:0,early:0,onTime:0,unknown:0,cancelled:0},seen=new Set(),lines=[];let count=0;for(const result of results){if(result.error){lines.push(result.s.name+': kunde inte hämtas');continue;}let n=0;for(const d of result.data.departures||[]){if(/buss/i.test(message)&&d.route?.transport_mode!=='BUS')continue;if(/spårvagn/i.test(message)&&d.route?.transport_mode!=='TRAM')continue;const id=d.trip?.trip_id?d.trip.trip_id+':'+(d.trip.start_date||''):null;if(id&&seen.has(id))continue;if(id)seen.add(id);totals[departureStatus(d)]++;count++;n++;}lines.push(result.s.name+': '+n+' avgångar efter eventuell avduplicering');}return{answer:`Kontrollerat ${selected.length} hållplatser inom 10 km, ${count} avgångar i API:ets kommande tidsfönster. Detta är ett urval, inte hela stadens fordon.\nSena (>1 min): ${totals.late}\nTidiga (>1 min): ${totals.early}\nInom ±1 min: ${totals.onTime}\nInställda: ${totals.cancelled}\nUtan jämförbar realtidsprognos: ${totals.unknown}\n`+lines.join('\n')+'\nAvgångar är inte samma sak som unika fordon. Försening bedöms vid den kontrollerade hållplatsen.',sources:[{name:/^SL:|stockholm/i.test(message)?'Trafiklab · SL avgångar':'Västtrafik avgångar',url:/^SL:|stockholm/i.test(message)?'https://www.trafiklab.se/api/our-apis/trafiklab-realtime-apis/':'https://www.vasttrafik.se/',time:new Date().toISOString()}]};}
-
-
-
+import { token } from './vasttrafik.js';
+import { swedenStops } from './local-sl-trip.js';
+import { distanceKm } from './local-ai-data.js';
+export function departureStatus(d) {
+  if (d.canceled) return 'cancelled';
+  if (!d.is_realtime || !Number.isFinite(d.delay)) return 'unknown';
+  return d.delay > 60 ? 'late' : d.delay < -60 ? 'early' : 'onTime';
+}
+export async function trafficAnswer(message, area, base) {
+  if (!/avgång|försen|sena|tidiga|i tid|trafikläge/i.test(message)) return null;
+  if (!area) throw Error('Kartpositionen saknas');
+  let center = area;
+  if (/stockholm|\bsl\b/i.test(message)) center = { lat: 59.33, lon: 18.06 };
+  if (/göteborg/i.test(message)) center = { lat: 57.708, lon: 11.974 };
+  const rows = await swedenStops(base);
+  const name = message
+    .match(/(?:vid|hållplats(?:en)?|från)\s+(.+?)[?!.]*$/i)?.[1]
+    ?.trim();
+  const near = rows
+    .map((s) => ({ s, d: distanceKm(center, s) }))
+    .filter((x) => x.d <= 10)
+    .sort((a, b) => a.d - b.d);
+  let selected = name
+    ? near
+        .filter((x) =>
+          x.s.name
+            .toLocaleLowerCase('sv')
+            .includes(name.toLocaleLowerCase('sv')),
+        )
+        .slice(0, 3)
+    : near.slice(0, 5);
+  if (!selected.length && name && !/^SL:|stockholm/i.test(message)) {
+    const r = await fetch(
+      'https://ext-api.vasttrafik.se/pr/v4/locations/by-text?' +
+        new URLSearchParams({ q: name, types: 'stoparea', limit: '10' }),
+      { headers: { Authorization: 'Bearer ' + (await token()) } },
+    );
+    if (r.ok)
+      selected = (await r.json()).results
+        .filter(
+          (l) =>
+            l.gid &&
+            l.locationType === 'stoparea' &&
+            l.name
+              .toLocaleLowerCase('sv')
+              .includes(name.toLocaleLowerCase('sv')) &&
+            distanceKm(center, { lat: l.latitude, lon: l.longitude }) <= 10,
+        )
+        .slice(0, 3)
+        .map((l) => ({
+          s: { id: l.gid, name: l.name, lat: l.latitude, lon: l.longitude },
+        }));
+  }
+  if (!selected.length)
+    return {
+      answer:
+        'Ingen matchande hållplats hittades inom 10 km. Ange ett hållplatsnamn eller flytta kartan.',
+    };
+  const results = await Promise.all(
+    selected.map(async ({ s }) => {
+      try {
+        if (!/^SL:|stockholm/i.test(message)) {
+          const headers = { Authorization: 'Bearer ' + (await token()) };
+          const search = await fetch(
+            'https://ext-api.vasttrafik.se/pr/v4/locations/by-text?' +
+              new URLSearchParams({
+                q: s.name,
+                limit: '10',
+                types: 'stoparea',
+              }),
+            { headers },
+          );
+          if (!search.ok) throw Error();
+          const locations = (await search.json()).results
+            .filter(
+              (l) =>
+                l.gid &&
+                l.locationType === 'stoparea' &&
+                distanceKm(s, { lat: l.latitude, lon: l.longitude }) < 1,
+            )
+            .sort(
+              (a, b) =>
+                distanceKm(s, { lat: a.latitude, lon: a.longitude }) -
+                distanceKm(s, { lat: b.latitude, lon: b.longitude }),
+            );
+          if (!locations.length) throw Error();
+          const r = await fetch(
+            'https://ext-api.vasttrafik.se/pr/v4/stop-areas/' +
+              locations[0].gid +
+              '/departures?limit=30',
+            { headers },
+          );
+          if (!r.ok) throw Error();
+          const d = await r.json();
+          return {
+            s,
+            data: {
+              departures: (d.results || []).map((x) => ({
+                canceled: x.isCancelled,
+                is_realtime:
+                  x.serviceJourney?.line?.isRealtimeJourney === true &&
+                  Boolean(x.estimatedTime),
+                delay: x.estimatedTime
+                  ? (Date.parse(x.estimatedTime) - Date.parse(x.plannedTime)) /
+                    1000
+                  : null,
+                route: {
+                  transport_mode:
+                    x.serviceJourney?.line?.transportMode?.toUpperCase(),
+                },
+                trip: { trip_id: x.detailsReference },
+              })),
+            },
+          };
+        }
+        const r = await fetch(base + '/api/timetable/departures?id=' + s.id, {
+          signal: AbortSignal.timeout(25000),
+        });
+        if (!r.ok) throw Error();
+        return { s, data: await r.json() };
+      } catch {
+        return { s, error: true };
+      }
+    }),
+  );
+  const totals = { late: 0, early: 0, onTime: 0, unknown: 0, cancelled: 0 },
+    seen = new Set(),
+    lines = [];
+  let count = 0;
+  for (const result of results) {
+    if (result.error) {
+      lines.push(result.s.name + ': kunde inte hämtas');
+      continue;
+    }
+    let n = 0;
+    for (const d of result.data.departures || []) {
+      if (/buss/i.test(message) && d.route?.transport_mode !== 'BUS') continue;
+      if (/spårvagn/i.test(message) && d.route?.transport_mode !== 'TRAM')
+        continue;
+      const id = d.trip?.trip_id
+        ? d.trip.trip_id + ':' + (d.trip.start_date || '')
+        : null;
+      if (id && seen.has(id)) continue;
+      if (id) seen.add(id);
+      totals[departureStatus(d)]++;
+      count++;
+      n++;
+    }
+    lines.push(
+      result.s.name + ': ' + n + ' avgångar efter eventuell avduplicering',
+    );
+  }
+  return {
+    answer:
+      `Kontrollerat ${selected.length} hållplatser inom 10 km, ${count} avgångar i API:ets kommande tidsfönster. Detta är ett urval, inte hela stadens fordon.\nSena (>1 min): ${totals.late}\nTidiga (>1 min): ${totals.early}\nInom ±1 min: ${totals.onTime}\nInställda: ${totals.cancelled}\nUtan jämförbar realtidsprognos: ${totals.unknown}\n` +
+      lines.join('\n') +
+      '\nAvgångar är inte samma sak som unika fordon. Försening bedöms vid den kontrollerade hållplatsen.',
+    sources: [
+      {
+        name: /^SL:|stockholm/i.test(message)
+          ? 'Trafiklab · SL avgångar'
+          : 'Västtrafik avgångar',
+        url: /^SL:|stockholm/i.test(message)
+          ? 'https://www.trafiklab.se/api/our-apis/trafiklab-realtime-apis/'
+          : 'https://www.vasttrafik.se/',
+        time: new Date().toISOString(),
+      },
+    ],
+  };
+}

@@ -1,3 +1,4 @@
+@import './src/layers/local-ai/panel.css';
 /* Preserve component and responsive rule order in one stylesheet entry. */
 @import './src/ui/styles/foundation.css';
 @import './src/ui/styles/controls.css';

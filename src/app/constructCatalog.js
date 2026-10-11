@@ -4,7 +4,11 @@ import { resolveCatalogSources } from './sourceComposition.js';
 import { createLiveuamapLayer } from '../layers/liveuamap/index.js';
 import { createGdacsLayer } from '../layers/gdacs/index.js';
 import { createSmhiLayer } from '../layers/smhi/index.js';
-import { createSmhiObservations, createSmhiForecast, createSmhiRadar } from '../layers/smhi/weather.js';
+import {
+  createSmhiObservations,
+  createSmhiForecast,
+  createSmhiRadar,
+} from '../layers/smhi/weather.js';
 import { createMcfLayers } from '../layers/mcf/index.js';
 import { createKrisNews, createVmaLayer } from '../layers/kris/index.js';
 import { createSlLayer } from '../layers/sl/index.js';
@@ -54,15 +58,25 @@ export const LOCAL_ONLY_LAYER_METADATA = Object.freeze([
   Object.freeze({ id: 'gdacs', disposition: 'local-only' }),
   Object.freeze({ id: 'smhi', disposition: 'local-only' }),
   Object.freeze({ id: 'sl-live', disposition: 'local-only' }),
-  Object.freeze({ id:'vasttrafik',disposition:'local-only' }),
-  Object.freeze({id:'local-ai',disposition:'local-only'}),
-  Object.freeze({id:'air-quality',disposition:'local-only'}),
-  Object.freeze({ id:'polisen',disposition:'local-only' }),
-  ...['administrativindelning','kommunikation','hydrografi'].map(theme=>Object.freeze({id:'lm-'+theme,disposition:'local-only'})),
-  ...['sweden-stops','sweden-transit'].map(id=>Object.freeze({id,disposition:'local-only'})),
-  ...['kris-news','kris-vma'].map(id => Object.freeze({ id, disposition: 'local-only' })),
-  ...['smhi-observations','smhi-forecast','smhi-radar'].map(id => Object.freeze({ id, disposition: 'local-only' })),
-  ...['shelters','stations','flood','fire'].map(id => Object.freeze({ id: `mcf-${id}`, disposition: 'local-only' })),
+  Object.freeze({ id: 'vasttrafik', disposition: 'local-only' }),
+  Object.freeze({ id: 'local-ai', disposition: 'local-only' }),
+  Object.freeze({ id: 'air-quality', disposition: 'local-only' }),
+  Object.freeze({ id: 'polisen', disposition: 'local-only' }),
+  ...['administrativindelning', 'kommunikation', 'hydrografi'].map((theme) =>
+    Object.freeze({ id: 'lm-' + theme, disposition: 'local-only' }),
+  ),
+  ...['sweden-stops', 'sweden-transit'].map((id) =>
+    Object.freeze({ id, disposition: 'local-only' }),
+  ),
+  ...['kris-news', 'kris-vma'].map((id) =>
+    Object.freeze({ id, disposition: 'local-only' }),
+  ),
+  ...['smhi-observations', 'smhi-forecast', 'smhi-radar'].map((id) =>
+    Object.freeze({ id, disposition: 'local-only' }),
+  ),
+  ...['shelters', 'stations', 'flood', 'fire'].map((id) =>
+    Object.freeze({ id: `mcf-${id}`, disposition: 'local-only' }),
+  ),
   Object.freeze({ id: 'local-adsb', disposition: 'local-only' }),
 ]);
 
@@ -135,9 +149,23 @@ export function createApplicationCatalog({
         createSmhiLayer(),
         createSlLayer(),
         createVasttrafikLayer(),
-        createLocalAiLayer(), createAirQualityLayer(), createPoliceLayer(), ...createTopographyLayers(),
+        createLocalAiLayer(),
+        createAirQualityLayer(),
+        createPoliceLayer(),
+        ...createTopographyLayers(),
         createStopsLayer(),
-        createSlLayer({id:'sweden-transit',name:'Sverige · Regiontrafik',operator:'otraf',regions:[['otraf','Östgötatrafiken'],['ul','UL · Uppsala'],['varm','Värmlandstrafik'],['skane','Skånetrafiken'],['jlt','Jönköpings länstrafik']]}),
+        createSlLayer({
+          id: 'sweden-transit',
+          name: 'Sverige · Regiontrafik',
+          operator: 'otraf',
+          regions: [
+            ['otraf', 'Östgötatrafiken'],
+            ['ul', 'UL · Uppsala'],
+            ['varm', 'Värmlandstrafik'],
+            ['skane', 'Skånetrafiken'],
+            ['jlt', 'Jönköpings länstrafik'],
+          ],
+        }),
         createKrisNews(),
         createVmaLayer(),
         createSmhiObservations(),
@@ -227,6 +255,3 @@ export function createApplicationCatalog({
     throw error;
   }
 }
-
-
-

@@ -1,20 +1,342 @@
 import * as Cesium from 'cesium';
 import { COUNTIES, activeVmas, belongsToCounty } from './model.js';
-import { registerPickOwner, unregisterPickOwner, resolvePickId } from '../../data/pickRegistry.js';
-const time=v=>v?new Date(v).toLocaleString('sv-SE',{timeZone:'Europe/Stockholm'}):'Ej angivet';
-function panel(title){const el=document.createElement('section');el.setAttribute('aria-label',title);el.style.cssText='position:fixed;right:24px;bottom:85px;width:430px;max-width:85vw;max-height:65vh;overflow:auto;background:#101820;color:white;padding:18px;border:1px solid #999;z-index:10000;font:14px sans-serif';const close=document.createElement('button');close.textContent='Stäng ×';close.onclick=()=>el.remove();el.append(close);const h=document.createElement('h3');h.textContent=title;el.append(h);document.body.append(el);return el;}
-function text(el,s){const p=document.createElement('p');p.textContent=s||'';p.style.whiteSpace='pre-wrap';el.append(p);return p;}
-function link(el,title,url){try{const u=new URL(url);if(!['https:','http:'].includes(u.protocol))return;const a=document.createElement('a');a.textContent=title;a.href=u.href;a.target='_blank';a.rel='noopener noreferrer';a.style.color='#7edcff';el.append(a);}catch{}}
-async function get(route,signal){const r=await fetch('/api/kris/'+route,{signal});const p=await r.json();if(!r.ok)throw new Error(p.error);return p;}
-export function createKrisNews(){let enabled=false,box,body,select,request,payload,error,lastUpdate,count=0;
-  function render(){if(!body||!payload)return;body.replaceChildren();count=0;for(const name of ['news','notices']){text(body,name==='news'?'Krisnyheter · senaste 30 dagarna':'Meddelanden');if(payload.errors.includes(name)){text(body,'Detta flöde kunde inte kontrolleras.');continue;}const rows=(payload[name]||[]).filter(row=>belongsToCounty(row,select.value));count+=rows.length;if(!rows.length)text(body,'Inga poster returnerades av API:t för detta urval.');for(const row of rows){const article=document.createElement('article');article.style.cssText='border-top:1px solid #555;padding:8px 0';text(article,row.Headline||row.headline||'Krisinformation');text(article,row.Preamble||row.preamble);text(article,time(row.ChangedDate||row.changedDate||row.Updated||row.updated||row.Published||row.published));const areas=row.Area||row.area||[];text(article,areas.length?'Område: '+areas.map(a=>a.Name||a.name||a.Description||a.description||a.Code||a.code||'').join(', '):'Ingen geografisk avgränsning angiven');link(article,'Läs hos Krisinformation.se',row.Web||row.web||'https://www.krisinformation.se/');body.append(article);}}text(body,'Kontrollerat '+time(payload.fetchedAt)+'. Nationella poster och poster utan områdestagg visas också.');link(body,'Källa: Krisinformation.se','https://www.krisinformation.se/');}
-  return {id:'kris-news',name:'Krisinformation · Nyheter',icon:'▤',source:'Krisinformation.se',updateInterval:300000,init(){},enable(){enabled=true;box?.remove();box=panel('Krisinformation · Nyheter');select=document.createElement('select');for(const [code,name] of [['','Alla län'],...COUNTIES]){const option=document.createElement('option');option.value=code;option.textContent=name;select.append(option);}select.onchange=render;box.append(select);body=document.createElement('div');box.append(body);text(body,'Hämtar…');if(payload)render();},disable(){enabled=false;request?.abort();box?.remove();},async update(){if(!enabled)return false;request?.abort();const current=new AbortController();request=current;try{const p=await get('news',current.signal);if(!enabled||request!==current)return false;payload=p;lastUpdate=new Date(p.fetchedAt);error=p.errors.length?'Ett flöde kunde inte hämtas':null;render();return true;}catch(e){if(!current.signal.aborted){error=e.message;body.replaceChildren();text(body,error);}return false;}},getStats(){return {count,lastUpdate,error};},destroy(){this.disable();}};
+import {
+  registerPickOwner,
+  unregisterPickOwner,
+  resolvePickId,
+} from '../../data/pickRegistry.js';
+const time = (v) =>
+  v
+    ? new Date(v).toLocaleString('sv-SE', { timeZone: 'Europe/Stockholm' })
+    : 'Ej angivet';
+function panel(title) {
+  const el = document.createElement('section');
+  el.setAttribute('aria-label', title);
+  el.style.cssText =
+    'position:fixed;right:24px;bottom:85px;width:430px;max-width:85vw;max-height:65vh;overflow:auto;background:#101820;color:white;padding:18px;border:1px solid #999;z-index:10000;font:14px sans-serif';
+  const close = document.createElement('button');
+  close.textContent = 'Stäng ×';
+  close.onclick = () => el.remove();
+  el.append(close);
+  const h = document.createElement('h3');
+  h.textContent = title;
+  el.append(h);
+  document.body.append(el);
+  return el;
 }
-export function createVmaLayer(){let data,enabled=false,box,request,handler,lastUpdate,error,count=0,records=new Map();
-  function show(alert,container){text(container,alert.title);text(container,alert.text);if(alert.instruction)text(container,alert.instruction);text(container,alert.areas.map(a=>a.areaDesc).join('; '));text(container,`Utfärdat: ${time(alert.sent)} · Giltigt till: ${time(alert.expires)}`);link(container,'Källa: Sveriges Radio',alert.web||'https://sverigesradio.se/artikel/vma-vad-ar-det');}
-  return {id:'kris-vma',name:'Sverige · Aktiva VMA',icon:'⚠',source:'Sveriges Radio',updateInterval:60000,
-    init(v){data=new Cesium.CustomDataSource('kris-vma');data.show=false;v.dataSources.add(data);},enable(v){enabled=true;data.show=true;box?.remove();box=panel('Sverige · Aktiva VMA');text(box,'Kontrollerar aktuell VMA-status…');registerPickOwner('kris-vma',id=>id.startsWith('kris-vma:'));handler=new Cesium.ScreenSpaceEventHandler(v.scene.canvas);handler.setInputAction(click=>{if(!enabled)return;const id=resolvePickId(v.scene.pick(click.position));const alert=records.get(id);if(!alert)return;box?.remove();box=panel('Sverige · Aktiva VMA');show(alert,box);text(box,'Markören representerar ett område, inte en exakt händelseplats.');},Cesium.ScreenSpaceEventType.LEFT_CLICK);},
-    disable(v){enabled=false;request?.abort();handler?.destroy();handler=null;box?.remove();data.show=false;unregisterPickOwner('kris-vma');v.scene.requestRender();},
-    async update(v){if(!enabled)return false;request?.abort();const current=new AbortController();request=current;try{const p=await get('vma',current.signal);const alerts=activeVmas(p);if(!enabled||request!==current)return false;data.entities.removeAll();records=new Map();for(const alert of alerts){const codes=new Set(alert.areas.flatMap(a=>(a.geocode||[]).map(g=>String(g.value).slice(0,2))));for(const code of codes){const county=COUNTIES.find(c=>c[0]===code)|| (code==='00'?['00','Sverige',15,62]:null);if(!county)continue;const id=`kris-vma:${alert.id}:${code}`;records.set(id,alert);data.entities.add({id,name:'VMA · '+county[1],position:Cesium.Cartesian3.fromDegrees(county[2],county[3]),point:{pixelSize:15,color:Cesium.Color.RED,outlineColor:Cesium.Color.WHITE,outlineWidth:2,heightReference:Cesium.HeightReference.CLAMP_TO_GROUND,disableDepthTestDistance:Infinity}});}}count=alerts.length;lastUpdate=new Date(p.fetchedAt);error=null;box?.remove();box=panel('Sverige · Aktiva VMA');text(box,alerts.length?`${alerts.length} aktiva VMA`:'Inga aktiva VMA returnerades av Sveriges Radio.');for(const alert of alerts)show(alert,box);text(box,'Kontrollerat '+time(p.fetchedAt));text(box,'Områdesmarkörer anger berörda län. Testmeddelanden visas inte.');link(box,'Krisinformation.se','https://www.krisinformation.se/');v.scene.requestRender();return true;}catch(e){if(!current.signal.aborted){data.entities.removeAll();records.clear();count=0;error=e.message;box?.remove();box=panel('Sverige · Aktiva VMA');text(box,error);v.scene.requestRender();}return false;}},getStats(){return {count,lastUpdate,error};},destroy(v){this.disable(v);v.dataSources.remove(data,true);}
+function text(el, s) {
+  const p = document.createElement('p');
+  p.textContent = s || '';
+  p.style.whiteSpace = 'pre-wrap';
+  el.append(p);
+  return p;
+}
+function link(el, title, url) {
+  try {
+    const u = new URL(url);
+    if (!['https:', 'http:'].includes(u.protocol)) return;
+    const a = document.createElement('a');
+    a.textContent = title;
+    a.href = u.href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.style.color = '#7edcff';
+    el.append(a);
+  } catch {}
+}
+async function get(route, signal) {
+  const r = await fetch('/api/kris/' + route, { signal });
+  const p = await r.json();
+  if (!r.ok) throw new Error(p.error);
+  return p;
+}
+export function createKrisNews() {
+  let enabled = false,
+    box,
+    body,
+    select,
+    request,
+    payload,
+    error,
+    lastUpdate,
+    count = 0;
+  function render() {
+    if (!body || !payload) return;
+    body.replaceChildren();
+    count = 0;
+    for (const name of ['news', 'notices']) {
+      text(
+        body,
+        name === 'news' ? 'Krisnyheter · senaste 30 dagarna' : 'Meddelanden',
+      );
+      if (payload.errors.includes(name)) {
+        text(body, 'Detta flöde kunde inte kontrolleras.');
+        continue;
+      }
+      const rows = (payload[name] || []).filter((row) =>
+        belongsToCounty(row, select.value),
+      );
+      count += rows.length;
+      if (!rows.length)
+        text(body, 'Inga poster returnerades av API:t för detta urval.');
+      for (const row of rows) {
+        const article = document.createElement('article');
+        article.style.cssText = 'border-top:1px solid #555;padding:8px 0';
+        text(article, row.Headline || row.headline || 'Krisinformation');
+        text(article, row.Preamble || row.preamble);
+        text(
+          article,
+          time(
+            row.ChangedDate ||
+              row.changedDate ||
+              row.Updated ||
+              row.updated ||
+              row.Published ||
+              row.published,
+          ),
+        );
+        const areas = row.Area || row.area || [];
+        text(
+          article,
+          areas.length
+            ? 'Område: ' +
+                areas
+                  .map(
+                    (a) =>
+                      a.Name ||
+                      a.name ||
+                      a.Description ||
+                      a.description ||
+                      a.Code ||
+                      a.code ||
+                      '',
+                  )
+                  .join(', ')
+            : 'Ingen geografisk avgränsning angiven',
+        );
+        link(
+          article,
+          'Läs hos Krisinformation.se',
+          row.Web || row.web || 'https://www.krisinformation.se/',
+        );
+        body.append(article);
+      }
+    }
+    text(
+      body,
+      'Kontrollerat ' +
+        time(payload.fetchedAt) +
+        '. Nationella poster och poster utan områdestagg visas också.',
+    );
+    link(body, 'Källa: Krisinformation.se', 'https://www.krisinformation.se/');
+  }
+  return {
+    id: 'kris-news',
+    name: 'Krisinformation · Nyheter',
+    icon: '▤',
+    source: 'Krisinformation.se',
+    updateInterval: 300000,
+    init() {},
+    enable() {
+      enabled = true;
+      box?.remove();
+      box = panel('Krisinformation · Nyheter');
+      select = document.createElement('select');
+      for (const [code, name] of [['', 'Alla län'], ...COUNTIES]) {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = name;
+        select.append(option);
+      }
+      select.onchange = render;
+      box.append(select);
+      body = document.createElement('div');
+      box.append(body);
+      text(body, 'Hämtar…');
+      if (payload) render();
+    },
+    disable() {
+      enabled = false;
+      request?.abort();
+      box?.remove();
+    },
+    async update() {
+      if (!enabled) return false;
+      request?.abort();
+      const current = new AbortController();
+      request = current;
+      try {
+        const p = await get('news', current.signal);
+        if (!enabled || request !== current) return false;
+        payload = p;
+        lastUpdate = new Date(p.fetchedAt);
+        error = p.errors.length ? 'Ett flöde kunde inte hämtas' : null;
+        render();
+        return true;
+      } catch (e) {
+        if (!current.signal.aborted) {
+          error = e.message;
+          body.replaceChildren();
+          text(body, error);
+        }
+        return false;
+      }
+    },
+    getStats() {
+      return { count, lastUpdate, error };
+    },
+    destroy() {
+      this.disable();
+    },
+  };
+}
+export function createVmaLayer() {
+  let data,
+    enabled = false,
+    box,
+    request,
+    handler,
+    lastUpdate,
+    error,
+    count = 0,
+    records = new Map();
+  function show(alert, container) {
+    text(container, alert.title);
+    text(container, alert.text);
+    if (alert.instruction) text(container, alert.instruction);
+    text(container, alert.areas.map((a) => a.areaDesc).join('; '));
+    text(
+      container,
+      `Utfärdat: ${time(alert.sent)} · Giltigt till: ${time(alert.expires)}`,
+    );
+    link(
+      container,
+      'Källa: Sveriges Radio',
+      alert.web || 'https://sverigesradio.se/artikel/vma-vad-ar-det',
+    );
+  }
+  return {
+    id: 'kris-vma',
+    name: 'Sverige · Aktiva VMA',
+    icon: '⚠',
+    source: 'Sveriges Radio',
+    updateInterval: 60000,
+    init(v) {
+      data = new Cesium.CustomDataSource('kris-vma');
+      data.show = false;
+      v.dataSources.add(data);
+    },
+    enable(v) {
+      enabled = true;
+      data.show = true;
+      box?.remove();
+      box = panel('Sverige · Aktiva VMA');
+      text(box, 'Kontrollerar aktuell VMA-status…');
+      registerPickOwner('kris-vma', (id) => id.startsWith('kris-vma:'));
+      handler = new Cesium.ScreenSpaceEventHandler(v.scene.canvas);
+      handler.setInputAction((click) => {
+        if (!enabled) return;
+        const id = resolvePickId(v.scene.pick(click.position));
+        const alert = records.get(id);
+        if (!alert) return;
+        box?.remove();
+        box = panel('Sverige · Aktiva VMA');
+        show(alert, box);
+        text(
+          box,
+          'Markören representerar ett område, inte en exakt händelseplats.',
+        );
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    },
+    disable(v) {
+      enabled = false;
+      request?.abort();
+      handler?.destroy();
+      handler = null;
+      box?.remove();
+      data.show = false;
+      unregisterPickOwner('kris-vma');
+      v.scene.requestRender();
+    },
+    async update(v) {
+      if (!enabled) return false;
+      request?.abort();
+      const current = new AbortController();
+      request = current;
+      try {
+        const p = await get('vma', current.signal);
+        const alerts = activeVmas(p);
+        if (!enabled || request !== current) return false;
+        data.entities.removeAll();
+        records = new Map();
+        for (const alert of alerts) {
+          const codes = new Set(
+            alert.areas.flatMap((a) =>
+              (a.geocode || []).map((g) => String(g.value).slice(0, 2)),
+            ),
+          );
+          for (const code of codes) {
+            const county =
+              COUNTIES.find((c) => c[0] === code) ||
+              (code === '00' ? ['00', 'Sverige', 15, 62] : null);
+            if (!county) continue;
+            const id = `kris-vma:${alert.id}:${code}`;
+            records.set(id, alert);
+            data.entities.add({
+              id,
+              name: 'VMA · ' + county[1],
+              position: Cesium.Cartesian3.fromDegrees(county[2], county[3]),
+              point: {
+                pixelSize: 15,
+                color: Cesium.Color.RED,
+                outlineColor: Cesium.Color.WHITE,
+                outlineWidth: 2,
+                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                disableDepthTestDistance: Infinity,
+              },
+            });
+          }
+        }
+        count = alerts.length;
+        lastUpdate = new Date(p.fetchedAt);
+        error = null;
+        box?.remove();
+        box = panel('Sverige · Aktiva VMA');
+        text(
+          box,
+          alerts.length
+            ? `${alerts.length} aktiva VMA`
+            : 'Inga aktiva VMA returnerades av Sveriges Radio.',
+        );
+        for (const alert of alerts) show(alert, box);
+        text(box, 'Kontrollerat ' + time(p.fetchedAt));
+        text(
+          box,
+          'Områdesmarkörer anger berörda län. Testmeddelanden visas inte.',
+        );
+        link(box, 'Krisinformation.se', 'https://www.krisinformation.se/');
+        v.scene.requestRender();
+        return true;
+      } catch (e) {
+        if (!current.signal.aborted) {
+          data.entities.removeAll();
+          records.clear();
+          count = 0;
+          error = e.message;
+          box?.remove();
+          box = panel('Sverige · Aktiva VMA');
+          text(box, error);
+          v.scene.requestRender();
+        }
+        return false;
+      }
+    },
+    getStats() {
+      return { count, lastUpdate, error };
+    },
+    destroy(v) {
+      this.disable(v);
+      v.dataSources.remove(data, true);
+    },
   };
 }

@@ -238,13 +238,16 @@ export function createRadioProxyMiddleware({
     };
     // Reserve space for the complete local Swedish directory before global rankings.
     supplementalStations.forEach(take);
-    const supplementalStreams = new Set(supplementalStations.map(row => row.streamUrl));
-    const takeDirectoryStation = station => {
+    const supplementalStreams = new Set(
+      supplementalStations.map((row) => row.streamUrl),
+    );
+    const takeDirectoryStation = (station) => {
       if (!supplementalStreams.has(station.streamUrl)) take(station);
     };
     // Seed specialist station-tag queries before popularity fill so operational
     // categories remain represented even when global click charts skew musical.
-    for (const rows of resultSets.slice(1)) rows.slice(0, 45).forEach(takeDirectoryStation);
+    for (const rows of resultSets.slice(1))
+      rows.slice(0, 45).forEach(takeDirectoryStation);
     resultSets
       .flat()
       .sort(
@@ -392,7 +395,7 @@ export function createRadioProxyMiddleware({
       }
       res.writeHead(204, { 'Cache-Control': 'no-store' });
       res.end();
-      if (!supplementalStations.some(station => station.id === id))
+      if (!supplementalStations.some((station) => station.id === id))
         void fetchPath(`/json/url/${id}`).catch(() => {});
       return;
     }
