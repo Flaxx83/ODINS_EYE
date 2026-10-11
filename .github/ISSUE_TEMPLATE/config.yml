@@ -1,11 +1,8 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
-  - name: Security vulnerability
-    url: https://github.com/bilawalsidhu/gods-eye-view/security/advisories/new
-    about: Report anything exploitable privately. Do not open a public issue for it.
-  - name: Setup and quick start
-    url: https://github.com/bilawalsidhu/gods-eye-view#readme
-    about: Install paths (Pinokio, terminal), provider keys, and what runs keyless.
-  - name: Known issues
-    url: https://github.com/bilawalsidhu/gods-eye-view/blob/main/docs/KNOWN-ISSUES.md
-    about: Check here before filing. Your problem may already be tracked with a workaround.
+  - name: Installation och konfiguration
+    url: https://github.com/Flaxx83/ODINS_EYE/blob/main/docs/ODINS_SETUP.md
+    about: Lokala beroenden, nycklar och dataimport.
+  - name: Kända begränsningar
+    url: https://github.com/Flaxx83/ODINS_EYE/blob/main/docs/ODINS_STATUS.md
+    about: Aktuell status och täckning.
