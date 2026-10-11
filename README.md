@@ -31,7 +31,7 @@ Detta är en fungerande lokal prototyp under utveckling. AI-panelen har fortfara
 
 ## Planering
 
-[Roadmap](docs/ODINS_ROADMAP.md), GitHub Issues och repositoryts projektboard används för planering. Se [arkitektur](docs/ODINS_ARCHITECTURE.md) för var funktionerna ligger.
+[Roadmap](docs/ODINS_ROADMAP.md), [GitHub Issues](https://github.com/Flaxx83/ODINS_EYE/issues) och [projektet Odins Eye](https://github.com/users/Flaxx83/projects/3) används för planering. Se [arkitektur](docs/ODINS_ARCHITECTURE.md) för var funktionerna ligger.
 
 ## Verifiering
 
@@ -44,3 +44,4 @@ Riktade tester och lokala webbläsar-/API-prov är beskrivna i [docs/ODINS_STATU
 ## Hemligheter och data
 
 API-nycklar ska ligga i `.env`, aldrig i commits. `.gev-cache/`, `work/`, loggar och inspelningar är lokala. Nedladdade originaldata och modellvikter följer inte med repositoryt. Vissa små bearbetade datamängder finns i koden; deras licenser gäller separat från MIT.
+
