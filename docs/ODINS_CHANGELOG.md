@@ -4,14 +4,14 @@
 
 De senaste ändringarna finns i sex öppna pull requests. De körs i den lokala utvecklingsversionen men är ännu inte sammanfogade med `main`. Tabellen anger respektive avgränsning; verifiering gäller de angivna proverna.
 
-| Ändring | Innehåll | Issue | Pull request |
-| --- | --- | --- | --- |
-| Installation och dataimport | Gemensamt Pythonval via GEV_PYTHON/.venv/system-Python, geodata- och röstberoenden, SL/SJ ZIP-import, Lantmäteriet-topografi, järnvägsgraf, valfri Whispernedladdning, installationskontroll och tydliga fel vid saknad geometri | #2 | [#11](https://github.com/Flaxx83/ODINS_EYE/pull/11) |
-| AI-panelens design | Rundad glasbakgrund, gemensamma designvariabler, kort introduktion, tydligt trafiknätsval, grupperade knappar, svar och reseförslag, tangentbordsfokus och mobil layout | Del av gränssnittet kring #1 | [#12](https://github.com/Flaxx83/ODINS_EYE/pull/12) |
-| Svenska resefrågor | Hela timmar som vid 07 tiden, validering av felaktiga tider, nästa kalenderdag i Stockholm och normalisering av inklistrade radbrytningar/NBSP/osynliga tecken | Del av #4 | [#13](https://github.com/Flaxx83/ODINS_EYE/pull/13) |
-| AI vid Location | Knapp till vänster om Location, panel ovanför dockan, minimering/återöppning med bibehållen text och svar, Escape och städning vid avaktivering | Del av gränssnittet kring #1 | [#14](https://github.com/Flaxx83/ODINS_EYE/pull/14) |
-| Fartygskort | Namn, typ, fart/kurs, destination, rapporterad ETA, navigationsstatus, positionsrapportens ålder, MMSI/IMO och Visa senaste spår; saknade värden redovisas | #15 | [#16](https://github.com/Flaxx83/ODINS_EYE/pull/16) |
-| AI-dockans slutliga placering | 160 px knapp på rymliga skärmar som växer åt vänster utan att flytta Location; panelens högerkant i linje med Locations högerkant; begränsad utökning på smala skärmar | Del av gränssnittet kring #1 | [#17](https://github.com/Flaxx83/ODINS_EYE/pull/17) |
+| Ändring                       | Innehåll                                                                                                                                                                                                                         | Issue                        | Pull request                                        |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | --------------------------------------------------- |
+| Installation och dataimport   | Gemensamt Pythonval via GEV_PYTHON/.venv/system-Python, geodata- och röstberoenden, SL/SJ ZIP-import, Lantmäteriet-topografi, järnvägsgraf, valfri Whispernedladdning, installationskontroll och tydliga fel vid saknad geometri | #2                           | [#11](https://github.com/Flaxx83/ODINS_EYE/pull/11) |
+| AI-panelens design            | Rundad glasbakgrund, gemensamma designvariabler, kort introduktion, tydligt trafiknätsval, grupperade knappar, svar och reseförslag, tangentbordsfokus och mobil layout                                                          | Del av gränssnittet kring #1 | [#12](https://github.com/Flaxx83/ODINS_EYE/pull/12) |
+| Svenska resefrågor            | Hela timmar som vid 07 tiden, validering av felaktiga tider, nästa kalenderdag i Stockholm och normalisering av inklistrade radbrytningar/NBSP/osynliga tecken                                                                   | Del av #4                    | [#13](https://github.com/Flaxx83/ODINS_EYE/pull/13) |
+| AI vid Location               | Knapp till vänster om Location, panel ovanför dockan, minimering/återöppning med bibehållen text och svar, Escape och städning vid avaktivering                                                                                  | Del av gränssnittet kring #1 | [#14](https://github.com/Flaxx83/ODINS_EYE/pull/14) |
+| Fartygskort                   | Namn, typ, fart/kurs, destination, rapporterad ETA, navigationsstatus, positionsrapportens ålder, MMSI/IMO och Visa senaste spår; saknade värden redovisas                                                                       | #15                          | [#16](https://github.com/Flaxx83/ODINS_EYE/pull/16) |
+| AI-dockans slutliga placering | 160 px knapp på rymliga skärmar som växer åt vänster utan att flytta Location; panelens högerkant i linje med Locations högerkant; begränsad utökning på smala skärmar                                                           | Del av gränssnittet kring #1 | [#17](https://github.com/Flaxx83/ODINS_EYE/pull/17) |
 
 ### Verifiering
 
@@ -34,3 +34,13 @@ De senaste ändringarna finns i sex öppna pull requests. De körs i den lokala 
 PR:erna är staplade och bygger på föregående gren: **#11 → #12 → #13 → #14 → #16 → #17**. Granska och sammanfoga i denna ordning; kontrollera respektive basgren efter sammanfogning. Stäng inte #1 eller #4 enbart för dessa gränssnitts-/parserändringar. #2 och #15 har implementationer som inväntar granskning.
 
 Se [status](ODINS_STATUS.md), [installation](ODINS_SETUP.md) och [roadmap](ODINS_ROADMAP.md) för detaljer.
+
+## Svenska vägkameror (2026-10-11)
+
+Trafikverkets `Camera`-API (schema 1) matar nu det befintliga Cameras/CCTV-lagret. Använd **Data Layers → Cameras**, öppna **CCTV** och välj **Sverige · kameranamn**. Bildproxy, kartposition och befintliga kamerakontroller återanvänds. Panelen visar Trafikverket, kameratyp och **Bild tagen** i svensk tid. Tidsstämpeln är katalogens `PhotoTime`, inte tidpunkten då webbläsaren laddade bilden.
+
+API-nyckeln ligger bara i den ignorerade lokala `.env` som `TRAFIKVERKET_API_KEY`. Ingen nyckel eller extern bildadress skickas i klientens kamerakatalog. `CCTV_TRAFIKVERKET_ENABLED=0` stänger av leverantören. En egen fil-/miljökatalog kan enligt befintlig policy ersätta livekatalogerna.
+
+Liveprov: **1 548** aktiva kameror hämtades; katalogtaket **4 000** gav **485** svenska kameror efter fördelning mellan samtliga leverantörer. Taket innebär att kartan inte är en fullständig nationell inventering. `trimmedPacks` redovisar bortvalda kameror. `CCTV_MAX_SOURCES` kan justeras upp till befintligt tak 5 000, men garanterar inte alla svenska kameror. Uppdaterade stillbilder hämtas via servern; ingen videoström utlovas. Kamerornas fältvinkel, monteringshöjd och räckvidd är uppskattade och markeras RAW PRIOR. Källa: [Trafikverkets öppna API](https://www.trafikverket.se/e-tjanster/trafikverkets-oppna-api-for-trafikinformation/).
+
+Validering: fem leverantörstester passerade, produktionsbygget passerade, verklig JPEG hämtades med HTTP 200 via appens bildproxy. Liveprovet i gränssnittet visade Falutorget Norra, Trafikverket, kameratyp, tidsstämpel och SNAPSHOT OK. Implementationen spåras i [issue #18](https://github.com/Flaxx83/ODINS_EYE/issues/18) och bygger vidare på PR #17. Bredare tidigare CI-begränsningar gäller fortfarande.

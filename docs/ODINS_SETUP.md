@@ -101,3 +101,7 @@ Saknad SL/SJ-geometri ska inte stoppa reseplaneringen. Kartförslaget visar änd
 ## Drift
 
 Kör lokalt på loopback. Internet krävs för livedata och externa rese-/gångruttningstjänster. Publicering av servern på internet är inte förberedd. Gångruttning använder FOSSGIS offentliga Valhalla-demo med cache och sekventiella anrop; bredare distribution kräver en genomgång enligt #7. Geometri och tidtabeller behöver importeras på nytt när underlaget ändras; `doctor:odins` kontrollerar närvaro, inte fullständighet eller aktualitet för varje datafil.
+
+### Trafikverkets vägkameror
+
+Sätt `TRAFIKVERKET_API_KEY` i den lokala `.env` (utan `VITE_`-prefix) och starta om utvecklingsservern. Aktivera Data Layers → Cameras och välj Sverige i CCTV-panelens kameralista. `CCTV_TRAFIKVERKET_ENABLED=0` stänger av källan. Servern använder Camera schema 1 och cachar den gemensamma katalogen; bilder hämtas separat via serverns befintliga bildproxy. Bild tagen visar källans PhotoTime. Bilderna är stillbilder och globala katalogtak kan begränsa antalet svenska kameror, se ändringsloggen. Lägg aldrig en riktig nyckel i dokumentation, screenshots av appens inställningar eller Git.

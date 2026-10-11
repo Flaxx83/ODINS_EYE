@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { loadTrafikverketSources } from './trafikverket.js';
 import path from 'node:path';
 import { DEFAULT_CCTV_SOURCE_FILE, CCTV_SOURCE_CACHE_MS } from './constants.js';
 import { allocateSourceCap, resolveCatalogCap } from './cap.js';
@@ -32,6 +33,13 @@ const envEnabled = (name) => String(process.env[name] || '1').trim() !== '0';
  * kill switch.
  */
 const LIVE_PACKS = [
+  {
+    name: 'trafikverket',
+    enabled: () =>
+      envEnabled('CCTV_TRAFIKVERKET_ENABLED') &&
+      Boolean(process.env.TRAFIKVERKET_API_KEY),
+    load: loadTrafikverketSources,
+  },
   { name: 'austin', enabled: () => true, load: loadAustinSourcesFromOpenData },
   {
     name: 'caltrans',

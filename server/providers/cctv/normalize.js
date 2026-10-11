@@ -539,6 +539,7 @@ export function normalizeSourceItem(item) {
     // Per-camera attribution for feeds a partner supplies inside a pack
     // (DriveBC: TransLink, city cameras). Shown beside the provider.
     credit: String(item.credit || '').trim(),
+    photoTime: String(item.photoTime || ''),
     // Unselected-label code: the pack's explicit short name, else the feed's
     // name, else the id.
     code: cameraDisplayCode(
