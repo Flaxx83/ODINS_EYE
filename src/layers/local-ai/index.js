@@ -1,3 +1,4 @@
+import './panel.css';
 import { createTripMap } from './trip-map.js';
 import * as C from 'cesium';
 export function createLocalAiLayer() {
@@ -25,27 +26,55 @@ export function createLocalAiLayer() {
     enable() {
       enabled = true;
       panel = document.createElement('aside');
-      panel.style.cssText =
-        'position:fixed;right:16px;bottom:40px;width:400px;max-height:65vh;overflow:auto;background:#14202aee;color:white;padding:16px;z-index:1300;border:1px solid #80dfff';
+      panel.className = 'local-ai-panel';
+      panel.setAttribute('aria-label', 'Lokal AI');
       const title = document.createElement('h3');
-      title.textContent = 'Lokal AI · Qwen3.5 4B';
+      title.textContent = 'Lokal AI';
+      const header = document.createElement('header');
+      header.className = 'local-ai-header';
+      const body = document.createElement('div');
+      body.className = 'local-ai-body';
+      const fold = document.createElement('button');
+      fold.type = 'button';
+      fold.textContent = '−';
+      fold.setAttribute('aria-label', 'Minimera AI-panelen');
+      fold.setAttribute('aria-expanded', 'true');
+      fold.onclick = () => {
+        const collapsed = panel.classList.toggle('is-collapsed');
+        fold.textContent = collapsed ? '+' : '−';
+        fold.setAttribute('aria-expanded', String(!collapsed));
+        fold.setAttribute(
+          'aria-label',
+          collapsed ? 'Visa AI-panelen' : 'Minimera AI-panelen',
+        );
+      };
+      header.append(title, fold);
+      const model = document.createElement('div');
+      model.className = 'local-ai-model';
+      model.textContent = 'BIONIC · Qwen3.5 4B';
       const hint = document.createElement('p');
       hint.textContent =
-        'Navigering, polis/luftdata inom 50 km och trafik/resa med Västtrafik, SL eller hela Sverige. Välj nät ovan. Ange exempelvis imorgon kl 07:00 för en framtida avgång. Exempel: Jag vill åka buss från Skövde resecentrum till Södra Ryd väg 26.';
+        'Planera en resa, utforska kartan eller fråga om trafik, polis och luftkvalitet i området.';
+      hint.className = 'local-ai-hint';
       const network = document.createElement('select');
       for (const n of ['Västtrafik', 'SL', 'Hela Sverige']) {
         const o = document.createElement('option');
         o.textContent = n;
         network.append(o);
       }
-      panel.append(network);
+      const networkLabel = document.createElement('label');
+      networkLabel.className = 'local-ai-field';
+      networkLabel.append(document.createTextNode('Trafiknät'), network);
       const form = document.createElement('form'),
         input = document.createElement('textarea');
-      input.placeholder = 'Skriv eller spela in ett kommando';
+      input.placeholder =
+        'Exempel: Jag vill resa från Skövde resecentrum till Vällingby imorgon kl 07:00.';
+      input.setAttribute('aria-label', 'Fråga eller reseönskemål');
       input.maxLength = 2000;
-      input.style.cssText = 'width:100%;min-height:70px';
+
       const send = document.createElement('button');
-      send.textContent = 'Skicka';
+      send.textContent = 'Skicka ↗';
+      send.className = 'local-ai-send';
       const mic = document.createElement('button');
       mic.type = 'button';
       mic.textContent = 'Spela in';
@@ -53,10 +82,16 @@ export function createLocalAiLayer() {
       speak.type = 'button';
       speak.textContent = 'Läs upp svar';
       const output = document.createElement('div');
-      output.style.whiteSpace = 'pre-wrap';
+      output.className = 'local-ai-output';
+      output.setAttribute('aria-live', 'polite');
       const choices = document.createElement('div');
-      form.append(input, send, mic, speak);
-      panel.append(title, hint, form, choices, output);
+      choices.className = 'local-ai-choices';
+      const actions = document.createElement('div');
+      actions.className = 'local-ai-actions';
+      actions.append(send, mic, speak);
+      form.append(input, actions);
+      body.append(model, hint, networkLabel, form, choices, output);
+      panel.append(header, body);
       document.body.append(panel);
       let lastAnswer = '',
         tripChoice = null;
