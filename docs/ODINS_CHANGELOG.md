@@ -48,3 +48,7 @@ Validering: fem leverantörstester passerade, produktionsbygget passerade, verkl
 ## Trafikverksplan och arbetsordning (2026-10-11)
 
 Fem nya planeringsissues #20–#24 är tillagda i projekt 3: API-grund, tåginformation, väghändelser, vägväder och NVDB-utredning. De har prioritet, tidsintervall, Estimate, acceptanskriterier och GitHub-beroenden. Roadmappen omfattar nu 15 kärnuppgifter och ersätter tidigare sekvens och kalenderfönster. Befintliga issuebeskrivningar och projektets Ordning har samordnats. NVDB-utredning #24 blockerar räckviddsarbetet #9 tills ett datakälls-/routingbeslut finns; beslutet kan även bli att använda OSM utan NVDB. Ingen ny dataintegration implementeras inom planeringsändringen.
+
+## Stabil testgrund (2026-10-11)
+
+Issue #6 och PR #26 samlar offlineintegrationstester och reparation av befintliga CI-kontrakt. Unit discovery inkluderar serverfiler. Windows/Linux-gaten täcker resa, datum, trafikstatus, AI-källkontext, kameror och kartgeometri. Lokala karttexter använder gemensamt overlay-lager; AI-panelens CSS kan importeras av browsern utan att bryta Node-moduler. Formatteringen av lokala runtimefiler ligger i en separat commit. Se [testguiden](ODINS_TESTING.md) och issue #6 för verifieringsresultat och aktuell CI-status. Den generella AI-verktygsloopen tillhör fortsatt #1.

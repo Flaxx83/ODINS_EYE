@@ -47,7 +47,11 @@ export function createPoliceLayer() {
       groups.set(id, g);
       data.entities.add({
         id,
-        name: g.events[0].place || g.events[0].area,
+        name:
+          (g.events[0].place || g.events[0].area) +
+          ' · ' +
+          g.events.length +
+          ' notiser',
         position: Cesium.Cartesian3.fromDegrees(g.lon, g.lat),
         point: {
           pixelSize: 12,

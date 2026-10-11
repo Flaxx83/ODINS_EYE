@@ -76,7 +76,7 @@ export function createSelectedTransitRoute() {
           if (Number.isFinite(stop.lon) && Number.isFinite(stop.lat))
             data.entities.add({
               id: 'route-stop:' + index,
-              name: stop.name,
+              name: stop.name + (stop.platform ? ' · ' + stop.platform : ''),
               position: Cesium.Cartesian3.fromDegrees(stop.lon, stop.lat),
               point: {
                 pixelSize: 8,

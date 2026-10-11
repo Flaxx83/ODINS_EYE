@@ -31,3 +31,7 @@ Den fria AI-verktygsloopen byggs i #1 och får egna argument-/kontextprover där
 - README saknade beskrivning av det befintliga Draw-verktyget som dokumentationskontraktet kontrollerar.
 
 Slutliga körresultat och CI-länkar registreras i issue #6. Alla testsvar är fixtures; automatiska testresultat bevisar inte aktuell datatäckning hos externa tjänster.
+
+Ytterligare kontraktsfel i den breda sviten åtgärdades: lokala karttexter använder nu det gemensamma world-overlay-lagret med separata ägare och städning. Röstmanifestet deklarerar de 22 lokala lagren som voice-off tills verktygen finns. Cyber-stilen är åter sista stilimporten. Providerordningsprovet kontrollerar den ursprungliga providergruppen samtidigt som ODINS-leverantörerna finns kvar. Dokumentationskontraktet använder ODINS_README i stället för originalets lagerantal. Samtidig reparation av MCP-nyckelfiler återförsöker endast övergående Windows-delningfel inom befintlig tvåsekundersgräns.
+
+67 riktade kontraktsprover passerade efter korrigeringarna. AI-panelens utseende verifierades i en separat webbläsarflik efter CSS-flytten. Dessa riktade resultat kompletterar den fulla CI-körningen, som måste vara grön på senaste commit före sammanfogning.
