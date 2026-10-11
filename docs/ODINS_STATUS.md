@@ -1,5 +1,7 @@
 # Status 2026-10-11
 
+Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md](ODINS_CHANGELOG.md). De senaste ändringarna är implementerade på utvecklingsgrenarna och inväntar sammanfogning med main.
+
 - Vite-bygget har passerat efter de senaste tilläggen.
 - Liveprov: SL-resor Slussen–Stockholm C; Västtrafik Skövde–Södra Ryd; nationellt Lillegårdsvägen–Vällingby.
 - Senaste geometritestet gav 4/5, 5/5 och 6/6 delsträckor för alternativen. SJ 422 kunde inte matchas säkert.
@@ -48,7 +50,7 @@ Tidstolkningen stöder nu även hela timmar och svenska tidsuttryck som `vid 07 
 
 Liveprov 2026-10-11: `Jag vill resa från Göteborg central till Vällingby T-bana imorgon vid 07 tiden.` sökte avgång 2026-10-12 07:00 och gav tre ResRobot-förslag. Första förslaget avgick 07:11 och anlände 11:34. Dessa är testets tidtabellsuppgifter och inte fasta framtida reserekommendationer.
 
-Fyra regressionstester finns i `server/providers/travel-input.test.mjs` och körs med `npm run test:travel` samt i installations-CI. Övriga delar av #4, såsom önskad ankomsttid och bredare datum-/följdfrågetolkning, återstår.
+Fem regressionstester finns i `server/providers/travel-input.test.mjs` och körs med `npm run test:travel` samt i installations-CI. Övriga delar av #4, såsom önskad ankomsttid och bredare datum-/följdfrågetolkning, återstår.
 
 Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll en inklistrad radbrytning efter bindestrecket. Backend normaliserar nu radbrytningar, NBSP och osynliga formateringstecken innan verktygsval och reseparsning. Fem regressionstester täcker detta tillsammans med tidstolkningen.
 

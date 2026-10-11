@@ -29,6 +29,8 @@ npm run dev -- --host 127.0.0.1 --port 4173 --strictPort
 
 Detta är en fungerande lokal prototyp under utveckling. AI-panelen har fortfarande styrda frågemönster och är inte en fri agent med tillgång till alla datakällor. Beräknad spårväg är inte bekräftelse på tågets faktiska spårval. Geometrimatchning kan saknas. Följ källornas tidsstämplar och täckningsuppgifter.
 
+Se [ändringsloggen](docs/ODINS_CHANGELOG.md) för senaste tillägg, verifiering och koppling till issues/pull requests.
+
 ## Planering
 
 [Roadmap](docs/ODINS_ROADMAP.md), [GitHub Issues](https://github.com/Flaxx83/ODINS_EYE/issues) och [projektet Odins Eye](https://github.com/users/Flaxx83/projects/3) används för planering. Se [arkitektur](docs/ODINS_ARCHITECTURE.md) för var funktionerna ligger.

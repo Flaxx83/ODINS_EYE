@@ -22,3 +22,13 @@ Total bedömd insats: 216–360 timmar, mittpunkt 288 timmar. Vid 20 timmar/veck
 Projektfält: Ordning visar sekvensen, Etapp grupperar arbetet, Priority visar angelägenhet och Estimate visar arbetstimmar. Start date och Target date ger tidslinjens preliminära fönster. Endast grundarbetet #2 och #6 ligger kvar i aktuell iteration; övriga är Backlog för kommande planering.
 
 Omvärdera intervall och datum efter varje etapp. Källvillkor och regressionstester hanteras även under funktionsarbetet. POI-databasen förbereds för senare portabel distribution. Röst är fortsatt lägre prioriterad.
+
+
+## Senaste genomförda arbete som inväntar granskning
+
+- #2: installation och importer i PR #11.
+- #1: paneldesign och dockning i PR #12, #14 och #17; AI-verktygsintegrationen återstår.
+- #4: tidstolkning och robust inklistrad text i PR #13; övrig resefrågetolkning återstår.
+- #15: fartygskort i PR #16, status In review.
+
+Se [ändringsloggen](ODINS_CHANGELOG.md) för gränser, provresultat och sammanfogningsordning. Dessa ändringar flyttar inte automatiskt de återstående roadmapdatumen.
