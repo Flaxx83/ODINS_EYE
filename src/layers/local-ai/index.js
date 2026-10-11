@@ -5,6 +5,10 @@ export function createLocalAiLayer() {
   let map,
     viewer,
     panel,
+    dockButton,
+    dockObserver,
+    positionPanel,
+    escapePanel,
     request,
     enabled = false,
     recorder,
@@ -39,14 +43,49 @@ export function createLocalAiLayer() {
       fold.textContent = '−';
       fold.setAttribute('aria-label', 'Minimera AI-panelen');
       fold.setAttribute('aria-expanded', 'true');
-      fold.onclick = () => {
-        const collapsed = panel.classList.toggle('is-collapsed');
-        fold.textContent = collapsed ? '+' : '−';
-        fold.setAttribute('aria-expanded', String(!collapsed));
-        fold.setAttribute(
+      panel.id = 'local-ai-popover';
+      dockButton = document.createElement('button');
+      dockButton.type = 'button';
+      dockButton.className = 'local-ai-dock-button';
+      dockButton.textContent = 'AI';
+      dockButton.setAttribute('aria-controls', panel.id);
+      dockButton.setAttribute('aria-expanded', 'true');
+      dockButton.setAttribute('aria-label', 'Minimera lokal AI');
+      const setOpen = (open) => {
+        panel.hidden = !open;
+        dockButton.setAttribute('aria-expanded', String(open));
+        dockButton.setAttribute(
           'aria-label',
-          collapsed ? 'Visa AI-panelen' : 'Minimera AI-panelen',
+          open ? 'Minimera lokal AI' : 'Öppna lokal AI',
         );
+        if (open) positionPanel();
+      };
+      fold.onclick = () => {
+        setOpen(false);
+        dockButton.focus();
+      };
+      dockButton.onclick = () => setOpen(panel.hidden);
+      escapePanel = (event) => {
+        if (
+          event.key === 'Escape' &&
+          !panel.hidden &&
+          panel.contains(document.activeElement)
+        ) {
+          setOpen(false);
+          dockButton.focus();
+        }
+      };
+      document.addEventListener('keydown', escapePanel);
+      positionPanel = () => {
+        if (!dockButton?.isConnected || panel.hidden) return;
+        const anchor = dockButton.getBoundingClientRect();
+        const width = panel.getBoundingClientRect().width;
+        panel.style.left =
+          Math.max(12, Math.min(anchor.left, window.innerWidth - width - 12)) +
+          'px';
+        panel.style.right = 'auto';
+        panel.style.bottom = window.innerHeight - anchor.top + 12 + 'px';
+        panel.style.maxHeight = Math.max(100, anchor.top - 24) + 'px';
       };
       header.append(title, fold);
       const model = document.createElement('div');
@@ -93,6 +132,13 @@ export function createLocalAiLayer() {
       body.append(model, hint, networkLabel, form, choices, output);
       panel.append(header, body);
       document.body.append(panel);
+      const dock = document.getElementById('command-dock');
+      if (dock) dock.prepend(dockButton);
+      else document.body.append(dockButton);
+      dockObserver = new ResizeObserver(positionPanel);
+      dockObserver.observe(dock || dockButton);
+      window.addEventListener('resize', positionPanel);
+      positionPanel();
       let lastAnswer = '',
         tripChoice = null;
       async function submit(message, choice) {
@@ -323,6 +369,10 @@ export function createLocalAiLayer() {
       map.clear();
       stopRecording();
       speechSynthesis.cancel();
+      dockObserver?.disconnect();
+      window.removeEventListener('resize', positionPanel);
+      document.removeEventListener('keydown', escapePanel);
+      dockButton?.remove();
       panel?.remove();
     },
     update() {

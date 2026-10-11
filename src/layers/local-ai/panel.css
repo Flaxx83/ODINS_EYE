@@ -201,3 +201,38 @@
     max-height: calc(100dvh - 170px);
   }
 }
+
+/* Local AI shares the Location command dock; its popover stays in viewport. */
+.local-ai-panel[hidden] {
+  display: none;
+}
+.local-ai-dock-button {
+  order: -2;
+  flex: 0 0 80px;
+  align-self: center;
+  min-height: 60px;
+  padding: 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--panel-radius, 16px);
+  background: var(--glass-bg);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: 600 10px var(--font-mono, monospace);
+  letter-spacing: 2px;
+  backdrop-filter: blur(18px);
+}
+.local-ai-dock-button[aria-expanded='true'],
+.local-ai-dock-button:hover {
+  border-color: var(--accent, #00d4ff);
+  color: var(--accent, #00d4ff);
+}
+.local-ai-dock-button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .local-ai-dock-button {
+    flex-basis: 48px;
+    padding: 8px;
+  }
+}

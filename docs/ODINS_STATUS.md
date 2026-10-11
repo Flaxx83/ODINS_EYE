@@ -51,3 +51,8 @@ Liveprov 2026-10-11: `Jag vill resa från Göteborg central till Vällingby T-ba
 Fyra regressionstester finns i `server/providers/travel-input.test.mjs` och körs med `npm run test:travel` samt i installations-CI. Övriga delar av #4, såsom önskad ankomsttid och bredare datum-/följdfrågetolkning, återstår.
 
 Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll en inklistrad radbrytning efter bindestrecket. Backend normaliserar nu radbrytningar, NBSP och osynliga formateringstecken innan verktygsval och reseparsning. Fem regressionstester täcker detta tillsammans med tidstolkningen.
+
+
+## Dockning av lokal AI
+
+När Lokal AI-lagret är aktivt visas en AI-knapp direkt till vänster om Location i nederdockan. Panelen öppnas ovanför knappen och följer dockans placering vid storleksändring. Minimering döljer panelen; text, nätval och svar behålls vid återöppning under samma aktivering. Escape i panelen minimerar den och återför fokus till dockknappen. Avaktivering av lagret tar bort panel, knapp och händelselyssnare. Verifierat i användarens öppna app: placering, minimering och bibehållen text vid återöppning. Produktionsbygget passerar.
