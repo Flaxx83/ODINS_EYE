@@ -80,9 +80,15 @@ export function createLocalAiLayer() {
         if (!dockButton?.isConnected || panel.hidden) return;
         const anchor = dockButton.getBoundingClientRect();
         const width = panel.getBoundingClientRect().width;
+        const location = document
+          .getElementById('location-bar')
+          ?.getBoundingClientRect();
+        const rightEdge = location?.right ?? anchor.right;
         panel.style.left =
-          Math.max(12, Math.min(anchor.left, window.innerWidth - width - 12)) +
-          'px';
+          Math.max(
+            12,
+            Math.min(rightEdge - width, window.innerWidth - width - 12),
+          ) + 'px';
         panel.style.right = 'auto';
         panel.style.bottom = window.innerHeight - anchor.top + 12 + 'px';
         panel.style.maxHeight = Math.max(100, anchor.top - 24) + 'px';
@@ -137,6 +143,7 @@ export function createLocalAiLayer() {
       else document.body.append(dockButton);
       dockObserver = new ResizeObserver(positionPanel);
       dockObserver.observe(dock || dockButton);
+      if (dock) dockObserver.observe(dockButton);
       window.addEventListener('resize', positionPanel);
       positionPanel();
       let lastAnswer = '',

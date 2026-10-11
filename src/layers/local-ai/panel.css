@@ -208,7 +208,9 @@
 }
 .local-ai-dock-button {
   order: -2;
-  flex: 0 0 80px;
+  --ai-extension: clamp(0px, calc(50vw - 320px), 80px);
+  flex: 0 0 calc(80px + var(--ai-extension));
+  margin-left: calc(-1 * var(--ai-extension));
   align-self: center;
   min-height: 60px;
   padding: 12px;
@@ -232,7 +234,8 @@
 }
 @media (max-width: 600px) {
   .local-ai-dock-button {
-    flex-basis: 48px;
+    --ai-extension: clamp(0px, calc(50vw - 195px), 48px);
+    flex-basis: calc(48px + var(--ai-extension));
     padding: 8px;
   }
 }

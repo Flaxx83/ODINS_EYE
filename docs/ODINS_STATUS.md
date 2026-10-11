@@ -65,3 +65,6 @@ Val av fartyg öppnar ett kort med namn, typ, fart/kurs, destination, rapportera
 Knappen Visa senaste spår använder samma insamlade AIS-spår som befintlig fartygsvisning. För få rapporter redovisas tydligt; historiken är begränsad till serversessionen. Stängning eller avmarkering tar bort kortet. Statiska AIS-rapporter får inte ersätta senaste fart, position eller dess rapporttid.
 
 27 riktade tester och produktionsbygget passerar. Visuell kontroll, stängning och meddelande om saknat spår verifierades med tydligt märkt testdata. Liveflödet var tillgängligt, men ett komplett end-to-end-prov med ett faktiskt fartygsval verifierades inte under denna kontroll. Fälttäckning varierar mellan fartyg och AIS-rapporter.
+
+
+AI-dockans placering har justerats: knappen är 160 px på rymliga skärmar (tidigare 80 px) och utökas åt vänster med bibehållen nettobredd i dockans layout. Location flyttas därför inte. Panelens högerkant riktas mot Locations högerkant och klampas inom skärmen. Breddningen begränsas på smala skärmar för att undvika att knappen hamnar utanför vyn.
