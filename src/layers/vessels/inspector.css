@@ -1,0 +1,71 @@
+.vessel-inspector {
+  position: fixed;
+  right: 20px;
+  bottom: 120px;
+  z-index: 1290;
+  width: min(340px, calc(100vw - 32px));
+  max-height: 65vh;
+  overflow: auto;
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--panel-radius, 16px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  color: var(--text-primary);
+  font: 13px/1.5 var(--font-sans);
+  box-shadow: 0 12px 40px #0005;
+  scrollbar-width: thin;
+}
+.vessel-inspector header {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.vessel-inspector h3 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.vessel-inspector-type {
+  color: var(--accent);
+  font: 10px var(--font-mono);
+  letter-spacing: 1px;
+  margin: 6px 0 18px;
+}
+.vessel-inspector dl {
+  margin: 0 0 16px;
+}
+.vessel-inspector dt {
+  color: var(--text-secondary);
+  font: 10px var(--font-mono);
+  letter-spacing: 0.5px;
+  margin-top: 12px;
+}
+.vessel-inspector dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+}
+.vessel-inspector button {
+  padding: 9px 12px;
+  border: 1px solid var(--glass-border);
+  border-radius: 7px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  cursor: pointer;
+  font: 11px var(--font-mono);
+}
+.vessel-inspector button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.vessel-inspector button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.vessel-inspector .vessel-inspector-note {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}

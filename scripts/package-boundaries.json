@@ -902,6 +902,8 @@
     "exports": ["./layers/vessels"],
     "modules": [
       "src/layers/vessels/cards.js",
+      "src/layers/vessels/inspector.js",
+      "src/layers/vessels/inspector-model.js",
       "src/layers/vessels/evidence.js",
       "src/layers/vessels/index.js",
       "src/layers/vessels/ingestion.js",

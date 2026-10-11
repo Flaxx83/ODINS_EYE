@@ -1,3 +1,4 @@
+import { createVesselInspector } from './inspector.js';
 import {
   accentForVesselType,
   normalizeVesselType,
@@ -11,8 +12,20 @@ export function createCards({
   options,
 }) {
   const { state } = vesselState;
+  const inspector = createVesselInspector({
+    onClose: () => components.selection.clearVesselInspection(),
+    onTrack: async (record) => {
+      await components.tracking.backfillVesselTrail(
+        record.mmsi,
+        state.trailBackfillToken,
+        record.reference,
+      );
+      return state.trailPositions?.length || 0;
+    },
+  });
 
   function updateSelectedVesselHud(record) {
+    inspector.show(record);
     const el = document.getElementById('hud-ais-vessel');
     if (!el) return;
 
@@ -27,6 +40,7 @@ export function createCards({
   }
 
   function resetSelectedVesselHud() {
+    inspector.hide();
     const el = document.getElementById('hud-ais-vessel');
     if (!el) return;
     el.classList.remove('active');
@@ -169,6 +183,7 @@ export function createCards({
     return `POS: ${date.toISOString().slice(11, 19)}Z`;
   }
   return {
+    hideInspector: inspector.hide,
     updateSelectedVesselHud,
     resetSelectedVesselHud,
     trimHudValue,

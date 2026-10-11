@@ -232,6 +232,7 @@ export function createSelection({
         components.rendering.shipScale(record);
     }
     state.selectedRecord = null;
+    components.cards.hideInspector?.();
     // Drop the full-detail card right away (no-op when the layer is disabled —
     // disable() clears the entry set itself).
     if (record && state.feed.enabled)

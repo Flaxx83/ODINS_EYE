@@ -56,3 +56,12 @@ Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll 
 ## Dockning av lokal AI
 
 När Lokal AI-lagret är aktivt visas en AI-knapp direkt till vänster om Location i nederdockan. Panelen öppnas ovanför knappen och följer dockans placering vid storleksändring. Minimering döljer panelen; text, nätval och svar behålls vid återöppning under samma aktivering. Escape i panelen minimerar den och återför fokus till dockknappen. Avaktivering av lagret tar bort panel, knapp och händelselyssnare. Verifierat i användarens öppna app: placering, minimering och bibehållen text vid återöppning. Produktionsbygget passerar.
+
+
+## Fartygskort
+
+Val av fartyg öppnar ett kort med namn, typ, fart/kurs, destination, rapporterad ETA, navigationsstatus, positionsrapportens ålder och MMSI/IMO. Saknade fält visas som Uppgift saknas. ETA visas i UTC med rapporterad månad/dag och utan påhittat år. Foto och prognostiserad rutt ingår inte.
+
+Knappen Visa senaste spår använder samma insamlade AIS-spår som befintlig fartygsvisning. För få rapporter redovisas tydligt; historiken är begränsad till serversessionen. Stängning eller avmarkering tar bort kortet. Statiska AIS-rapporter får inte ersätta senaste fart, position eller dess rapporttid.
+
+27 riktade tester och produktionsbygget passerar. Visuell kontroll, stängning och meddelande om saknat spår verifierades med tydligt märkt testdata. Liveflödet var tillgängligt, men ett komplett end-to-end-prov med ett faktiskt fartygsval verifierades inte under denna kontroll. Fälttäckning varierar mellan fartyg och AIS-rapporter.

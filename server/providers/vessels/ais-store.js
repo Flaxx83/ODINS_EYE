@@ -48,9 +48,14 @@ export function ingestAisStreamEnvelope(envelope) {
       type: vesselTypeFromAis(message, _aisStreamStatic.get(mmsi)),
       destination: stringValue(message.Destination),
       imo: stringValue(message.ImoNumber ?? message.IMO),
+      reportedEta:
+        message.Eta ?? _aisStreamStatic.get(mmsi)?.reportedEta ?? null,
+      draught: numberValue(message.MaximumStaticDraught),
     };
     _aisStreamStatic.set(mmsi, staticData);
     mergeAisStaticIntoLiveVessel(mmsi, staticData);
+    // Voyage/static reports must not replace the latest position, speed or fix time.
+    return true;
   }
 
   const lat = numberValue(
@@ -72,6 +77,12 @@ export function ingestAisStreamEnvelope(envelope) {
     imo: stringValue(message.ImoNumber ?? message.IMO ?? staticData.imo),
     type: vesselTypeFromAis(message, staticData),
     destination: stringValue(message.Destination ?? staticData.destination),
+    reported_eta: staticData.reportedEta ?? null,
+    draught: staticData.draught ?? null,
+    navigational_status: numberValue(
+      message.NavigationalStatus ??
+        _aisStreamVessels.get(mmsi)?.navigational_status,
+    ),
     speed: normalizedSpeedOverGround(message.Sog ?? message.SOG),
     course: normalizedCourseOverGround(message.Cog ?? message.COG),
     heading: normalizedHeading(message.TrueHeading ?? message.Heading),
@@ -194,8 +205,10 @@ function mergeAisStaticIntoLiveVessel(mmsi, staticData) {
   if (staticData.name && (!existing.name || existing.name === `MMSI ${mmsi}`))
     existing.name = staticData.name;
   if (staticData.type && !existing.type) existing.type = staticData.type;
-  if (staticData.destination && !existing.destination)
-    existing.destination = staticData.destination;
+  existing.destination = staticData.destination;
+  if (staticData.reportedEta) existing.reported_eta = staticData.reportedEta;
+  if (Number.isFinite(staticData.draught))
+    existing.draught = staticData.draught;
   if (staticData.imo && !existing.imo) existing.imo = staticData.imo;
 }
 
