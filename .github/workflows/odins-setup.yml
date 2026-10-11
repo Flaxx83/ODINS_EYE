@@ -33,6 +33,6 @@ jobs:
           python-version: '3.12'
       - run: npm ci
       - run: python -m pip install -r requirements-geo.txt
-      - run: npm run test:travel
+      - run: npm run test:integrations
       - run: npm run test:setup
       - run: npm run test:imports

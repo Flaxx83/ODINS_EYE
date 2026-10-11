@@ -47,3 +47,9 @@ Riktade tester och lokala webbläsar-/API-prov är beskrivna i [docs/ODINS_STATU
 
 API-nycklar ska ligga i `.env`, aldrig i commits. `.gev-cache/`, `work/`, loggar och inspelningar är lokala. Nedladdade originaldata och modellvikter följer inte med repositoryt. Vissa små bearbetade datamängder finns i koden; deras licenser gäller separat från MIT.
 
+
+## Rita på kartan
+
+DISPLAY ▸ **Draw** öppnar ritverktyget för punkter, linjer och områden. Verktyget låter dig skapa och rensa kartanteckningar. Beständig POI-lagring planeras separat i issue #10.
+
+Testkommandon och CI-kontrakt: [ODINS_TESTING.md](docs/ODINS_TESTING.md).

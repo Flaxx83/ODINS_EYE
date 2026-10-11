@@ -1,4 +1,3 @@
-import './panel.css';
 import { createTripMap } from './trip-map.js';
 import * as C from 'cesium';
 export function createLocalAiLayer() {
