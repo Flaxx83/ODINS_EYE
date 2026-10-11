@@ -1,3 +1,4 @@
+import { createMapLabels } from '../local-ai/map-labels.js';
 import * as Cesium from 'cesium';
 import { filterPoliceEvents, groupPoliceEvents } from './model.js';
 import {
@@ -12,6 +13,7 @@ function text(el, value) {
   return p;
 }
 export function createPoliceLayer() {
+  const labels = createMapLabels();
   let data,
     viewer,
     enabled = false,
@@ -55,19 +57,9 @@ export function createPoliceLayer() {
           heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
           disableDepthTestDistance: Infinity,
         },
-        label: {
-          text: String(g.events.length),
-          font: '13px sans-serif',
-          fillColor: Cesium.Color.WHITE,
-          outlineColor: Cesium.Color.BLACK,
-          outlineWidth: 2,
-          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-          pixelOffset: new Cesium.Cartesian2(0, -18),
-          heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          disableDepthTestDistance: Infinity,
-        },
       });
     }
+    labels.replace(data.entities.values, viewer);
     const selectedEvents = selected ? groups.get(selected)?.events : null;
     const visible = selectedEvents || events;
     if (selected && !selectedEvents) selected = null;
@@ -209,6 +201,7 @@ export function createPoliceLayer() {
       }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     },
     disable(v) {
+      labels.clear();
       enabled = false;
       request?.abort();
       handler?.destroy();

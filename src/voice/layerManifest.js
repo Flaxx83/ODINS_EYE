@@ -370,6 +370,49 @@ const layers = [
  * pair belong to a scripted scene and are driven by `control_scene`.
  */
 export const VOICE_OFF_LAYERS = Object.freeze({
+  liveuamap:
+    'local layer: voice tools not implemented; use map controls or local AI',
+  gdacs:
+    'local layer: voice tools not implemented; use map controls or local AI',
+  smhi: 'local layer: voice tools not implemented; use map controls or local AI',
+  'sl-live':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  vasttrafik:
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'local-ai':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'air-quality':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  polisen:
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'lm-administrativindelning':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'lm-kommunikation':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'lm-hydrografi':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'sweden-stops':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'sweden-transit':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'kris-news':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'kris-vma':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'smhi-observations':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'smhi-forecast':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'smhi-radar':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'mcf-shelters':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'mcf-stations':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'mcf-flood':
+    'local layer: voice tools not implemented; use map controls or local AI',
+  'mcf-fire':
+    'local layer: voice tools not implemented; use map controls or local AI',
   'bhote-koshi-2026': 'scene-driven event layer (control_scene)',
   'bhote-koshi-locator': 'scene-driven event layer (control_scene)',
 });

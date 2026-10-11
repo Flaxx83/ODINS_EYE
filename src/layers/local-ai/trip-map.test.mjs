@@ -1,3 +1,4 @@
+import { getWorldOverlayDiagnostics } from '../../overlays/worldOverlay.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createTripMap } from './trip-map.js';
@@ -25,8 +26,9 @@ const leg = {
     [18.06, 59.33],
   ],
 };
-test('missing route geometry draws endpoints but never a straight rail line', () => {
+test('missing route geometry draws endpoints but never a straight rail line', (t) => {
   const f = setup();
+  t.after(() => f.map.destroy());
   f.map.show({ legs: [{ ...leg, approximate: true }] });
   assert.equal(f.entities().filter((e) => e.polyline).length, 0);
   assert.equal(f.entities().filter((e) => e.point).length, 2);
@@ -57,4 +59,21 @@ test('verified geometry is drawn; malformed coordinates never reach the globe', 
   assert.equal(f.entities().length, 3);
   f.map.clear();
   assert.equal(f.entities().length, 0);
+});
+
+test('two routes own separate shared text entries and clear only their own labels', (t) => {
+  const a = setup(),
+    b = setup();
+  t.after(() => {
+    a.map.destroy();
+    b.map.destroy();
+  });
+  const baseline = getWorldOverlayDiagnostics().entryCount;
+  a.map.show({ legs: [{ ...leg, approximate: true }] });
+  b.map.show({ legs: [{ ...leg, approximate: true }] });
+  assert.equal(getWorldOverlayDiagnostics().entryCount, baseline + 4);
+  a.map.clear();
+  assert.equal(getWorldOverlayDiagnostics().entryCount, baseline + 2);
+  b.map.clear();
+  assert.equal(getWorldOverlayDiagnostics().entryCount, baseline);
 });

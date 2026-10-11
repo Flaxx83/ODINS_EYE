@@ -2221,7 +2221,8 @@
       "src/layers/polisen/model.js",
       "src/layers/local-ai/index.js",
       "src/layers/local-ai/trip-map.js",
-      "src/layers/air-quality/index.js"
+      "src/layers/air-quality/index.js",
+      "src/layers/local-ai/map-labels.js"
     ],
     "external": [
       "hls.js",
@@ -2762,7 +2763,8 @@
       "src/layers/polisen/model.js",
       "src/layers/local-ai/index.js",
       "src/layers/local-ai/trip-map.js",
-      "src/layers/air-quality/index.js"
+      "src/layers/air-quality/index.js",
+      "src/layers/local-ai/map-labels.js"
     ],
     "external": [
       "hls.js",

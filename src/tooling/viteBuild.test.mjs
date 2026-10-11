@@ -89,7 +89,9 @@ test('root config retains existing named exports and standalone provider order',
     assert.equal(compatibility[name], value, name);
   const config = standaloneConfig({ mode: 'test' });
   assert.deepEqual(
-    config.plugins.slice(3, -4).map((plugin) => plugin.name),
+    config.plugins
+      .slice(-4 - providers.localProviderPlugins().length, -4)
+      .map((plugin) => plugin.name),
     providers.localProviderPlugins().map((plugin) => plugin.name),
   );
   assert.equal(config.plugins.at(-5).name, 'gev-key-setup');

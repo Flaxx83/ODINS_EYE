@@ -53,3 +53,5 @@ API-nycklar ska ligga i `.env`, aldrig i commits. `.gev-cache/`, `work/`, loggar
 DISPLAY ▸ **Draw** öppnar ritverktyget för punkter, linjer och områden. Verktyget låter dig skapa och rensa kartanteckningar. Beständig POI-lagring planeras separat i issue #10.
 
 Testkommandon och CI-kontrakt: [ODINS_TESTING.md](docs/ODINS_TESTING.md).
+
+**Sits on the real ground.** Entity heights are aligned to work with Google 3D tiles, so aircraft park on aprons and cameras stand on street corners instead of floating.

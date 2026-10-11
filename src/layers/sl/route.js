@@ -1,5 +1,7 @@
+import { createMapLabels } from '../local-ai/map-labels.js';
 import * as Cesium from 'cesium';
 export function createSelectedTransitRoute() {
+  const labels = createMapLabels();
   let viewer,
     data,
     request,
@@ -11,6 +13,7 @@ export function createSelectedTransitRoute() {
       v.dataSources.add(data);
     },
     clear() {
+      labels.clear();
       selection++;
       request?.abort();
       request = null;
@@ -83,22 +86,8 @@ export function createSelectedTransitRoute() {
                 heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
                 disableDepthTestDistance: Infinity,
               },
-              label: {
-                text: stop.name + (stop.platform ? ' · ' + stop.platform : ''),
-                font: '12px sans-serif',
-                pixelOffset: new Cesium.Cartesian2(0, -16),
-                fillColor: Cesium.Color.WHITE,
-                outlineColor: Cesium.Color.BLACK,
-                outlineWidth: 2,
-                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-                heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
-                  0,
-                  12000,
-                ),
-                disableDepthTestDistance: Infinity,
-              },
             });
+        labels.replace(data.entities.values, viewer);
         status.textContent =
           operator === 'vasttrafik'
             ? `Cyan linje: planerad färdväg med ${p.stops?.length || 0} hållplatslägen. Turmarkören visas separat.`

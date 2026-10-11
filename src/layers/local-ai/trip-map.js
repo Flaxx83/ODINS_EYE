@@ -1,5 +1,7 @@
+import { createMapLabels } from './map-labels.js';
 import * as C from 'cesium';
 export function createTripMap(viewer) {
+  const labels = createMapLabels();
   const data = new C.CustomDataSource('ai-trip-route');
   viewer.dataSources.add(data);
   return {
@@ -60,26 +62,10 @@ export function createTripMap(viewer) {
               heightReference: C.HeightReference.CLAMP_TO_GROUND,
               disableDepthTestDistance: Infinity,
             },
-            label: {
-              text:
-                ((j ? leg.to : leg.from) || '') +
-                (leg.approximate ? ' · Resväg saknas' : ''),
-              font: '12px sans-serif',
-              fillColor: C.Color.WHITE,
-              outlineColor: C.Color.BLACK,
-              outlineWidth: 2,
-              style: C.LabelStyle.FILL_AND_OUTLINE,
-              pixelOffset: new C.Cartesian2(0, -16),
-              heightReference: C.HeightReference.CLAMP_TO_GROUND,
-              disableDepthTestDistance: Infinity,
-              distanceDisplayCondition: new C.DistanceDisplayCondition(
-                0,
-                150000,
-              ),
-            },
           });
         }
       });
+      labels.replace(data.entities.values, viewer);
       if (points.length) {
         const sphere = C.BoundingSphere.fromPoints(points);
         viewer.camera.flyToBoundingSphere(sphere, {
@@ -94,10 +80,12 @@ export function createTripMap(viewer) {
       viewer.scene.requestRender();
     },
     clear() {
+      labels.clear();
       data.entities.removeAll();
       viewer.scene.requestRender();
     },
     destroy() {
+      labels.clear();
       viewer.dataSources.remove(data, true);
     },
   };
