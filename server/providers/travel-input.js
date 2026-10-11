@@ -1,0 +1,8 @@
+import {token} from './vasttrafik.js';
+export function parseTravelTime(message,now=new Date()){
+ const tomorrow=/i\s*morgon/i.test(message);const match=message.match(/(?:kl\.?|klockan|vid)\s*(\d{1,2})[:.](\d{2})/i);if(match&&(Number(match[1])>23||Number(match[2])>59))throw Error('Ogiltig tid');
+ const date=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(now.getTime()+(tomorrow?86400000:0)));
+ return{date,time:match?match[1].padStart(2,'0')+':'+match[2]:undefined,clean:message.replace(/\s+(?:imorgon|i morgon|idag|i dag)\b.*$/i,'').replace(/\s+(?:kl\.?|klockan|vid)\s*\d{1,2}[:.]\d{2}.*$/i,'')};
+}
+export async function addressCandidates(query){if(!/\d/.test(query))return null;const q=query.replace(/\s+i\s+/i,', ');const r=await fetch('https://ext-api.vasttrafik.se/pr/v4/locations/by-text?'+new URLSearchParams({q,limit:'15',types:'address'}),{headers:{Authorization:'Bearer '+await token()},signal:AbortSignal.timeout(20000)});if(!r.ok)throw Error('Adressökning misslyckades');const data=await r.json();const city=q.split(',').at(-1).trim().toLocaleLowerCase('sv');const street=q.split(',')[0].trim().toLocaleLowerCase('sv');return(data.results||[]).filter(x=>x.locationType==='address'&&x.name.toLocaleLowerCase('sv').includes(city)&&x.name.toLocaleLowerCase('sv').replace(/(\d)\s+([a-z])\b/g,'$1$2').startsWith(street.replace(/(\d)\s+([a-z])\b/g,'$1$2'))&&Number.isFinite(x.latitude)&&Number.isFinite(x.longitude)).map(x=>({name:x.name,id:'coord:'+x.latitude+':'+x.longitude,gid:'coord:'+x.latitude+':'+x.longitude,lat:x.latitude,lon:x.longitude}));}
+

@@ -1,0 +1,3319 @@
+{
+  "source": "https://radio.garden",
+  "importedAt": "2026-10-11T11:06:02.073Z",
+  "places": 72,
+  "stations": [
+    {
+      "id": "bece9fc1-803c-5154-ac63-5dad2e8847db",
+      "name": "GNF.NU 102,6 MHz",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/VguMCu9R/channel.mp3",
+      "homepage": "https://radio.garden/listen/gnf-nu-102-6-mhz/VguMCu9R",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "VguMCu9R",
+      "gardenUrl": "https://radio.garden/listen/gnf-nu-102-6-mhz/VguMCu9R"
+    },
+    {
+      "id": "4f5109ac-2610-5580-a4d7-3de5ee2eed8a",
+      "name": "GNF.NU 103,1 MHz",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/2VTkqmBh/channel.mp3",
+      "homepage": "https://radio.garden/listen/gnf-nu-103-1-mhz/2VTkqmBh",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "2VTkqmBh",
+      "gardenUrl": "https://radio.garden/listen/gnf-nu-103-1-mhz/2VTkqmBh"
+    },
+    {
+      "id": "2bdf06a3-18de-5fc8-ab29-ff8064865a03",
+      "name": "GNF.NU 94,9 MHz",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/dTp98DPt/channel.mp3",
+      "homepage": "https://radio.garden/listen/gnf-nu-94-9-mhz/dTp98DPt",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "dTp98DPt",
+      "gardenUrl": "https://radio.garden/listen/gnf-nu-94-9-mhz/dTp98DPt"
+    },
+    {
+      "id": "5e00edf5-3803-5635-a80d-f497e695dd60",
+      "name": "Pirate Rock",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://stream.piraterock.se:8100/webradio",
+      "homepage": "https://piraterock.se/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "kFCqptRw",
+      "gardenUrl": "https://radio.garden/listen/radio-prime-fm-106-8/kFCqptRw"
+    },
+    {
+      "id": "105795c6-c8fd-52a5-a3af-6d28eeabc38b",
+      "name": "Radio GBG Laganini",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/do5Mkbm0/channel.mp3",
+      "homepage": "https://www.radiogbg.se/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "do5Mkbm0",
+      "gardenUrl": "https://radio.garden/listen/radio-gbg-laganini/do5Mkbm0"
+    },
+    {
+      "id": "2bea6b76-64c7-5d45-ab2e-2e28087650b0",
+      "name": "Radio GBG Narodna",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/5CT3phuS/channel.mp3",
+      "homepage": "https://www.radiogbg.se/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "5CT3phuS",
+      "gardenUrl": "https://radio.garden/listen/radio-gbg-narodna/5CT3phuS"
+    },
+    {
+      "id": "e23038c6-10f1-5161-ae5a-e17194351048",
+      "name": "Radio GBG Sevdah",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/d5296GWG/channel.mp3",
+      "homepage": "https://www.radiogbg.se/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "d5296GWG",
+      "gardenUrl": "https://radio.garden/listen/radio-gbg-sevdah/d5296GWG"
+    },
+    {
+      "id": "76ef730a-1613-5aab-acbd-cec1e7f39248",
+      "name": "Radio GBG Zabavna",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/4wN6YAGH/channel.mp3",
+      "homepage": "https://radio.garden/listen/radiogbg/4wN6YAGH",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "4wN6YAGH",
+      "gardenUrl": "https://radio.garden/listen/radiogbg/4wN6YAGH"
+    },
+    {
+      "id": "a8d8394d-1f12-5475-a43f-30148d02d48a",
+      "name": "Radio Pasion Latina",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://sonic-us.fhost.cl/9948/stream",
+      "homepage": "https://www.radiopasionlatina.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "c8fN88Cu",
+      "gardenUrl": "https://radio.garden/listen/radio-pasion-latina/c8fN88Cu"
+    },
+    {
+      "id": "3a311778-0ef2-5ccd-ad6f-d19f33849954",
+      "name": "Radio Payam",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://stream.radiopayam.se:8443/;",
+      "homepage": "https://radiopayam.se/live-radio/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "imaKpriO",
+      "gardenUrl": "https://radio.garden/listen/radio-payam/imaKpriO"
+    },
+    {
+      "id": "a1ccbcc0-91bb-540f-ac0b-3de39bc87d35",
+      "name": "Slay Radio",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/9XcVNbXI/channel.mp3",
+      "homepage": "https://radio.garden/listen/slayradio/9XcVNbXI",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "9XcVNbXI",
+      "gardenUrl": "https://radio.garden/listen/slayradio/9XcVNbXI"
+    },
+    {
+      "id": "25faaaef-b5d0-5317-a3dd-f9a5598b4af6",
+      "name": "SR P4 Göteborg",
+      "lat": 57.70887,
+      "lon": 11.97456,
+      "streamUrl": "https://live1.sr.se/p4gbg-aac-320",
+      "homepage": "https://sverigesradio.se/goteborg/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gothenburg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "IAI6XAEh",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-goeteborg/IAI6XAEh"
+    },
+    {
+      "id": "2dd3702e-68c5-5766-a4d6-d9c3438e20ee",
+      "name": "Bandit Classic Rock",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr11-ice.stream.khz.se/wr11_mp3",
+      "homepage": "https://www.ilikeradio.se/banditclassicrock/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "MGk9vm1m",
+      "gardenUrl": "https://radio.garden/listen/bandit-classic-rock/MGk9vm1m"
+    },
+    {
+      "id": "ace6947e-b2d5-5ce4-a4af-2090b1bfe011",
+      "name": "Bandit Metal",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr03-ice.stream.khz.se/wr03_mp3",
+      "homepage": "https://www.ilikeradio.se/banditmetal/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "5pXrX1Kx",
+      "gardenUrl": "https://radio.garden/listen/bandit-metal/5pXrX1Kx"
+    },
+    {
+      "id": "fc23cc6c-d7b0-540d-aab8-5a9abf71b58a",
+      "name": "Bandit Rock FM 101.9",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm02-ice.stream.khz.se/fm02_mp3",
+      "homepage": "https://radio.garden/listen/bandit-rock/Tk0sD8cv",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "Tk0sD8cv",
+      "gardenUrl": "https://radio.garden/listen/bandit-rock/Tk0sD8cv"
+    },
+    {
+      "id": "414246e6-d2c3-55d5-a6e0-d4c1bb3137f0",
+      "name": "Disco 54",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr15-ice.stream.khz.se/wr15_mp3",
+      "homepage": "https://www.ilikeradio.se/dansbandsfavoriter/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "7twFD-0F",
+      "gardenUrl": "https://radio.garden/listen/dansbandsfavoriter/7twFD-0F"
+    },
+    {
+      "id": "1a5314a7-1c1e-5a44-a59f-422f72a05943",
+      "name": "DistFM - 100% Rock!",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/axQztywR/channel.mp3",
+      "homepage": "https://radio.garden/listen/distfm/axQztywR",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "axQztywR",
+      "gardenUrl": "https://radio.garden/listen/distfm/axQztywR"
+    },
+    {
+      "id": "adf289a6-7b38-5006-a48a-ce5f100063c7",
+      "name": "Go Country FM 107.9",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr14-ice.stream.khz.se/wr14_mp3",
+      "homepage": "https://www.gocountry.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "-6a-gdy9",
+      "gardenUrl": "https://radio.garden/listen/go-country-fm-107-9/-6a-gdy9"
+    },
+    {
+      "id": "1b37ca43-4a12-5841-adab-f493e48618a0",
+      "name": "Hamsafar Radio FM 94.2",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://stream.radiojar.com/pyea7q9h5ehvv.m4a",
+      "homepage": "https://www.hamsafarradio.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "xkeOr-KQ",
+      "gardenUrl": "https://radio.garden/listen/radio-94-2-fm-hamsafar-radio/xkeOr-KQ"
+    },
+    {
+      "id": "6bba76a1-ab89-5a37-a833-7d2fdf194c77",
+      "name": "lugna favoriter 104.7FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm03-ice.stream.khz.se/fm03_mp3",
+      "homepage": "https://www.ilikeradio.se/lugnafavoriter/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "4PSMBLZi",
+      "gardenUrl": "https://radio.garden/listen/lugna-favoriter/4PSMBLZi"
+    },
+    {
+      "id": "57e71373-6504-5539-aaaa-0f4bbe8e36db",
+      "name": "MRS 90½ FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/3cOiAx3Y/channel.mp3",
+      "homepage": "https://radio.garden/listen/mrs/3cOiAx3Y",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "3cOiAx3Y",
+      "gardenUrl": "https://radio.garden/listen/mrs/3cOiAx3Y"
+    },
+    {
+      "id": "cf3297a0-e554-5f21-a295-e4fea77ee56f",
+      "name": "Power Hit Radio",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm04-ice.stream.khz.se/fm04_mp3?listenerid=7104709ca5f8cbd117d1bfb1ae549a42&awparams=companionAds%3Atrue&platform=web&aw_0_1st.playerid=mtgradio-web&aw_0_1st.skey=1572636863",
+      "homepage": "https://www.ilikeradio.se/powerhitradio/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "pTodgf0t",
+      "gardenUrl": "https://radio.garden/listen/power-hit-radio/pTodgf0t"
+    },
+    {
+      "id": "bc8b131c-b7bd-5b29-a9db-e568ce0dee0a",
+      "name": "Radio Ayeneh FM 97.3",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/gOcOM6GL/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-97-3-fm-radio-ayeneh/gOcOM6GL",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "gOcOM6GL",
+      "gardenUrl": "https://radio.garden/listen/radio-97-3-fm-radio-ayeneh/gOcOM6GL"
+    },
+    {
+      "id": "36d13a5a-f5fe-58e7-a7b8-ad8ef80ee3c1",
+      "name": "Radio Hambastegi",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/GOvDePTt/channel.mp3",
+      "homepage": "https://radiohambastegi.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "GOvDePTt",
+      "gardenUrl": "https://radio.garden/listen/radio-hambastegi/GOvDePTt"
+    },
+    {
+      "id": "045ffee1-e955-56af-a999-4be4a7c1b04c",
+      "name": "Radio Nacka FM 99.9",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://s4.ssl-stream.com/radio/7900/radionacka",
+      "homepage": "https://www.radionacka.se/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "7xfaWrYw",
+      "gardenUrl": "https://radio.garden/listen/radionacka/7xfaWrYw"
+    },
+    {
+      "id": "da51c25d-5745-5ed4-aaa0-e4cb3a6799c4",
+      "name": "Radio Pontos Stockholm",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/32HTNHgU/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-pontos-stockholm/32HTNHgU",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "32HTNHgU",
+      "gardenUrl": "https://radio.garden/listen/radio-pontos-stockholm/32HTNHgU"
+    },
+    {
+      "id": "c16324a6-7e7f-5bd9-aaa3-bee31adec135",
+      "name": "Radio Rivendell",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://play.radiorivendell.com/radio/8000/radio.mp3",
+      "homepage": "https://www.radiorivendell.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "QHQOse4w",
+      "gardenUrl": "https://radio.garden/listen/radio-rivendell/QHQOse4w"
+    },
+    {
+      "id": "63cbd83d-8e4b-5791-a48f-3a753cb74160",
+      "name": "Radio Sydväst FM 88.9",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/AFqVzGvi/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-sydvaest-88-9-mhz/AFqVzGvi",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "AFqVzGvi",
+      "gardenUrl": "https://radio.garden/listen/radio-sydvaest-88-9-mhz/AFqVzGvi"
+    },
+    {
+      "id": "1b489c82-0b54-560c-ac7e-2d8f6133451c",
+      "name": "Rix FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm01-ice.stream.khz.se/fm01_mp3",
+      "homepage": "https://radio.garden/listen/rixfm/4v2sLRQX",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "4v2sLRQX",
+      "gardenUrl": "https://radio.garden/listen/rixfm/4v2sLRQX"
+    },
+    {
+      "id": "8102bbef-4028-5a36-a68d-9de05fdd1376",
+      "name": "Rix FM Fresh",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr04-ice.stream.khz.se/wr04_mp3",
+      "homepage": "https://www.ilikeradio.se/rixfmfresh/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "u6YQEHWk",
+      "gardenUrl": "https://radio.garden/listen/rix-fm-fresh/u6YQEHWk"
+    },
+    {
+      "id": "3e8c9644-bc4f-52d9-a234-432612ea0d86",
+      "name": "Rocket FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/c8Es9vde/channel.mp3",
+      "homepage": "https://radio.garden/listen/rocket/c8Es9vde",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "c8Es9vde",
+      "gardenUrl": "https://radio.garden/listen/rocket/c8Es9vde"
+    },
+    {
+      "id": "68f39803-1feb-5b4c-a4f4-aa91674317cd",
+      "name": "Sauna Radio",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://stream.saunaradio.com/live",
+      "homepage": "https://saunaradio.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "v9EpJ1kV",
+      "gardenUrl": "https://radio.garden/listen/sauna-radio/v9EpJ1kV"
+    },
+    {
+      "id": "90d394c6-e2ef-5288-aa99-59f99045170c",
+      "name": "SDX Synthetic Experience",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/UYh1ioYF/channel.mp3",
+      "homepage": "https://radio.garden/listen/dawnshadow/UYh1ioYF",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "UYh1ioYF",
+      "gardenUrl": "https://radio.garden/listen/dawnshadow/UYh1ioYF"
+    },
+    {
+      "id": "aa5564c2-bc7d-5448-a4ec-690e14560e4b",
+      "name": "Skärgårdsradion FM 90.2",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm06-ice.stream.khz.se/fm06_mp3",
+      "homepage": "https://radio.garden/listen/skargardsradion/mZnStgTJ",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "mZnStgTJ",
+      "gardenUrl": "https://radio.garden/listen/skargardsradion/mZnStgTJ"
+    },
+    {
+      "id": "6a0d17fe-b9ea-5a8b-a21a-ff09c2236eec",
+      "name": "Skvaller FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.skvaller.icu/listen/skvaller_radio/radio.mp3",
+      "homepage": "https://skvaller.icu",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "ZDnHfYSk",
+      "gardenUrl": "https://radio.garden/listen/skvaller-fm/ZDnHfYSk"
+    },
+    {
+      "id": "2686782f-b63f-5c27-ad37-cab2b7c9d177",
+      "name": "Sonic Radio",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr10-ice.stream.khz.se/wr10_aac",
+      "homepage": "https://www.viaplayradio.se/sonic/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "KK5VFUN7",
+      "gardenUrl": "https://radio.garden/listen/sonic-radio/KK5VFUN7"
+    },
+    {
+      "id": "d980008b-9100-5031-ac0f-bd19a7be593d",
+      "name": "SR P1",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/p1-aac-320",
+      "homepage": "https://sverigesradio.se/p1",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "h0kRDfA9",
+      "gardenUrl": "https://radio.garden/listen/sr-p1/h0kRDfA9"
+    },
+    {
+      "id": "196267c3-4eb7-5252-ad02-81e728e4f640",
+      "name": "SR P2 Alltid Musik",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/p2-aac-320",
+      "homepage": "https://radio.garden/listen/sr/ZEUX9E8a",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "ZEUX9E8a",
+      "gardenUrl": "https://radio.garden/listen/sr/ZEUX9E8a"
+    },
+    {
+      "id": "84747715-0ca1-5fe6-a1a9-7856b30bef3a",
+      "name": "SR P3",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/p3-aac-320",
+      "homepage": "https://sverigesradio.se/p3",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "Z6FOT2bN",
+      "gardenUrl": "https://radio.garden/listen/sr-p3/Z6FOT2bN"
+    },
+    {
+      "id": "8d167958-0d76-5407-a4ab-d2194b2a7242",
+      "name": "SR P4 Plus",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/p4plus-aac-320",
+      "homepage": "https://sverigesradio.se/p4plus",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "lP1gDDuV",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-plus/lP1gDDuV"
+    },
+    {
+      "id": "d11712bb-df08-5872-aabd-c44a1cdb84a4",
+      "name": "SR P4 Stockholm",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/p4sth-aac-320",
+      "homepage": "https://sverigesradio.se/stockholm",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "_DuZun_Y",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-stockholm/_DuZun_Y"
+    },
+    {
+      "id": "de53f5e8-f5c6-5c60-aa66-703a512d5c9a",
+      "name": "SR Radio Finska",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://live1.sr.se/finska-aac-320",
+      "homepage": "https://sverigesradio.se/sida/default.aspx?programid=185",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "-wvCLuRh",
+      "gardenUrl": "https://radio.garden/listen/sr-radio-finska/-wvCLuRh"
+    },
+    {
+      "id": "62bbb28c-e657-506f-a36d-33728f7be3a2",
+      "name": "Star FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://fm05-ice.stream.khz.se/fm05_mp3",
+      "homepage": "https://radio.garden/listen/star-fm/0x9mFqQH",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "0x9mFqQH",
+      "gardenUrl": "https://radio.garden/listen/star-fm/0x9mFqQH"
+    },
+    {
+      "id": "14f6f5a4-563b-58bf-aca5-e6f8eea72f23",
+      "name": "Stockholm Närradio FM 101.1",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/L5xK9834/channel.mp3",
+      "homepage": "https://radio.garden/listen/stockholm-naerradio-101-1-mhz/L5xK9834",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "L5xK9834",
+      "gardenUrl": "https://radio.garden/listen/stockholm-naerradio-101-1-mhz/L5xK9834"
+    },
+    {
+      "id": "1eaa0259-8aab-52b2-a767-b9e20d7093a5",
+      "name": "Stockholm Närradio FM 88.0",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/suqRGWW5/channel.mp3",
+      "homepage": "https://radio.garden/listen/stockholm-naerradio-88-0-mhz/suqRGWW5",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "suqRGWW5",
+      "gardenUrl": "https://radio.garden/listen/stockholm-naerradio-88-0-mhz/suqRGWW5"
+    },
+    {
+      "id": "ecca4adb-c2f9-5074-afee-4322ade9e2d7",
+      "name": "Stockholm Närradio FM 95.3",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/kwRIpb49/channel.mp3",
+      "homepage": "https://radio.garden/listen/stockholm-naerradio-95-3-mhz/kwRIpb49",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "kwRIpb49",
+      "gardenUrl": "https://radio.garden/listen/stockholm-naerradio-95-3-mhz/kwRIpb49"
+    },
+    {
+      "id": "67f83b00-3d75-5fb1-a64d-f3907c790bb5",
+      "name": "Strul FM",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://stream.streamaudio.de:8000/strul-fm",
+      "homepage": "https://radio.garden/listen/strul-fm/ODkcvak5",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "ODkcvak5",
+      "gardenUrl": "https://radio.garden/listen/strul-fm/ODkcvak5"
+    },
+    {
+      "id": "e917d0aa-eee0-5f44-acea-f57b744feb45",
+      "name": "Svenska Favoriter",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://wr13-ice.stream.khz.se/wr13_mp3",
+      "homepage": "https://www.ilikeradio.se/svenskafavoriter/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "gAZLUBiy",
+      "gardenUrl": "https://radio.garden/listen/svenska-favoriter/gAZLUBiy"
+    },
+    {
+      "id": "32285718-3f6c-5d9b-aec7-def57f51edef",
+      "name": "Vaanambadi Vaanoli",
+      "lat": 59.329323,
+      "lon": 18.06858,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/nFJgEwNb/channel.mp3",
+      "homepage": "https://vaanambadivaanoli.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stockholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "nFJgEwNb",
+      "gardenUrl": "https://radio.garden/listen/vaanambadi-vaanoli/nFJgEwNb"
+    },
+    {
+      "id": "84d059d7-429a-5e5e-a946-921eb7176386",
+      "name": "Country Rocks Radio",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/crrMP3",
+      "homepage": "https://radio.garden/listen/country-rocks-radio/w1nz3rHs",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "w1nz3rHs",
+      "gardenUrl": "https://radio.garden/listen/country-rocks-radio/w1nz3rHs"
+    },
+    {
+      "id": "c12c85f1-4b23-5857-a6ab-dba10854673e",
+      "name": "Dansbandskanalen 106.5 FM",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/dbkMP3",
+      "homepage": "https://dansbandskanalen.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "WbEYOnQO",
+      "gardenUrl": "https://radio.garden/listen/dansbandskanalen-106-5/WbEYOnQO"
+    },
+    {
+      "id": "3515eb37-6951-566d-ae99-ff4aaacb690e",
+      "name": "Dansbandskanalen Julmusik",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/dbkjulMP3?.mp3",
+      "homepage": "https://radio.garden/listen/dansbandskanalen/dKUrl4EH",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "dKUrl4EH",
+      "gardenUrl": "https://radio.garden/listen/dansbandskanalen/dKUrl4EH"
+    },
+    {
+      "id": "b0110d45-8db2-53e0-a1b3-efeab744a820",
+      "name": "Guldkanalen",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/gk96",
+      "homepage": "https://www.guldkanalen.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "1Q2s61Gh",
+      "gardenUrl": "https://radio.garden/listen/guldkanalen/1Q2s61Gh"
+    },
+    {
+      "id": "171c9ffb-108f-52e4-a06b-1a83d996f6a2",
+      "name": "Guldkanalen 60-tal",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/gk60talMP3",
+      "homepage": "https://radio.garden/listen/guldkanalen/UyqmV8gJ",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "UyqmV8gJ",
+      "gardenUrl": "https://radio.garden/listen/guldkanalen/UyqmV8gJ"
+    },
+    {
+      "id": "282084c6-2dc7-57d1-a915-7e93edf9c34c",
+      "name": "Guldkanalen 70-tal",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/gk70tal96",
+      "homepage": "https://www.guldkanalen.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "wOg1NpRh",
+      "gardenUrl": "https://radio.garden/listen/guldkanalen-70-tal/wOg1NpRh"
+    },
+    {
+      "id": "b798edc4-9f96-5e28-aa14-7c3c7cc66ce0",
+      "name": "Guldkanalen 80-tal",
+      "lat": 55.641064,
+      "lon": 13.212229,
+      "streamUrl": "https://stream.dbmedia.se/gk80tal96",
+      "homepage": "https://guldkanalen.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Staffanstorp",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "sceF1rk6",
+      "gardenUrl": "https://radio.garden/listen/guldkanalen-80-tal/sceF1rk6"
+    },
+    {
+      "id": "2a4b069e-da95-576c-a272-30e4c8656851",
+      "name": "Leon FM - Malmös Radiokanal",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://azura.linkodev.ch/listen/leonfm/radio.mp3",
+      "homepage": "https://leonfm.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "2BfSYu8U",
+      "gardenUrl": "https://radio.garden/listen/leon-fm/2BfSYu8U"
+    },
+    {
+      "id": "8e04725c-8392-596a-a446-a3b3061c5704",
+      "name": "Radio Malmökanalen FM 89.2",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://stream.nsp.se/MNR89_AAC_Hi",
+      "homepage": "https://radio.garden/listen/radio-malmoekanalen-fm-89-2/qEPGAHCH",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "qEPGAHCH",
+      "gardenUrl": "https://radio.garden/listen/radio-malmoekanalen-fm-89-2/qEPGAHCH"
+    },
+    {
+      "id": "cf02d542-4697-5d1f-a799-fb2fbaf9eacc",
+      "name": "Radio Topp 40 FM 90.2",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://stream.rcs.revma.com/0ckm64p5vepwv",
+      "homepage": "https://www.topp40.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "LUnkTM2r",
+      "gardenUrl": "https://radio.garden/listen/radio-topp-40-fm-90-2/LUnkTM2r"
+    },
+    {
+      "id": "7ac9f660-bf29-5133-aaf9-288a45381c22",
+      "name": "Retreat Radio",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://retreatradio.out.airtime.pro/retreatradio_b",
+      "homepage": "https://www.retreatradio.net",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "QmU37KMt",
+      "gardenUrl": "https://radio.garden/listen/retreat-radio/QmU37KMt"
+    },
+    {
+      "id": "e2f318dd-22bb-57e9-abfe-c53c394c932a",
+      "name": "Retro FM",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://stream.rcs.revma.com/25knctp5vepwv",
+      "homepage": "https://retrofm.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "MKVX7y5E",
+      "gardenUrl": "https://radio.garden/listen/retro-fm/MKVX7y5E"
+    },
+    {
+      "id": "dcf65e89-46a8-56f6-a22a-45f5cdcc00ab",
+      "name": "SR Din Gata",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://live1.sr.se/dingata-aac-320",
+      "homepage": "https://www.sverigesradio.se/kanaler/p3-din-gata",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "t0ojfM0E",
+      "gardenUrl": "https://radio.garden/listen/sr-din-gata/t0ojfM0E"
+    },
+    {
+      "id": "97a5b819-bd2f-54a5-aa38-08c820493c91",
+      "name": "SR P4 Malmöhus",
+      "lat": 55.60498,
+      "lon": 13.003822,
+      "streamUrl": "https://live1.sr.se/p4malm-aac-320",
+      "homepage": "https://sverigesradio.se/malmo/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Malmö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "9IGdxzOx",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-malmoehus/9IGdxzOx"
+    },
+    {
+      "id": "5eff7830-0830-58c1-a90c-54339e828e17",
+      "name": "Oldies FM",
+      "lat": 60.67488,
+      "lon": 17.141273,
+      "streamUrl": "https://s12.ssl-stream.com:8080/stream",
+      "homepage": "https://www.oldiesfm.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gävle",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "4reiYM6H",
+      "gardenUrl": "https://radio.garden/listen/oldies-fm/4reiYM6H"
+    },
+    {
+      "id": "fbc2bd88-c020-55d2-a3dc-be496d491b0f",
+      "name": "Radio Gävle FM 102.7",
+      "lat": 60.67488,
+      "lon": 17.141273,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/hsSAVl6a/channel.mp3",
+      "homepage": "https://radiogavle.gavlewebb.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gävle",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "hsSAVl6a",
+      "gardenUrl": "https://radio.garden/listen/radio-gaevle-fm-102-7/hsSAVl6a"
+    },
+    {
+      "id": "050a2588-e3ac-56b0-a0b7-797080849a1b",
+      "name": "SR P4 Gävleborg",
+      "lat": 60.67488,
+      "lon": 17.141273,
+      "streamUrl": "https://live1.sr.se/p4gavl-aac-320",
+      "homepage": "https://sverigesradio.se/gavleborg/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gävle",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "Y2aSZED8",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-gaevleborg/Y2aSZED8"
+    },
+    {
+      "id": "c58eae44-b6f1-5ec4-a2bf-a32791f27636",
+      "name": "Puls FM 104.1",
+      "lat": 57.721035,
+      "lon": 12.939819,
+      "streamUrl": "https://pulsfm.radioca.st/stream",
+      "homepage": "https://pulsfm.se/boras/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Borås",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "YgyGdaOf",
+      "gardenUrl": "https://radio.garden/listen/puls-fm-104-1/YgyGdaOf"
+    },
+    {
+      "id": "43a6e539-f474-5f66-a1b5-efd20c3b9e6f",
+      "name": "SR P4 Sjuhärad",
+      "lat": 57.721035,
+      "lon": 12.939819,
+      "streamUrl": "https://live1.sr.se/p4sju-aac-320",
+      "homepage": "https://www.sverigesradio.se/nyheter/p4-sjuharad",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Borås",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "cVYvJqf8",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-sjuhaerad/cVYvJqf8"
+    },
+    {
+      "id": "230cd152-3646-5393-ae4a-b28791729f92",
+      "name": "Radio Vättervåg FM 98.5",
+      "lat": 57.78059,
+      "lon": 14.164405,
+      "streamUrl": "https://uk5.internet-radio.com/proxy/radiovattervag?mp=/stream",
+      "homepage": "https://www.radiovv.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Jönköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "UBIRkSNb",
+      "gardenUrl": "https://radio.garden/listen/radio-vaettervag-fm-98-5/UBIRkSNb"
+    },
+    {
+      "id": "1de2c94e-d40b-54ef-a800-624dad8f2f1d",
+      "name": "SR P4 Jonköping",
+      "lat": 57.78059,
+      "lon": 14.164405,
+      "streamUrl": "https://live1.sr.se/p4jkpg-aac-320",
+      "homepage": "https://sverigesradio.se/jonkoping/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Jönköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "6PB3Bd5e",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-jonkoeping/6PB3Bd5e"
+    },
+    {
+      "id": "740efb02-8294-5d97-ac25-169413ea4222",
+      "name": "Radio AF",
+      "lat": 55.70466,
+      "lon": 13.191008,
+      "streamUrl": "https://stream.rcs.revma.com/e3tha8v4dkhvv",
+      "homepage": "https://radioaf.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Lund",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "Vil6Z7Pv",
+      "gardenUrl": "https://radio.garden/listen/radio-af/Vil6Z7Pv"
+    },
+    {
+      "id": "0e60b866-7f34-5a42-a3d7-203097949c9b",
+      "name": "The Weekend Radio Show",
+      "lat": 55.70466,
+      "lon": 13.191008,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/-8Xc1jfw/channel.mp3",
+      "homepage": "https://radio.garden/listen/the-weekend-radio-show/-8Xc1jfw",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Lund",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "-8Xc1jfw",
+      "gardenUrl": "https://radio.garden/listen/the-weekend-radio-show/-8Xc1jfw"
+    },
+    {
+      "id": "7f7955f6-3219-5e16-a452-f898bc5b93f2",
+      "name": "Countrykanalen Sweden",
+      "lat": 58.18177,
+      "lon": 13.959474,
+      "streamUrl": "https://eu2.fastcast4u.com/proxy/counrtyk?mp=/;",
+      "homepage": "https://radio.garden/listen/countrykanalen/Y8ixnFfQ",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Tidaholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "Y8ixnFfQ",
+      "gardenUrl": "https://radio.garden/listen/countrykanalen/Y8ixnFfQ"
+    },
+    {
+      "id": "c1e72409-f4e8-5ecd-aba5-3588f78f179a",
+      "name": "Radio Tidaholm 101,6",
+      "lat": 58.18177,
+      "lon": 13.959474,
+      "streamUrl": "https://streaming.943.se/radiotidaholm",
+      "homepage": "https://radio.garden/listen/radio-tidaholm-101-6/pPiMCzJS",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Tidaholm",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "pPiMCzJS",
+      "gardenUrl": "https://radio.garden/listen/radio-tidaholm-101-6/pPiMCzJS"
+    },
+    {
+      "id": "f2d7b522-e99c-537b-a687-ea0290ab6421",
+      "name": "Pop & Rock 102,3",
+      "lat": 63.825848,
+      "lon": 20.263035,
+      "streamUrl": "https://sstream.ueteknik.se/listen/poporock/radio.mp3",
+      "homepage": "https://poporock.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Umeå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "XrN0TfqS",
+      "gardenUrl": "https://radio.garden/listen/pop-and-rock-102-3/XrN0TfqS"
+    },
+    {
+      "id": "63201590-5635-52bf-a280-70754e96de8b",
+      "name": "SR P4 Västerbotten",
+      "lat": 63.825848,
+      "lon": 20.263035,
+      "streamUrl": "https://live1.sr.se/p4vbtn-aac-320",
+      "homepage": "https://sverigesradio.se/vasterbotten/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Umeå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "AlJgOIsh",
+      "gardenUrl": "https://radio.garden/listen/p4-vaesterbotten/AlJgOIsh"
+    },
+    {
+      "id": "4ecfcac4-6813-53b8-a416-86e9ec5dcc90",
+      "name": "Radio Treby",
+      "lat": 58.26178,
+      "lon": 12.960194,
+      "streamUrl": "https://streaming.943.se/treby878",
+      "homepage": "https://radio.garden/listen/radiotreby/apD9yYFq",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Vara",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "apD9yYFq",
+      "gardenUrl": "https://radio.garden/listen/radiotreby/apD9yYFq"
+    },
+    {
+      "id": "a94cc690-dc8a-5e0f-a4fc-a9be8b5af21e",
+      "name": "Radio Vara FM 87,8 Mhz",
+      "lat": 58.26178,
+      "lon": 12.960194,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/JiLMlT1Z/channel.mp3",
+      "homepage": "https://www.radiovara.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Vara",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "JiLMlT1Z",
+      "gardenUrl": "https://radio.garden/listen/radio-vara-fm-87-8-mhz/JiLMlT1Z"
+    },
+    {
+      "id": "cd59be98-c32e-528f-a33d-5c2a7445641b",
+      "name": "Clubalicious Radio",
+      "lat": 59.410065,
+      "lon": 17.836803,
+      "streamUrl": "https://www.radioking.com/play/deejay-2",
+      "homepage": "https://www.deejaypromo.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Järfälla",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "3m9b9-Xz",
+      "gardenUrl": "https://radio.garden/listen/clubalicious-radio/3m9b9-Xz"
+    },
+    {
+      "id": "9b569e5a-99f8-5dc9-ab24-fa03d9e83e4e",
+      "name": "Galaxy FM",
+      "lat": 56.029392,
+      "lon": 14.156678,
+      "streamUrl": "https://galaxyfm.radioca.st/stream",
+      "homepage": "https://galaxyfm.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kristianstad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "y2vbCMUy",
+      "gardenUrl": "https://radio.garden/listen/galaxy-fm/y2vbCMUy"
+    },
+    {
+      "id": "972880a3-b7ba-502f-a210-f7bbcc1fa37c",
+      "name": "SR P4 Kristianstad",
+      "lat": 56.029392,
+      "lon": 14.156678,
+      "streamUrl": "https://live1.sr.se/p4krist-aac-320",
+      "homepage": "https://sverigesradio.se/kristianstad/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kristianstad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "Rz4MS0uP",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-kristianstad/Rz4MS0uP"
+    },
+    {
+      "id": "e6c802a3-01d0-573c-a157-2138607ac881",
+      "name": "Radio Lidköping 93.8 MHz",
+      "lat": 58.503506,
+      "lon": 13.157077,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/nqVjwNBF/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-lidkoeping/nqVjwNBF",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Lidköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "nqVjwNBF",
+      "gardenUrl": "https://radio.garden/listen/radio-lidkoeping/nqVjwNBF"
+    },
+    {
+      "id": "189a7bc2-a6f1-523a-aac0-2cdbed321c1a",
+      "name": "Rockfavoriter",
+      "lat": 58.503506,
+      "lon": 13.157077,
+      "streamUrl": "https://streaming.943.se/rockfavoriter",
+      "homepage": "https://www.radiolidkoping.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Lidköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "JC9p1N22",
+      "gardenUrl": "https://radio.garden/listen/rockfavoriter/JC9p1N22"
+    },
+    {
+      "id": "ba16e977-106c-579e-a11b-83cf4d1e92da",
+      "name": "Northern Metal Radio",
+      "lat": 64.750244,
+      "lon": 20.950916,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/xG4hLLRC/channel.mp3",
+      "homepage": "https://www.northernmetalradio.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Skellefteå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "xG4hLLRC",
+      "gardenUrl": "https://radio.garden/listen/northern-metal-radio/xG4hLLRC"
+    },
+    {
+      "id": "89af37af-e015-57b8-a470-21a73e84393a",
+      "name": "Northern Metal Radio - Extreme",
+      "lat": 64.750244,
+      "lon": 20.950916,
+      "streamUrl": "https://s2.free-shoutcast.com/stream/18092",
+      "homepage": "https://www.northernmetalradio.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Skellefteå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "4tkM7f8V",
+      "gardenUrl": "https://radio.garden/listen/northern-metal-radio-extreme/4tkM7f8V"
+    },
+    {
+      "id": "8d6b0724-e243-538a-acc1-c580ed5f886c",
+      "name": "Radio Halmstad FM 88.6",
+      "lat": 56.674374,
+      "lon": 12.857788,
+      "streamUrl": "https://s26.myradiostream.com:23322/listen.mp3",
+      "homepage": "https://radiohalmstad.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Halmstad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "0_rUcGkN",
+      "gardenUrl": "https://radio.garden/listen/radio-halmstad/0_rUcGkN"
+    },
+    {
+      "id": "23f7f128-ed02-5af4-a07b-9adf50705831",
+      "name": "SR P4 Halland",
+      "lat": 56.674374,
+      "lon": 12.857788,
+      "streamUrl": "https://live1.sr.se/p4hall-aac-320",
+      "homepage": "https://sverigesradio.se/halland/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Halmstad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "869FFyWh",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-halland/869FFyWh"
+    },
+    {
+      "id": "220e787d-25f1-5a4f-aa81-76e30cac28ba",
+      "name": "Dagnys musikcafe",
+      "lat": 58.3498,
+      "lon": 11.935649,
+      "streamUrl": "https://ssl-streaming.nordblommedia.se/dagny.mp3",
+      "homepage": "https://radio.garden/listen/dagny/sEsFhu5Q",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Uddevalla",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "sEsFhu5Q",
+      "gardenUrl": "https://radio.garden/listen/dagny/sEsFhu5Q"
+    },
+    {
+      "id": "f9212720-2446-54ea-a8bd-f0b0a8ac2298",
+      "name": "Radio Bohuslän 106,2",
+      "lat": 58.3498,
+      "lon": 11.935649,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/nAKPDGKi/channel.mp3",
+      "homepage": "https://radio.garden/listen/radiobohuslan/nAKPDGKi",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Uddevalla",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "nAKPDGKi",
+      "gardenUrl": "https://radio.garden/listen/radiobohuslan/nAKPDGKi"
+    },
+    {
+      "id": "1f3e5719-7dbb-5633-a7e5-8ecaabdcfb2e",
+      "name": "Radio Österåker 103.7 FM",
+      "lat": 59.480278,
+      "lon": 18.310783,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/1hewK9Wp/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-oesteraker/1hewK9Wp",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Åkersberga",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "1hewK9Wp",
+      "gardenUrl": "https://radio.garden/listen/radio-oesteraker/1hewK9Wp"
+    },
+    {
+      "id": "c12f1d96-6e6b-569d-a668-a6512501c11d",
+      "name": "Puls FM 91.9 Varberg",
+      "lat": 57.107117,
+      "lon": 12.25209,
+      "streamUrl": "https://pulsfmvbg.radioca.st/stream",
+      "homepage": "https://pulsfm.se/varberg/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Varberg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "3fTTt1It",
+      "gardenUrl": "https://radio.garden/listen/puls-fm-91-9-varberg/3fTTt1It"
+    },
+    {
+      "id": "373ee975-2816-5450-a3d3-f1c138e22abf",
+      "name": "SR P4 Kronoberg",
+      "lat": 56.78587,
+      "lon": 14.465063,
+      "streamUrl": "https://live1.sr.se/p4kron-aac-320",
+      "homepage": "https://sverigesradio.se/kronoberg/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Vislanda",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "TH61xFxf",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-kronoberg/TH61xFxf"
+    },
+    {
+      "id": "6641c64e-ffc6-5907-a906-3f2282fb202c",
+      "name": "SR P4 Jämtland",
+      "lat": 63.17668,
+      "lon": 14.636068,
+      "streamUrl": "https://live1.sr.se/p4jmtl-aac-320",
+      "homepage": "https://sverigesradio.se/jamtland/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Östersund",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "Oo6wWpBY",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-jaemtland/Oo6wWpBY"
+    },
+    {
+      "id": "34fdd201-34a9-5292-a8d1-3d0b99a5c7ad",
+      "name": "Radio Haninge FM 98.5",
+      "lat": 59.16742,
+      "lon": 18.136347,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/Vh7K7rbD/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-haninge/Vh7K7rbD",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Handen",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "Vh7K7rbD",
+      "gardenUrl": "https://radio.garden/listen/radio-haninge/Vh7K7rbD"
+    },
+    {
+      "id": "e6a90f17-c4fd-5bdb-ad52-873e7a9452bd",
+      "name": "Radio Wix FM 97.9",
+      "lat": 58.20245,
+      "lon": 16.601362,
+      "streamUrl": "https://s2.radio.co/s74d4d7992/listen",
+      "homepage": "https://radio.garden/listen/radio-wix-fm-97-9/tNYwMmmi",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Valdemarsvik",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "tNYwMmmi",
+      "gardenUrl": "https://radio.garden/listen/radio-wix-fm-97-9/tNYwMmmi"
+    },
+    {
+      "id": "fff959fc-a2da-57ab-a087-498bff4d78eb",
+      "name": "Radio Viking 101,4",
+      "lat": 59.279835,
+      "lon": 17.790224,
+      "streamUrl": "https://stream.rcs.revma.com/qp6w2wzrruhvv",
+      "homepage": "https://radio.garden/listen/radioviking/lHfTJBs8",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Ekerö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "lHfTJBs8",
+      "gardenUrl": "https://radio.garden/listen/radioviking/lHfTJBs8"
+    },
+    {
+      "id": "12c53c8b-fda7-5a35-a05a-bb95a6ba4061",
+      "name": "Lite FM",
+      "lat": 58.379726,
+      "lon": 12.324803,
+      "streamUrl": "https://streaming.943.se/litefm",
+      "homepage": "https://www.litefm.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Vänersborg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "I5AI4cQK",
+      "gardenUrl": "https://radio.garden/listen/lite-fm/I5AI4cQK"
+    },
+    {
+      "id": "91380bca-6ef0-5687-a4c8-198fc98e8296",
+      "name": "Radio Sandviken FM 89.9",
+      "lat": 60.62161,
+      "lon": 16.775917,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/EDInRbKk/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-sandviken-89-9/EDInRbKk",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Sandviken",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "EDInRbKk",
+      "gardenUrl": "https://radio.garden/listen/radio-sandviken-89-9/EDInRbKk"
+    },
+    {
+      "id": "3481e738-8179-508e-aed7-c0360e09d473",
+      "name": "Radio Nynäshamn",
+      "lat": 58.902927,
+      "lon": 17.94653,
+      "streamUrl": "https://cast4.asurahosting.com/proxy/gtconsul/stream",
+      "homepage": "https://radio-nynashamn.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Nynäshamn",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "12Tr8beP",
+      "gardenUrl": "https://radio.garden/listen/radio-nynaeshamn/12Tr8beP"
+    },
+    {
+      "id": "d917991c-8d67-5186-a642-06dfc6d54476",
+      "name": "SR P4 Blekinge",
+      "lat": 56.210434,
+      "lon": 15.276023,
+      "streamUrl": "https://live1.sr.se/p4blek-aac-320",
+      "homepage": "https://www.sverigesradio.se/nyheter/p4-blekinge",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Ronneby",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "VscozwOA",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-blekinge/VscozwOA"
+    },
+    {
+      "id": "d324af1d-2a55-56a6-a2c0-2aafc3877a05",
+      "name": "SR P4 Skaraborg",
+      "lat": 58.390278,
+      "lon": 13.846121,
+      "streamUrl": "https://live1.sr.se/p4skbg-aac-320",
+      "homepage": "https://sverigesradio.se/skaraborg",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Skövde",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "yRpQ6JKU",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-skaraborg/yRpQ6JKU"
+    },
+    {
+      "id": "3ed7ee83-1918-5b74-a931-a8d75efc5f32",
+      "name": "Wolf FM Radio 88.8",
+      "lat": 60.60646,
+      "lon": 15.6355,
+      "streamUrl": "https://sstream.ueteknik.se/listen/wolffm/radio.mp3",
+      "homepage": "https://wolffmradio.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Falun",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "x0fL2mVc",
+      "gardenUrl": "https://radio.garden/listen/wolf-fm-radio-88-8/x0fL2mVc"
+    },
+    {
+      "id": "ca63be12-b306-59e6-a3a1-fed99be2f67e",
+      "name": "Radio Falköping 90.8 FM",
+      "lat": 58.17503,
+      "lon": 13.553217,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/cSYJtq5d/channel.mp3",
+      "homepage": "https://radio.garden/listen/fnf/cSYJtq5d",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Falköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "cSYJtq5d",
+      "gardenUrl": "https://radio.garden/listen/fnf/cSYJtq5d"
+    },
+    {
+      "id": "60c3e04a-8243-55f4-a74d-16d69dfb523c",
+      "name": "Hitcity Öresund",
+      "lat": 55.870346,
+      "lon": 12.83008,
+      "streamUrl": "https://stream.hitcity.se/livehq",
+      "homepage": "https://radio.garden/listen/hitcity/qlxWXj3p",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Landskrona",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "qlxWXj3p",
+      "gardenUrl": "https://radio.garden/listen/hitcity/qlxWXj3p"
+    },
+    {
+      "id": "7853f3bf-5d39-53e9-aadb-01e48b3c23da",
+      "name": "SR P4 Uppland",
+      "lat": 59.858562,
+      "lon": 17.638927,
+      "streamUrl": "https://live1.sr.se/p4uppl-aac-320",
+      "homepage": "https://sverigesradio.se/artikel/mp3-lankar-som-m3u-192-kbps",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Uppsala",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "x6LzbR5A",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-uppland/x6LzbR5A"
+    },
+    {
+      "id": "f49940e3-d005-5824-ab49-86ed83049841",
+      "name": "Radio Trollhättan FM 90.6",
+      "lat": 58.28349,
+      "lon": 12.285821,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/LP03uTh7/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-trollhaettan-90-6/LP03uTh7",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Trollhättan",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "LP03uTh7",
+      "gardenUrl": "https://radio.garden/listen/radio-trollhaettan-90-6/LP03uTh7"
+    },
+    {
+      "id": "98b81c6e-3301-5851-a970-fc975deb8e46",
+      "name": "Radio Trelleborg 92,8 MHz",
+      "lat": 55.376244,
+      "lon": 13.157423,
+      "streamUrl": "https://stream.radiotrelleborg.se/RaTbg_AAC_Lo",
+      "homepage": "https://radio.garden/listen/radio-trelleborg-92-8-mhz/IhcOlxVP",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Trelleborg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "IhcOlxVP",
+      "gardenUrl": "https://radio.garden/listen/radio-trelleborg-92-8-mhz/IhcOlxVP"
+    },
+    {
+      "id": "8d64b429-20df-5a06-a6bb-36c2c8f99aa4",
+      "name": "Radio Fryksdalen FM 100.6",
+      "lat": 59.83656,
+      "lon": 13.144047,
+      "streamUrl": "https://webradio.radiofryksdalen.se/RF_Live",
+      "homepage": "https://radiofryksdalen.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Sunne",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "a4OJW6k8",
+      "gardenUrl": "https://radio.garden/listen/radio-fryksdalen-100-6/a4OJW6k8"
+    },
+    {
+      "id": "a2ff5d62-b559-52eb-ae3c-38994c0e0fee",
+      "name": "SR P4 Gotland",
+      "lat": 57.6348,
+      "lon": 18.29484,
+      "streamUrl": "https://live1.sr.se/p4gotl-aac-320",
+      "homepage": "https://www.sverigesradio.se/nyheter/p4-gotland",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Visby",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "eltDpWjj",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-gotland/eltDpWjj"
+    },
+    {
+      "id": "10724a41-d16e-5aae-a25e-e7bbdd1d870c",
+      "name": "Scandinavian Albania Radio",
+      "lat": 57.653034,
+      "lon": 14.696725,
+      "streamUrl": "https://streaming.shoutcast.com/skandinavian-albania-radio",
+      "homepage": "https://skandialbradio.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Nässjö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "YH1s9zG3",
+      "gardenUrl": "https://radio.garden/listen/scandinavian-albania-radio/YH1s9zG3"
+    },
+    {
+      "id": "1fada3ee-2e7c-5f1e-ab4b-74be7adda8e0",
+      "name": "SR P4 Östergötland",
+      "lat": 58.587746,
+      "lon": 16.192421,
+      "streamUrl": "https://live1.sr.se/p4ostg-aac-320",
+      "homepage": "https://sverigesradio.se/ostergotland",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Norrköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "5buCBHVm",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-oestergoetland/5buCBHVm"
+    },
+    {
+      "id": "3c11ec69-bbf9-526c-a62c-2bcb416cb969",
+      "name": "SR Sápmi-Sameradion",
+      "lat": 67.8558,
+      "lon": 20.225283,
+      "streamUrl": "https://live1.sr.se/sameradion-aac-320",
+      "homepage": "https://www.sverigesradio.se/sameradion",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kiruna",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "UkWtcEO2",
+      "gardenUrl": "https://radio.garden/listen/sr-sapmi-sameradion/UkWtcEO2"
+    },
+    {
+      "id": "9ff25b2a-725e-5928-a300-3890bb2f4709",
+      "name": "Radio Sol",
+      "lat": 63.165405,
+      "lon": 17.277136,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/uFNlEPZb/channel.mp3",
+      "homepage": "https://www.radiosol.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Sollefteå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "uFNlEPZb",
+      "gardenUrl": "https://radio.garden/listen/radio-sol/uFNlEPZb"
+    },
+    {
+      "id": "4a63fc0f-bb9e-56bb-add1-6474083a8768",
+      "name": "Radio Boden 98.2 FM",
+      "lat": 65.82512,
+      "lon": 21.688704,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/NaFBrd7c/channel.mp3",
+      "homepage": "https://radio.garden/listen/bodensradio/NaFBrd7c",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Boden",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "NaFBrd7c",
+      "gardenUrl": "https://radio.garden/listen/bodensradio/NaFBrd7c"
+    },
+    {
+      "id": "2963d418-8e57-599f-acf2-ad4d621744d9",
+      "name": "Bananradion",
+      "lat": 59.73859,
+      "lon": 15.1977005,
+      "streamUrl": "https://lyssna.bananradion.se/listen/bananradion/128aac",
+      "homepage": "https://www.bananradion.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Stråssa",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "sl9SoPdS",
+      "gardenUrl": "https://radio.garden/listen/bananradion/sl9SoPdS"
+    },
+    {
+      "id": "b55ecf3b-98b1-5102-a149-9d37210b2b94",
+      "name": "Radio 45 FM 98.1",
+      "lat": 59.051117,
+      "lon": 12.697732,
+      "streamUrl": "https://streaming.943.se/radio45",
+      "homepage": "https://radio45.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Åmål",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "I06HFYHS",
+      "gardenUrl": "https://radio.garden/listen/radio-45-fm-98-1/I06HFYHS"
+    },
+    {
+      "id": "b171fd76-8dbb-57be-aafe-94eeec8e6b86",
+      "name": "Radio Krokom",
+      "lat": 63.46661,
+      "lon": 14.010987,
+      "streamUrl": "https://securestreams4.autopo.st:1798/;",
+      "homepage": "https://www.radiokrokom.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Offerdal",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "GpYpbSes",
+      "gardenUrl": "https://radio.garden/listen/radio-krokom/GpYpbSes"
+    },
+    {
+      "id": "bbe8f865-fadb-5269-a34a-c9c2bcd9c52c",
+      "name": "Radio Active",
+      "lat": 55.429504,
+      "lon": 13.820031,
+      "streamUrl": "https://stream.nsp.se/radioactive48",
+      "homepage": "https://radio.garden/listen/radioactive/5g9loLV8",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Ystad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "5g9loLV8",
+      "gardenUrl": "https://radio.garden/listen/radioactive/5g9loLV8"
+    },
+    {
+      "id": "33a2d1f3-3ec4-5228-a7f8-06973b6e3e19",
+      "name": "Höganäs Närradio 104,9 FM",
+      "lat": 56.200638,
+      "lon": 12.555328,
+      "streamUrl": "https://deb.patrikmalmgrenrask.se:10443/high/;",
+      "homepage": "https://radio-kullabygden.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Höganäs",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "KEnFpFs7",
+      "gardenUrl": "https://radio.garden/listen/hoeganaes-naerradio-104-9-fm/KEnFpFs7"
+    },
+    {
+      "id": "8d1b7d34-1fa2-53c7-a3e9-65f441c763d5",
+      "name": "SR P4 Dalarna",
+      "lat": 60.484303,
+      "lon": 15.433969,
+      "streamUrl": "https://live1.sr.se/p4dala-aac-320",
+      "homepage": "https://sverigesradio.se/dalarna/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Borlänge",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "dcQx2xhE",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-dalarna/dcQx2xhE"
+    },
+    {
+      "id": "f26e40f8-46bb-55f1-a967-b6522f07feac",
+      "name": "Radio Båstad 96.1 FM",
+      "lat": 56.433304,
+      "lon": 12.835379,
+      "streamUrl": "https://audio-edge-fvq45.ams.d.radiomast.io/0cf89221-143e-4e91-8c1a-3668a99404ac",
+      "homepage": "https://www.radiobastad.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Båstad",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "rsOrsLRT",
+      "gardenUrl": "https://radio.garden/listen/radio-bastad-96-1-fm/rsOrsLRT"
+    },
+    {
+      "id": "ae844799-9a30-5d6e-a62d-fdc466d84548",
+      "name": "Radio Siljan FM 94.1",
+      "lat": 61.016666,
+      "lon": 14.533333,
+      "streamUrl": "https://sstream.ueteknik.se/listen/siljan/radio.mp3",
+      "homepage": "https://radiosiljan.com/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Mora",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "qLiA1VPw",
+      "gardenUrl": "https://radio.garden/listen/radio-siljan-fm-94-1/qLiA1VPw"
+    },
+    {
+      "id": "fdf4487d-6241-5a76-aca9-5e82e1e20fec",
+      "name": "Helsingborgs Närradio FM 99.2",
+      "lat": 56.046467,
+      "lon": 12.694512,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/BXU6LA61/channel.mp3",
+      "homepage": "https://radio.garden/listen/helsingborgs-naerradio-99-2/BXU6LA61",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Helsingborg",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "BXU6LA61",
+      "gardenUrl": "https://radio.garden/listen/helsingborgs-naerradio-99-2/BXU6LA61"
+    },
+    {
+      "id": "dee1f410-b3ea-53eb-a07d-a549dfda6a36",
+      "name": "SR P4 Kalmar",
+      "lat": 56.663445,
+      "lon": 16.35678,
+      "streamUrl": "https://live1.sr.se/p4kalm-aac-320",
+      "homepage": "https://sverigesradio.se/kalmar/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kalmar",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "EFYu3UvO",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-kalmar/EFYu3UvO"
+    },
+    {
+      "id": "0d4de716-1d8c-517a-a2a9-5cefcb158d8c",
+      "name": "Radio 94.3",
+      "lat": 59.126537,
+      "lon": 15.140105,
+      "streamUrl": "https://stream.radio943.se/stream",
+      "homepage": "https://radio943.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kumla",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "ifZqk8yi",
+      "gardenUrl": "https://radio.garden/listen/radio-94-3/ifZqk8yi"
+    },
+    {
+      "id": "c59ff602-de18-5524-aa5f-1abe8c432e9f",
+      "name": "Radio Linköping FM 95.5",
+      "lat": 58.41081,
+      "lon": 15.621373,
+      "streamUrl": "https://stream.linkopingsnarradio.se:8005/radioprogram",
+      "homepage": "https://radio.garden/listen/radio-linkoeping-95-5-mhz/GaMJILus",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Linköping",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "GaMJILus",
+      "gardenUrl": "https://radio.garden/listen/radio-linkoeping-95-5-mhz/GaMJILus"
+    },
+    {
+      "id": "fe5fddcb-eb6c-581f-ae43-540661623c5f",
+      "name": "SR P4 Norrbotten",
+      "lat": 65.584816,
+      "lon": 22.156702,
+      "streamUrl": "https://live1.sr.se/p4nbtn-aac-320",
+      "homepage": "https://sverigesradio.se/norrbotten/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Luleå",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "jNgpg1Gg",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-norrbotten/jNgpg1Gg"
+    },
+    {
+      "id": "73694ae6-d078-5827-adc1-7f920b46a90d",
+      "name": "Radio Nybro FM 98.1",
+      "lat": 56.892994,
+      "lon": 15.968924,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/ca9GAXmp/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-nybro-98-1-fm/ca9GAXmp",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Nybro",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "ca9GAXmp",
+      "gardenUrl": "https://radio.garden/listen/radio-nybro-98-1-fm/ca9GAXmp"
+    },
+    {
+      "id": "4f1ede33-f7e8-5aa3-a092-eec80f405ac5",
+      "name": "Radio Öckerö",
+      "lat": 57.711742,
+      "lon": 11.648788,
+      "streamUrl": "https://radio.darub.se/ockero.mp3",
+      "homepage": "https://radio.garden/listen/radio-oecker/QXQ2xnnG",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Öckerö",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "QXQ2xnnG",
+      "gardenUrl": "https://radio.garden/listen/radio-oecker/QXQ2xnnG"
+    },
+    {
+      "id": "f4ce6f6e-0da0-54ae-a1fa-bed4521d4ee9",
+      "name": "SR P4 Örebro",
+      "lat": 59.27526,
+      "lon": 15.21341,
+      "streamUrl": "https://live1.sr.se/p4oreb-aac-320",
+      "homepage": "https://radio.garden/listen/sr-p4-oerebro/qT8TnJw8",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Örebro",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "qT8TnJw8",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-oerebro/qT8TnJw8"
+    },
+    {
+      "id": "41cf0788-d605-5a7d-a9e2-6381b6ceaff0",
+      "name": "89.7 Radio Söderhamn",
+      "lat": 61.305576,
+      "lon": 17.06281,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/siD5UVdD/channel.mp3",
+      "homepage": "https://radio.garden/listen/-89-7-radio-soederhamn/siD5UVdD",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Söderhamn",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "siD5UVdD",
+      "gardenUrl": "https://radio.garden/listen/-89-7-radio-soederhamn/siD5UVdD"
+    },
+    {
+      "id": "3836352e-3270-5658-a567-825d29dcc65c",
+      "name": "SR P4 Västernorrland",
+      "lat": 62.390812,
+      "lon": 17.306927,
+      "streamUrl": "https://live1.sr.se/p4vnrl-aac-320",
+      "homepage": "https://sverigesradio.se/vasternorrland/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Sundsvall",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "_D7LHTEi",
+      "gardenUrl": "https://radio.garden/listen/sr-p4-vaesternorrland/_D7LHTEi"
+    },
+    {
+      "id": "ca06aa13-8c93-5f17-abec-a08cee90a434",
+      "name": "Radio Nord FM 98.3",
+      "lat": 59.4418,
+      "lon": 18.070114,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/-XV_6lvZ/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-nord-fm-98-3/-XV_6lvZ",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Täby",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "-XV_6lvZ",
+      "gardenUrl": "https://radio.garden/listen/radio-nord-fm-98-3/-XV_6lvZ"
+    },
+    {
+      "id": "84f45c8e-31a6-5878-aa3c-931b5f61bbb4",
+      "name": "Radio Kinnekulle 102,6 MHz",
+      "lat": 58.528004,
+      "lon": 13.491428,
+      "streamUrl": "https://radio.fnf.nu/radiokinnekulle.mp3",
+      "homepage": "https://radio.garden/listen/radio-kinnekulle-102-6-mhz/WbzfKmRy",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Götene",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "WbzfKmRy",
+      "gardenUrl": "https://radio.garden/listen/radio-kinnekulle-102-6-mhz/WbzfKmRy"
+    },
+    {
+      "id": "d437622c-ea85-5b5a-a63e-bfb12ca7fc6a",
+      "name": "Radio pE20",
+      "lat": 57.769485,
+      "lon": 12.26882,
+      "streamUrl": "https://streaming.943.se/radiope20",
+      "homepage": "https://radio.garden/listen/radio-pe20/Pr7BjZ4W",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Lerum",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "Pr7BjZ4W",
+      "gardenUrl": "https://radio.garden/listen/radio-pe20/Pr7BjZ4W"
+    },
+    {
+      "id": "415763f6-a6b5-5c2b-a7a0-7a2b524ebfae",
+      "name": "HitzFM Sommenbygd 97,8FM",
+      "lat": 58.03552,
+      "lon": 14.975696,
+      "streamUrl": "https://s2.stationplaylist.com:7098/listen.mp3",
+      "homepage": "https://hitzfm.nu",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Tranås",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "VRK0QhdZ",
+      "gardenUrl": "https://radio.garden/listen/hitz-fm-sommenbygd-97-8-fm/VRK0QhdZ"
+    },
+    {
+      "id": "6ece4366-9bf7-5d6c-a681-738a2b2dd336",
+      "name": "Radio Sotenäs FM 95.3",
+      "lat": 58.35948,
+      "lon": 11.2594185,
+      "streamUrl": "https://sc1.radiosotenas.se/;",
+      "homepage": "https://www.radiosotenas.se",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Kungshamn",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "R5mNLd-O",
+      "gardenUrl": "https://radio.garden/listen/radio-sotenaes-fm-95-3/R5mNLd-O"
+    },
+    {
+      "id": "16081ef0-eef0-5ad3-a38b-e3b37c7dac0d",
+      "name": "Radio 88",
+      "lat": 57.717957,
+      "lon": 12.082596,
+      "streamUrl": "https://streaming.943.se/radio88",
+      "homepage": "https://radio.garden/listen/radio-88/ZPAIMmOb",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Sävedalen",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "ZPAIMmOb",
+      "gardenUrl": "https://radio.garden/listen/radio-88/ZPAIMmOb"
+    },
+    {
+      "id": "7ad4a6cb-5c2c-59c3-a29d-29aea989fbc9",
+      "name": "Radio Avesta 103.5 FM",
+      "lat": 60.14533,
+      "lon": 16.17384,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/l7KYzokK/channel.mp3",
+      "homepage": "https://radio.garden/listen/radioavesta/l7KYzokK",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Avesta",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "l7KYzokK",
+      "gardenUrl": "https://radio.garden/listen/radioavesta/l7KYzokK"
+    },
+    {
+      "id": "b614d4a3-7681-59d4-a876-24cc7ef477cf",
+      "name": "Spinning Seal FM",
+      "lat": 57.39376,
+      "lon": 12.253759,
+      "streamUrl": "https://stream.zeno.fm/9q3ez3k3fchvv",
+      "homepage": "https://zeno.fm/radio/SpinningSeal/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Gällinge",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "d7RMpZjk",
+      "gardenUrl": "https://radio.garden/listen/spinning-seal-fm/d7RMpZjk"
+    },
+    {
+      "id": "7d681fd6-0662-53f8-ad99-73a5fca54321",
+      "name": "Radio Strömsund 88.7 FM",
+      "lat": 63.85366,
+      "lon": 15.5568695,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/e5E2t5MB/channel.mp3",
+      "homepage": "https://radio.garden/listen/radio-stroemsund-88-7-fm/e5E2t5MB",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Strömsund",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "e5E2t5MB",
+      "gardenUrl": "https://radio.garden/listen/radio-stroemsund-88-7-fm/e5E2t5MB"
+    },
+    {
+      "id": "8841f724-0068-5ecb-a4b8-dcc6bd475396",
+      "name": "P4 Västmanland FM 100.5",
+      "lat": 59.79158,
+      "lon": 15.75921,
+      "streamUrl": "https://live1.sr.se/p4vstm-aac-320",
+      "homepage": "https://www.sverigesradio.se/nyheter/p4-vastmanland",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Vastmanland",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "AAC",
+      "bitrate": null,
+      "gardenId": "F5iguC8q",
+      "gardenUrl": "https://radio.garden/listen/p4-vaestmanland-fm-100-5/F5iguC8q"
+    },
+    {
+      "id": "785fa7d2-d9ff-5394-affa-7463c82eb1e6",
+      "name": "SceneSat",
+      "lat": 57.80154,
+      "lon": 12.3656,
+      "streamUrl": "https://streams.scenesat.com/main/hq.mp3",
+      "homepage": "https://scenesat.com",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Floda",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "kUyoH2fO",
+      "gardenUrl": "https://radio.garden/listen/scene-sat/kUyoH2fO"
+    },
+    {
+      "id": "d26d3678-b12f-571c-afc8-c6ea4971b5cc",
+      "name": "Radio Gagnef 105.9 FM",
+      "lat": 60.560753,
+      "lon": 15.1318035,
+      "streamUrl": "https://radio.garden/api/ara/content/listen/wgWA0Ptx/channel.mp3",
+      "homepage": "https://radiogagnef.nu/",
+      "tags": [
+        "swedish",
+        "radio garden"
+      ],
+      "languages": [
+        "Swedish"
+      ],
+      "state": "Djurås",
+      "country": "Sweden",
+      "countryCode": "SE",
+      "metadataTrust": "untrusted-community",
+      "codec": "MP3",
+      "bitrate": null,
+      "gardenId": "wgWA0Ptx",
+      "gardenUrl": "https://radio.garden/listen/radio-gagnef/wgWA0Ptx"
+    }
+  ]
+}
