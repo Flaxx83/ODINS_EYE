@@ -1,0 +1,4 @@
+# Optional: only needed for local speech recognition.
+faster-whisper>=1.1,<2
+av>=14,<17
+numpy>=1.26,<3

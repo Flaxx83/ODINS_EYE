@@ -25,3 +25,7 @@ pinokio/.installed
 # Local experiments, downloads, recordings and diagnostics
 work/
 
+
+# Local Python environment
+.venv/
+__pycache__/

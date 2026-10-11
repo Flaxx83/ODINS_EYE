@@ -1,0 +1,4 @@
+# Python 3.11 or 3.12 recommended. GeoPackage reading uses Python's built-in sqlite3.
+shapely>=2.0,<3
+pyproj>=3.6,<4
+pyarrow>=18,<25
