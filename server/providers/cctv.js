@@ -1,3 +1,4 @@
+import { createTrafikverketStatusMiddleware } from './trafikverket/status.js';
 import { createCctvCatalog } from './cctv/catalog.js';
 import {
   normalizeFeedType,
@@ -130,6 +131,10 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
   };
 
   const installMiddleware = (server) => {
+    server.middlewares.use(
+      '/api/trafikverket',
+      createTrafikverketStatusMiddleware(),
+    );
     server.httpServer?.on('close', () => {
       puller.shutdown();
     });
@@ -167,6 +172,10 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
               license: source.license,
               credit: source.credit || '',
               photoTime: source.photoTime || '',
+              catalogFetchedAt: source.catalogFetchedAt || '',
+              catalogStale: source.catalogStale === true,
+              catalogRefreshFailed: source.catalogRefreshFailed === true,
+              catalogComplete: source.catalogComplete !== false,
               code: source.code || '',
               groundHeights: source.groundHeights || null,
             })),

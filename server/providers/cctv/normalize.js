@@ -540,6 +540,10 @@ export function normalizeSourceItem(item) {
     // (DriveBC: TransLink, city cameras). Shown beside the provider.
     credit: String(item.credit || '').trim(),
     photoTime: String(item.photoTime || ''),
+    catalogFetchedAt: String(item.catalogFetchedAt || ''),
+    catalogStale: item.catalogStale === true,
+    catalogRefreshFailed: item.catalogRefreshFailed === true,
+    catalogComplete: item.catalogComplete !== false,
     // Unselected-label code: the pack's explicit short name, else the feed's
     // name, else the id.
     code: cameraDisplayCode(

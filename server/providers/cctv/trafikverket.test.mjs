@@ -50,10 +50,7 @@ test('request escapes credentials; mapped output never includes the key', async 
     apiKey: 'test&key',
     fetchImpl: async (url, options) => {
       assert.ok(options.body.includes('test&amp;key'));
-      return {
-        ok: true,
-        json: async () => ({ RESPONSE: { RESULT: [{ Camera: [record] }] } }),
-      };
+      return Response.json({ RESPONSE: { RESULT: [{ Camera: [record] }] } });
     },
   });
   assert.equal(cameras.length, 1);
@@ -69,4 +66,25 @@ test('missing credentials skip the network', async () => {
     }),
     [],
   );
+});
+
+test('camera adapter preserves last-good catalog freshness instead of inventing a fresh timestamp', async () => {
+  const old = '2026-10-11T10:00:00Z';
+  const sources = await loadTrafikverketSources({
+    client: {
+      query: async () => ({
+        rows: [record],
+        metadata: {
+          fetchedAt: old,
+          stale: true,
+          refreshFailed: true,
+          complete: false,
+        },
+      }),
+    },
+  });
+  assert.equal(sources[0].catalogFetchedAt, old);
+  assert.equal(sources[0].catalogStale, true);
+  assert.equal(sources[0].catalogRefreshFailed, true);
+  assert.equal(sources[0].catalogComplete, false);
 });

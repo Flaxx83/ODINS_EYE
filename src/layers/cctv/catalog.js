@@ -198,6 +198,10 @@ export function createCatalog({ state: layerState, services, parts, source }) {
         license: String(source.license || source.licenseNote || ''),
         credit: String(source.credit || ''),
         photoTime: String(source.photoTime || ''),
+        catalogFetchedAt: String(source.catalogFetchedAt || ''),
+        catalogStale: source.catalogStale === true,
+        catalogRefreshFailed: source.catalogRefreshFailed === true,
+        catalogComplete: source.catalogComplete !== false,
         code: String(source.code || ''),
         // Shipped precompute (see server/providers/cctv/groundHeights.js).
         groundHeights:

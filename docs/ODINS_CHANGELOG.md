@@ -52,3 +52,7 @@ Fem nya planeringsissues #20–#24 är tillagda i projekt 3: API-grund, tåginfo
 ## Stabil testgrund (2026-10-11)
 
 Issue #6 och PR #26 samlar offlineintegrationstester och reparation av befintliga CI-kontrakt. Unit discovery inkluderar serverfiler. Windows/Linux-gaten täcker resa, datum, trafikstatus, AI-källkontext, kameror och kartgeometri. Lokala karttexter använder gemensamt overlay-lager; AI-panelens CSS kan importeras av browsern utan att bryta Node-moduler. Formatteringen av lokala runtimefiler ligger i en separat commit. Se [testguiden](ODINS_TESTING.md) och issue #6 för verifieringsresultat och aktuell CI-status. Den generella AI-verktygsloopen tillhör fortsatt #1.
+
+## Gemensam Trafikverksklient (2026-10-11)
+
+Issue #20 inför serverklient med validerade XML-frågor, begränsade svar, samordnade anrop, cache, backoff och lokal anropsbudget. Kamerorna återanvänder klienten och visar katalogens staleness/begränsning. Observationstid och hämtningstid hålls isär. Sex modellversioner accepterades i begränsade liveprover; störningsmodellerna TrainMessage/Situation kräver ytterligare verifiering i #21/#22. Inga nya tågsvar eller väghändelselager levereras här. Se [API-guiden](ODINS_TRAFIKVERKET.md) för verifierade versioner och policies, och issue #20 för slutliga provresultat.

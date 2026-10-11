@@ -180,7 +180,10 @@
       "scripts/google-server-key.mjs",
       "src/data/cctvFootprint.js",
       "src/sources/cctvTypes.js",
-      "src/sources/httpBody.js"
+      "src/sources/httpBody.js",
+      "server/providers/trafikverket/client.js",
+      "server/providers/trafikverket/models.js",
+      "server/providers/trafikverket/status.js"
     ],
     "external": []
   },
