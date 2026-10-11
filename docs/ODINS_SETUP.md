@@ -105,3 +105,7 @@ Kör lokalt på loopback. Internet krävs för livedata och externa rese-/gångr
 ### Trafikverkets vägkameror
 
 Sätt `TRAFIKVERKET_API_KEY` i den lokala `.env` (utan `VITE_`-prefix) och starta om utvecklingsservern. Aktivera Data Layers → Cameras och välj Sverige i CCTV-panelens kameralista. `CCTV_TRAFIKVERKET_ENABLED=0` stänger av källan. Servern använder Camera schema 1 och cachar den gemensamma katalogen; bilder hämtas separat via serverns befintliga bildproxy. Bild tagen visar källans PhotoTime. Bilderna är stillbilder och globala katalogtak kan begränsa antalet svenska kameror, se ändringsloggen. Lägg aldrig en riktig nyckel i dokumentation, screenshots av appens inställningar eller Git.
+
+### Trafikverkets API-grund
+
+Kamerorna använder den gemensamma serverklienten. `TRAFIKVERKET_DAILY_REQUEST_BUDGET` sätter ett lokalt, minnesbaserat tak för XML-anrop (standard 5 000 per UTC-dygn; 0 stoppar nya anrop). Bildhämtning har separat CCTV-policy. `GET /api/trafikverket/status` visar säker lokal diagnostik utan nyckel eller frågevärden och utan att hämta upstreamdata. Se [API-guiden](ODINS_TRAFIKVERKET.md) för modellversioner, cache, backoff och begränsningar.

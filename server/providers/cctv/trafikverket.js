@@ -1,6 +1,20 @@
-import { escapeXml, parsePointString } from './normalize.js';
+import { parseReportedTime } from '../trafikverket/models.js';
+import { parsePointString } from './normalize.js';
+import {
+  createTrafikverketClient,
+  getTrafikverketClient,
+} from '../trafikverket/client.js';
 
-const API_URL = 'https://api.trafikinfo.trafikverket.se/v2/data.json';
+const CAMERA_QUERY = {
+  type: 'Camera',
+  filter: {
+    op: 'AND',
+    filters: [
+      { op: 'EQ', field: 'Active', value: true },
+      { op: 'EQ', field: 'Deleted', value: false },
+    ],
+  },
+};
 
 /** Convert upstream records without exposing credentials or arbitrary image hosts. */
 export function normalizeTrafikverketCamera(camera) {
@@ -29,7 +43,7 @@ export function normalizeTrafikverketCamera(camera) {
     return null;
   const heading = camera.Direction == null ? NaN : Number(camera.Direction);
   const hasHeading = Number.isFinite(heading) && heading >= 0 && heading < 360;
-  const photoTime = Date.parse(camera.PhotoTime);
+  const photoTime = parseReportedTime(camera.PhotoTime);
   return {
     id: `se-trafikverket-${camera.Id}`,
     name: String(camera.Name || camera.Id),
@@ -58,24 +72,31 @@ export function normalizeTrafikverketCamera(camera) {
 }
 
 export async function loadTrafikverketSources({
-  fetchImpl = fetch,
-  apiKey = process.env.TRAFIKVERKET_API_KEY,
+  fetchImpl,
+  apiKey,
+  client,
 } = {}) {
-  if (!apiKey) return [];
   try {
-    const response = await fetchImpl(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/xml' },
-      body: `<REQUEST><LOGIN authenticationkey="${escapeXml(apiKey)}"/><QUERY objecttype="Camera" schemaversion="1"><FILTER><AND><EQ name="Active" value="true"/><EQ name="Deleted" value="false"/></AND></FILTER></QUERY></REQUEST>`,
-      signal: AbortSignal.timeout(20000),
-    });
-    if (!response.ok) throw new Error('upstream');
-    const data = await response.json();
-    const result = data.RESPONSE?.RESULT?.[0];
-    if (!Array.isArray(result?.Camera)) throw new Error('invalid catalog');
-    return result.Camera.map(normalizeTrafikverketCamera).filter(Boolean);
+    const activeClient =
+      client ||
+      (fetchImpl || apiKey !== undefined
+        ? createTrafikverketClient({
+            fetchImpl: fetchImpl || fetch,
+            getApiKey: () => apiKey ?? process.env.TRAFIKVERKET_API_KEY,
+          })
+        : getTrafikverketClient());
+    const result = await activeClient.query(CAMERA_QUERY);
+    return (result.rows || [])
+      .map(normalizeTrafikverketCamera)
+      .filter(Boolean)
+      .map((camera) => ({
+        ...camera,
+        catalogFetchedAt: result.metadata.fetchedAt,
+        catalogStale: result.metadata.stale,
+        catalogRefreshFailed: result.metadata.refreshFailed,
+        catalogComplete: result.metadata.complete,
+      }));
   } catch {
-    // Never log the request, credential or upstream error payload.
     console.warn('[CCTV] Trafikverket camera catalog unavailable');
     return [];
   }

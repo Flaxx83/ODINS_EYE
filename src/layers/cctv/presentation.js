@@ -103,6 +103,10 @@ export function createPresentation({
       sourceLabel: health?.label || camera.provider || '',
       credit: camera.credit || '',
       photoTime: camera.photoTime || '',
+      catalogFetchedAt: camera.catalogFetchedAt || '',
+      catalogStale: camera.catalogStale === true,
+      catalogRefreshFailed: camera.catalogRefreshFailed === true,
+      catalogComplete: camera.catalogComplete !== false,
       calibration: {
         ...parts.calibration.normalizeCalibration(camera.calibration),
       },
