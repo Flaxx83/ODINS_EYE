@@ -1,8 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseTravelTime } from './travel-input.js';
+import { parseTravelTime, normalizeTravelMessage } from './travel-input.js';
 
 const now = new Date('2026-10-11T12:00:00Z');
+test('pasted line breaks and invisible spacing preserve journey names', () => {
+  const text =
+    'Sverige: Jag vill resa från Göteborg central till Vällingby T-\r\nbana imorgon vid 07 tiden.';
+  const expected =
+    'Sverige: Jag vill resa från Göteborg central till Vällingby T-bana';
+  assert.equal(parseTravelTime(text, now).clean, expected);
+  assert.equal(parseTravelTime(text, now).time, '07:00');
+  assert.equal(
+    normalizeTravelMessage(
+      'från Göteborg\ncentral\u00a0till Vällingby\u200b T-bana',
+    ),
+    'från Göteborg central till Vällingby T-bana',
+  );
+});
 test('user journey request preserves both stop names and departure at 07', () => {
   assert.deepEqual(
     parseTravelTime(

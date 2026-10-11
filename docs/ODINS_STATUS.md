@@ -49,3 +49,5 @@ Tidstolkningen stöder nu även hela timmar och svenska tidsuttryck som `vid 07 
 Liveprov 2026-10-11: `Jag vill resa från Göteborg central till Vällingby T-bana imorgon vid 07 tiden.` sökte avgång 2026-10-12 07:00 och gav tre ResRobot-förslag. Första förslaget avgick 07:11 och anlände 11:34. Dessa är testets tidtabellsuppgifter och inte fasta framtida reserekommendationer.
 
 Fyra regressionstester finns i `server/providers/travel-input.test.mjs` och körs med `npm run test:travel` samt i installations-CI. Övriga delar av #4, såsom önskad ankomsttid och bredare datum-/följdfrågetolkning, återstår.
+
+Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll en inklistrad radbrytning efter bindestrecket. Backend normaliserar nu radbrytningar, NBSP och osynliga formateringstecken innan verktygsval och reseparsning. Fem regressionstester täcker detta tillsammans med tidstolkningen.

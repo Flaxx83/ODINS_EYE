@@ -1,5 +1,14 @@
 import { token } from './vasttrafik.js';
+export function normalizeTravelMessage(message) {
+  return message
+    .normalize('NFC')
+    .replace(/[\u00ad\u200b\ufeff]/g, '')
+    .replace(/(\p{L})-[ \t]*\r?\n[ \t]*(?=\p{L})/gu, '$1-')
+    .replace(/\s+/gu, ' ')
+    .trim();
+}
 export function parseTravelTime(message, now = new Date()) {
+  message = normalizeTravelMessage(message);
   const tomorrow = /i\s*morgon/i.test(message);
   const timePattern =
     /(?:kl\.?|klockan|vid)\s*(\d{1,2})(?:[:.](\d{2}))?(?:\s*-?\s*tiden)?(?=\s|[.!?]|$)/i;

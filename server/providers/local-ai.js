@@ -1,4 +1,5 @@
 import { planSlTrip } from './local-sl-trip.js';
+import { normalizeTravelMessage } from './travel-input.js';
 import { trafficAnswer } from './local-traffic.js';
 import { planTrip } from './local-trip.js';
 import { localDataContext } from './local-ai-data.js';
@@ -9,6 +10,7 @@ export async function askLocalAi(
   base = 'http://127.0.0.1:4173',
   choice,
 ) {
+  message = normalizeTravelMessage(message);
   const isTrip =
     /från.+till/i.test(message) &&
     /åka|resa|buss|spårvagn|tunnelbana/i.test(message);
