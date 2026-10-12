@@ -12,6 +12,72 @@ export async function executeLocalQuery(
   toolOptions,
 ) {
   message = normalizeTravelMessage(message);
+  if (toolOptions?.tool === 'road_weather') {
+    const r = await fetch(
+      base +
+        '/api/road-weather?' +
+        new URLSearchParams({ lat: area.lat, lon: area.lon }),
+    );
+    if (!r.ok) throw Error('Vägväder kunde inte hämtas');
+    const d = await r.json();
+    const s = d.nearest;
+    return {
+      answer: !d.available
+        ? 'Vägväderkällan är otillgänglig.'
+        : !s
+          ? 'Ingen vägväderstation inom 30 km.'
+          : s.name +
+            ' · ' +
+            s.distanceKm.toFixed(1) +
+            ' km från vald plats.\nVägtemperatur: ' +
+            (s.roadTemperatureC ?? 'Uppgift saknas') +
+            ' °C. Lufttemperatur: ' +
+            (s.airTemperatureC ?? 'Uppgift saknas') +
+            ' °C. Mättid: ' +
+            (s.sampledAt || 'okänd') +
+            (s.stale ? ' · gammal/okänd observation' : '') +
+            '\n' +
+            d.note +
+            '\n' +
+            d.conditionNote +
+            '\nNederbörd (rapporterad kod): ' +
+            (s.precipitation ?? 'Uppgift saknas') +
+            '\nVind: ' +
+            (s.wind.length ? '' : 'Uppgift saknas') +
+            s.wind
+              .map(
+                (w) =>
+                  (w.speedMps ?? 'Uppgift saknas') +
+                  ' m/s, ' +
+                  (w.directionDeg ?? 'okänd') +
+                  '°',
+              )
+              .join('; ') +
+            '\n' +
+            (d.reports || [])
+              .slice(0, 5)
+              .map(
+                (c) =>
+                  'Rapporterat väglag på ' +
+                  (c.road || c.place || 'okänd sträcka') +
+                  ': ' +
+                  (c.text || 'uppgift saknas') +
+                  ' ' +
+                  c.info.join(', ') +
+                  ' · ' +
+                  (c.reportedAt || 'okänd tid') +
+                  (c.stale ? ' · gammal rapport' : ''),
+              )
+              .join('\n'),
+      sources: d.sources
+        .filter((m) => m.fetchedAt)
+        .map((m) => ({
+          name: 'Trafikverket · ' + m.type,
+          url: 'https://data.trafikverket.se/',
+          time: m.fetchedAt,
+        })),
+    };
+  }
   if (toolOptions?.tool === 'road_events') {
     const dx = 50 / (111 * Math.max(0.2, Math.cos((area.lat * Math.PI) / 180))),
       dy = 50 / 111;

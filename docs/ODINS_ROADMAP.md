@@ -61,3 +61,5 @@ Inventering, källhänvisning, faktisk cache och routingbeslut är implementerad
 ### Väghändelser – första etapp, 2026-10-12
 
 #22 har levererat valbart lager, kort och strukturerat AI-verktyg för tre DATEX-feeds. Giltighets-/källbegränsningar finns i ODINS_ROAD_EVENTS.md. Delperiodstolkning och verklig geometribaserad reseanknytning återstår; ursprungligt estimat omvärderas när den första etappen granskats. Nästa funktionsspår efter granskning är #23, vägväder och väglag.
+
+#23 har levererat stationslager, kort, kameraknapp och validerat AI-verktyg. Tätare vägsträckematchning och verklig reseanknytning återstår; dessa hålls synliga i issue/dokumentation. Cachepolicyn för WeatherMeasurepoint är korrigerad eftersom svaret innehåller senaste observation, inte bara statiska stationer. Se ODINS_ROAD_WEATHER.md.

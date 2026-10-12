@@ -46,10 +46,13 @@ export const TRAFIKVERKET_MODELS = Object.freeze({
   WeatherMeasurepoint: Object.freeze({
     version: '2',
     limit: 2000,
-    ttlMs: 24 * hour,
-    maxStaleMs: 7 * 24 * hour,
+    ttlMs: 5 * minute,
+    maxStaleMs: 15 * minute,
+    observationField: 'Observation.Sample',
+    observationMaxAgeMs: 30 * minute,
   }),
   RoadCondition: Object.freeze({
+    maxResponseBytes: 33554432,
     version: '1.2',
     limit: 2000,
     ttlMs: 5 * minute,
