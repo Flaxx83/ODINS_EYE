@@ -1,4 +1,11 @@
 import {
+  parseTravelTime,
+  applyJourneyTime,
+  journeyTimeLabel,
+  choiceMessage,
+  addressCandidates,
+} from './travel-input.js';
+import {
   enrichTrainTrips,
   trainStatusText,
 } from './trafikverket/train-status.js';
@@ -13,27 +20,40 @@ async function get(path) {
   if (!r.ok) throw Error('Västtrafik svarade ' + r.status);
   return r.json();
 }
-export async function planTrip(message, choice) {
-  const m = message.match(
+export async function planTrip(
+  message,
+  choice,
+  { getImpl = get, now = () => new Date() } = {},
+) {
+  if (
+    !/från.+till/i.test(message) ||
+    !/buss|resa|åka|spårvagn|resplan|tåg|tunnelbana/i.test(message)
+  )
+    return null;
+  const travel = parseTravelTime(message, now());
+  const m = travel.clean.match(
     /från\s+(.+?)\s+till\s+(.+?)(?:\s+(?:med buss|med spårvagn|nu))?[.!?]*$/i,
   );
   if (!m) return null;
-  if (!/buss|resa|åka|spårvagn|resplan/i.test(message)) return null;
+  if (!/buss|resa|åka|spårvagn|resplan|tåg|tunnelbana/i.test(message))
+    return null;
   const from = m[1].trim(),
     to = m[2].replace(/\s+(med buss|med spårvagn|nu).*$/i, '').trim();
-  if (/imorgon|i morgon|klockan|\d{1,2}:\d{2}/i.test(message))
-    return {
-      answer:
-        'Det första reseläget gäller avgång nu. Skriv exempelvis: Jag vill åka buss från Skövde resecentrum till Södra Ryd väg 26.',
-    };
   const find = async (q) =>
     (
-      await get(
+      await getImpl(
         'locations/by-text?' +
-          new URLSearchParams({ q, limit: '15', types: 'stoparea' }),
+          new URLSearchParams({
+            q: q.replace(/\s+i\s+/i, ', '),
+            limit: '15',
+            types: 'stoparea',
+          }),
       )
     ).results.filter((r) => r.gid && r.locationType === 'stoparea');
-  const [origins, destinations] = await Promise.all([find(from), find(to)]);
+  const [origins, destinations] = await Promise.all([
+    addressCandidates(from).then((rows) => rows ?? find(from)),
+    addressCandidates(to).then((rows) => rows ?? find(to)),
+  ]);
   if (!origins.length || !destinations.length)
     return {
       answer:
@@ -42,22 +62,37 @@ export async function planTrip(message, choice) {
         '. Ange hållplatsnamn och kommun.',
     };
   const pick = (rows, id) =>
-    rows.find((r) => r.gid === id) || (rows.length === 1 ? rows[0] : null);
+    id ? rows.find((r) => r.gid === id) : rows.length === 1 ? rows[0] : null;
   const o = pick(origins, choice?.origin),
     d = pick(destinations, choice?.destination);
   if (!o || !d)
     return {
-      answer: 'Välj de exakta hållplatserna nedan. Sökningen gäller avgång nu.',
-      tripChoices: { origins, destinations, message },
+      answer:
+        'Välj exakta adresser eller hållplatser. Sökningen gäller ' +
+        journeyTimeLabel(travel) +
+        '.',
+      tripChoices: {
+        origins,
+        destinations,
+        message: choiceMessage(message, travel),
+      },
     };
   const bus = /buss/i.test(message);
   const q = new URLSearchParams({
-    originGid: o.gid,
-    destinationGid: d.gid,
     limit: '5',
   });
+  for (const [prefix, location] of [
+    ['origin', o],
+    ['destination', d],
+  ]) {
+    if (location.gid.startsWith('coord:')) {
+      q.set(prefix + 'Latitude', String(location.lat));
+      q.set(prefix + 'Longitude', String(location.lon));
+    } else q.set(prefix + 'Gid', location.gid);
+  }
+  applyJourneyTime(q, travel, 'vasttrafik');
   if (bus) q.append('transportModes', 'bus');
-  const data = await get('journeys?' + q);
+  const data = await getImpl('journeys?' + q);
   const trips = (data.results || [])
     .filter(
       (j) =>
@@ -77,7 +112,9 @@ export async function planTrip(message, choice) {
           minute: '2-digit',
         })
       : '—';
-  const lines = [`Reseförslag från ${o.name} till ${d.name}. Avgång nu.`];
+  const lines = [
+    `Reseförslag från ${o.name} till ${d.name}. ${journeyTimeLabel(travel)}.`,
+  ];
   if (!trips.length)
     lines.push('Inga reseförslag för valt färdsätt returnerades.');
   trips.forEach((j, i) => {

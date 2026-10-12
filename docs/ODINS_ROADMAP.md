@@ -47,3 +47,5 @@ Tidigare daterade roadmapfönster ersätts av denna prioritering. Inga nya kalen
 - #5: täckning, deduplicering och prognosstatus implementerat, inväntar granskning. Se [trafikläge](ODINS_TRAFFIC_COVERAGE.md). Nästa kärnuppgift i ordningen är #4, ankomsttid och datum i resefrågor.
 
 Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [GitHub-projekt 3](https://github.com/users/Flaxx83/projects/3). Röst har fortsatt lägre prioritet.
+
+- #4: ankomsttid, datum och förtydliganden implementerat, inväntar granskning. Se [reseindata](ODINS_TRAVEL_INPUT.md). Nästa kärnuppgift i lösningsordningen är #3, kvarvarande järnvägsgeometri, samordnat med #30.

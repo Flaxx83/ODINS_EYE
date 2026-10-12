@@ -69,3 +69,7 @@ AI-dockans placering har justerats: knappen är 160 px på rymliga skärmar (tid
 ## Trafikläge – issue #5
 
 Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [Urval, prognoser, begränsningar och verifiering](ODINS_TRAFFIC_COVERAGE.md). 91 integrationstester och liveprov via AI-endpointen för Göteborg och Stockholm passerade. Statistik avser hållplatsavgångar i ett avgränsat urval; hela stadens fordon ingår inte.
+
+## Resefrågor – issue #4
+
+Ankomsttid, datum och gemensam tidsvalidering implementerat på feat/travel-arrival-dates, inväntar granskning. [Exempel, kalenderregler och begränsningar](ODINS_TRAVEL_INPUT.md). 108 integrationstester passerade. Valt trafiknät behålls; tvetydiga datum/tider behöver förtydligande. Automatisk kontext för följdfrågor återstår i #1.

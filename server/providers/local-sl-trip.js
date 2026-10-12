@@ -8,7 +8,13 @@ import { resolveWalking } from './walking-geometry.js';
 import { resolveNationalVasttrafik } from './national-vt-geometry.js';
 import { resolveSlGeometry } from './sl-trip-geometry.js';
 import { resRobotMapTrips } from './trip-map.js';
-import { parseTravelTime, addressCandidates } from './travel-input.js';
+import {
+  parseTravelTime,
+  addressCandidates,
+  applyJourneyTime,
+  journeyTimeLabel,
+  choiceMessage,
+} from './travel-input.js';
 const cache = new Map();
 export async function swedenStops(base) {
   let e = cache.get(base);
@@ -34,8 +40,14 @@ export async function swedenStops(base) {
   }
   return e.rows;
 }
-export async function planSlTrip(message, choice, base, national = false) {
-  const travel = parseTravelTime(message);
+export async function planSlTrip(
+  message,
+  choice,
+  base,
+  national = false,
+  { getStops = swedenStops, fetchImpl = fetch, now = () => new Date() } = {},
+) {
+  const travel = parseTravelTime(message, now());
   const m = travel.clean.match(/från\s+(.+?)\s+till\s+(.+?)[.!?]*$/i);
   if (!m)
     return {
@@ -44,14 +56,23 @@ export async function planSlTrip(message, choice, base, national = false) {
     };
   const from = m[1].trim(),
     to = m[2].replace(/\s+(?:med buss|nu).*$/i, '').trim();
-  const stops = (await swedenStops(base)).filter(
+  const stops = (await getStops(base)).filter(
     (g) =>
       national || (g.lat > 58.7 && g.lat < 60.5 && g.lon > 17 && g.lon < 19.8),
   );
+  const nameKey = (value) =>
+    value
+      .toLocaleLowerCase('sv')
+      .replace(/\s+i\s+/g, ' ')
+      .replace(/[(),]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
   const find = (q) =>
     stops
       .filter((s) =>
-        s.name.toLocaleLowerCase('sv').includes(q.toLocaleLowerCase('sv')),
+        nameKey(q)
+          .split(' ')
+          .every((part) => nameKey(s.name).includes(part)),
       )
       .slice(0, 20)
       .map((s) => ({ ...s, gid: s.id }));
@@ -66,13 +87,17 @@ export async function planSlTrip(message, choice, base, national = false) {
         'Ingen hållplats hittades i valt sökområde. Prova namnet från hållplatsregistret.',
     };
   const pick = (rows, id) =>
-      rows.find((s) => s.id === id) || (rows.length === 1 ? rows[0] : null),
+      id ? rows.find((s) => s.id === id) : rows.length === 1 ? rows[0] : null,
     o = pick(origins, choice?.origin),
     d = pick(destinations, choice?.destination);
   if (!o || !d)
     return {
       answer: 'Välj exakta adresser eller hållplatser för resan.',
-      tripChoices: { origins, destinations, message },
+      tripChoices: {
+        origins,
+        destinations,
+        message: choiceMessage(message, travel),
+      },
     };
   const key = process.env.RESROBOT_API_KEY;
   if (!key) throw Error('ResRobot-nyckeln saknas');
@@ -83,7 +108,7 @@ export async function planSlTrip(message, choice, base, national = false) {
     passlist: 'true',
     showPassingPoints: 'true',
   });
-  if (travel.time) q.set('time', travel.time);
+  applyJourneyTime(q, travel, 'resrobot');
   for (const [prefix, location] of [
     ['origin', o],
     ['dest', d],
@@ -93,7 +118,7 @@ export async function planSlTrip(message, choice, base, national = false) {
       q.set(prefix + 'CoordLong', String(location.lon));
     } else q.set(prefix + 'Id', location.id);
   }
-  const r = await fetch('https://api.resrobot.se/v2.1/trip?' + q, {
+  const r = await fetchImpl('https://api.resrobot.se/v2.1/trip?' + q, {
     signal: AbortSignal.timeout(20000),
   });
   if (!r.ok) throw Error('Reseplaneraren kunde inte hämtas');
@@ -124,7 +149,7 @@ export async function planSlTrip(message, choice, base, national = false) {
     .slice(0, 3);
   const trainStatus = await enrichTrainTrips(trips);
   const lines = [
-    `${national ? 'Sverigeresa' : 'SL-resa'} från ${o.name} till ${d.name}, avgång ${travel.date}${travel.time ? ' kl ' + travel.time : ' från aktuell tid'}. ResRobot-underlag.`,
+    `${national ? 'Sverigeresa' : 'SL-resa'} från ${o.name} till ${d.name}, ${journeyTimeLabel(travel)}. ResRobot-underlag.`,
   ];
   if (!trips.length)
     lines.push('Inga förslag med valt operatörsurval och färdsätt hittades.');
