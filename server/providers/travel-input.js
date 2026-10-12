@@ -251,6 +251,7 @@ export function parseTravelTime(message, now = new Date()) {
     .trim();
   return {
     date,
+    hasDate: dates.length > 0,
     time,
     clean,
     mode: arrival ? 'arrival' : 'departure',

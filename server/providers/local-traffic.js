@@ -25,9 +25,16 @@ export async function trafficAnswer(
     getStops = swedenStops,
     getToken = token,
     getNow = Date.now,
+    selected: toolSelected = false,
+    placeName,
+    mode,
   } = {},
 ) {
-  if (!/avgång|försen|sena|tidiga|i tid|trafikläge/i.test(message)) return null;
+  if (
+    !toolSelected &&
+    !/avgång|försen|sena|tidiga|i tid|trafikläge/i.test(message)
+  )
+    return null;
   const unknown = (reason) => ({
     answer: reason,
     trafficSummary: { status: 'unavailable', count: null, totals: null },
@@ -44,13 +51,15 @@ export async function trafficAnswer(
     );
   let center = area;
   let centerName = 'kartans position';
-  const places = [
-    ...message.matchAll(
-      /\bi\s+(\p{L}[\p{L} -]*?)(?=\s+i\s|\s+(?:är|just|nu|idag|som)|[?.!]|$)/giu,
-    ),
-  ]
-    .map((m) => m[1].trim())
-    .filter((p) => !/^(?:tid|dag|området|närheten)$/i.test(p));
+  const places = placeName
+    ? [placeName]
+    : [
+        ...message.matchAll(
+          /\bi\s+(\p{L}[\p{L} -]*?)(?=\s+i\s|\s+(?:är|just|nu|idag|som)|[?.!]|$)/giu,
+        ),
+      ]
+        .map((m) => m[1].trim())
+        .filter((p) => !/^(?:tid|dag|området|närheten)$/i.test(p));
   if (places.length > 1)
     return unknown('Ange en stad åt gången för trafikläget.');
   const place = places[0];
@@ -94,8 +103,9 @@ export async function trafficAnswer(
   const start = getNow(),
     end = start + 3600000;
   const modes = [
-    ...(/buss/i.test(message) ? ['BUS'] : []),
-    ...(/spårvagn/i.test(message) ? ['TRAM'] : []),
+    ...(/buss/i.test(message) || mode === 'bus' ? ['BUS'] : []),
+    ...(/spårvagn/i.test(message) || mode === 'tram' ? ['TRAM'] : []),
+    ...(mode === 'train' ? ['TRAIN'] : []),
   ];
   const name = message
     .match(/(?:vid|hållplats(?:en)?|från)\s+(.+?)[?!.]*$/i)?.[1]

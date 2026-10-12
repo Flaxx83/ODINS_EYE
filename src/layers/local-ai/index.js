@@ -132,7 +132,18 @@ export function createLocalAiLayer() {
       choices.className = 'local-ai-choices';
       const actions = document.createElement('div');
       actions.className = 'local-ai-actions';
-      actions.append(send, mic, speak);
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.textContent = 'Nytt samtal';
+      reset.onclick = () => {
+        conversationId = undefined;
+        tripChoice = null;
+        lastAnswer = '';
+        choices.replaceChildren();
+        map.clear();
+        output.textContent = 'Nytt samtal. Tidigare frågor återanvänds inte.';
+      };
+      actions.append(send, mic, speak, reset);
       form.append(input, actions);
       body.append(model, hint, networkLabel, form, choices, output);
       panel.append(header, body);
@@ -145,10 +156,12 @@ export function createLocalAiLayer() {
       if (dock) dockObserver.observe(dockButton);
       window.addEventListener('resize', positionPanel);
       positionPanel();
-      let lastAnswer = '',
+      let conversationId,
+        lastAnswer = '',
         tripChoice = null;
       async function submit(message, choice) {
         send.disabled = true;
+        reset.disabled = true;
         choices.replaceChildren();
         map.clear();
         output.textContent = 'Hämtar svar…';
@@ -158,13 +171,9 @@ export function createLocalAiLayer() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              message:
-                network.value === 'Hela Sverige' &&
-                !message.startsWith('Sverige:')
-                  ? 'Sverige: ' + message
-                  : network.value === 'SL' && !message.startsWith('SL:')
-                    ? 'SL: ' + message
-                    : message,
+              message,
+              network: network.value,
+              conversationId,
               choice,
               area: {
                 lat: C.Math.toDegrees(
@@ -180,6 +189,7 @@ export function createLocalAiLayer() {
           const d = await r.json();
           if (!r.ok) throw Error(d.error);
           if (!enabled) return;
+          conversationId = d.resetConversation ? undefined : d.conversationId;
           output.textContent = d.answer;
           lastAnswer = d.answer;
           for (const source of d.sources || []) {
@@ -302,6 +312,7 @@ export function createLocalAiLayer() {
           if (enabled) output.textContent = e.message;
         } finally {
           send.disabled = false;
+          reset.disabled = false;
         }
       }
       form.onsubmit = (e) => {

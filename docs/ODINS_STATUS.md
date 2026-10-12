@@ -77,3 +77,7 @@ Ankomsttid, datum och gemensam tidsvalidering implementerat på feat/travel-arri
 ## Järnvägsutredning – issue #3
 
 Utredning, säkrare segmentkoppling och orsaker per delsträcka implementerat på fix/rail-network-routing-diagnostics, inväntar granskning. 125 integrationstester och nio offlineprov passerade. Två av fem sparade fall fick beräknad geometri; 422/428/4132 avvisades med konkret orsak. [Resultat och kvarstående databegränsningar](ODINS_RAIL_GEOMETRY.md). Kvarvarande geometriarbete inklusive expressbussar följs i #30.
+
+## AI-integration – issue #1
+
+Implementerat på codex/validated-ai-tools, inväntar granskning. [Verktyg, samtalskontext och anropsbudget](ODINS_AI_TOOLS.md). Följdfrågor behåller resväg, kalenderdatum och ankomst/avgång. Nya källanrop görs för datafrågor; äldre källsvar blir inte nya fakta. Trafiknät och användarens senaste platsval valideras. Tidigare begränsning om att alltid skriva hela resvägen i #4 ersätts av detta tillfälliga samtalsminne.

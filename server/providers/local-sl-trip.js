@@ -16,6 +16,7 @@ import {
   choiceMessage,
   placeMatches,
 } from './travel-input.js';
+import { journeyMatchesMode } from './journey-mode.js';
 const cache = new Map();
 export async function swedenStops(base) {
   let e = cache.get(base);
@@ -121,6 +122,7 @@ export async function planSlTrip(
   if (data.errorCode) throw Error('Reseplaneraren hittade inga förslag');
   const legs = (j) => j.LegList?.Leg || [];
   const trips = (data.Trip || [])
+    .filter((j) => journeyMatchesMode(legs(j), message, 'resrobot'))
     .filter(
       (j) =>
         national ||
