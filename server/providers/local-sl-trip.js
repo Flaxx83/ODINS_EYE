@@ -14,6 +14,7 @@ import {
   applyJourneyTime,
   journeyTimeLabel,
   choiceMessage,
+  placeMatches,
 } from './travel-input.js';
 const cache = new Map();
 export async function swedenStops(base) {
@@ -45,7 +46,12 @@ export async function planSlTrip(
   choice,
   base,
   national = false,
-  { getStops = swedenStops, fetchImpl = fetch, now = () => new Date() } = {},
+  {
+    getStops = swedenStops,
+    fetchImpl = fetch,
+    getAddresses = addressCandidates,
+    now = () => new Date(),
+  } = {},
 ) {
   const travel = parseTravelTime(message, now());
   const m = travel.clean.match(/från\s+(.+?)\s+till\s+(.+?)[.!?]*$/i);
@@ -60,26 +66,15 @@ export async function planSlTrip(
     (g) =>
       national || (g.lat > 58.7 && g.lat < 60.5 && g.lon > 17 && g.lon < 19.8),
   );
-  const nameKey = (value) =>
-    value
-      .toLocaleLowerCase('sv')
-      .replace(/\s+i\s+/g, ' ')
-      .replace(/[(),]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
   const find = (q) =>
     stops
-      .filter((s) =>
-        nameKey(q)
-          .split(' ')
-          .every((part) => nameKey(s.name).includes(part)),
-      )
+      .filter((s) => placeMatches(q, s.name))
       .slice(0, 20)
       .map((s) => ({ ...s, gid: s.id }));
-  let origins = await addressCandidates(from),
-    destinations = await addressCandidates(to);
-  origins ??= find(from);
-  destinations ??= find(to);
+  let origins = await getAddresses(from),
+    destinations = await getAddresses(to);
+  if (!origins?.length) origins = find(from);
+  if (!destinations?.length) destinations = find(to);
   if (!destinations.length) destinations = find(to.replace(/\s+centrum$/i, ''));
   if (!origins.length || !destinations.length)
     return {

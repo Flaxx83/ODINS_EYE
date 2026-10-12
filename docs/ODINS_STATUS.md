@@ -72,4 +72,4 @@ Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [
 
 ## Resefrågor – issue #4
 
-Ankomsttid, datum och gemensam tidsvalidering implementerat på feat/travel-arrival-dates, inväntar granskning. [Exempel, kalenderregler och begränsningar](ODINS_TRAVEL_INPUT.md). 109 integrationstester passerade. Valt trafiknät behålls; tvetydiga datum/tider behöver förtydligande. Automatisk kontext för följdfrågor återstår i #1.
+Ankomsttid, datum och gemensam tidsvalidering implementerat på feat/travel-arrival-dates, inväntar granskning. [Exempel, kalenderregler och begränsningar](ODINS_TRAVEL_INPUT.md). 111 integrationstester passerade. Valt trafiknät behålls; tvetydiga datum/tider behöver förtydligande. Automatisk kontext för följdfrågor återstår i #1.

@@ -339,3 +339,23 @@ export function needsTravelRoute(message) {
     )
   );
 }
+
+export function placeMatches(query, name) {
+  const norm = (value) =>
+    value
+      .toLocaleLowerCase('sv')
+      .normalize('NFC')
+      .replace(/(\d)\s+([a-z])\b/g, '$1$2')
+      .replace(/\s+i\s+/g, ' ')
+      .replace(/[(),]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  const haystack = norm(name);
+  return norm(query)
+    .split(' ')
+    .every((part) =>
+      /\d/.test(part)
+        ? haystack.split(/[^\p{L}\p{N}]+/u).includes(part)
+        : haystack.includes(part),
+    );
+}

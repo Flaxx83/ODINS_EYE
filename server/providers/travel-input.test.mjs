@@ -1,3 +1,4 @@
+import { placeMatches } from './travel-input.js';
 import { needsTravelRoute } from './travel-input.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -231,7 +232,14 @@ test('Västtrafik planner sends the requested arrival datetime and asks on ambig
       now: () => now,
       getImpl: async (path) => {
         if (path.startsWith('journeys')) journeyCalled = true;
-        return { results: [stops.A, stops.B] };
+        return {
+          results: [
+            { ...stops.A, name: 'A station' },
+            { ...stops.A, gid: 'A2', name: 'A centrum' },
+            { ...stops.B, name: 'B station' },
+            { ...stops.B, gid: 'B2', name: 'B centrum' },
+          ],
+        };
       },
     },
   );
@@ -382,4 +390,84 @@ test('short clock follow-up needs a route while unrelated follow-ups retain thei
     'Jag vill resa från A till B imorgon kl 07',
   ])
     assert.equal(needsTravelRoute(message), false);
+});
+
+test('numeric stop names remain eligible while different house numbers are rejected', () => {
+  assert.equal(
+    placeMatches('Södra Ryd väg 26', 'Södra Ryd väg 26, Skövde'),
+    true,
+  );
+  assert.equal(
+    placeMatches('Södra Ryd väg 26', 'Södra Ryd väg 260, Skövde'),
+    false,
+  );
+  assert.equal(
+    placeMatches(
+      'Lillegårdsvägen 11 A i Skövde',
+      'Lillegårdsvägen 11A, Skövde',
+    ),
+    true,
+  );
+  assert.equal(
+    placeMatches('Lillegårdsvägen 11A i Skövde', 'Lillegårdsvägen 11B, Skövde'),
+    false,
+  );
+});
+
+test('numeric literal stop survives empty address results in both planners', async () => {
+  let vtQuery;
+  const vt = await planTrip(
+    'Jag vill resa från A till Södra Ryd väg 26 imorgon kl 08',
+    null,
+    {
+      now: () => now,
+      getAddresses: async () => [],
+      getImpl: async (path) => {
+        if (path.startsWith('journeys?')) {
+          vtQuery = new URLSearchParams(path.split('?')[1]);
+          return { results: [] };
+        }
+        const query = new URLSearchParams(path.split('?')[1]).get('q');
+        return {
+          results: [
+            {
+              gid: query === 'A' ? '1' : '26',
+              locationType: 'stoparea',
+              name: query,
+            },
+          ],
+        };
+      },
+    },
+  );
+  assert.equal(vtQuery.get('destinationGid'), '26');
+  assert.match(vt.answer, /Södra Ryd väg 26/);
+  const saved = process.env.RESROBOT_API_KEY;
+  process.env.RESROBOT_API_KEY = 'fixture-only';
+  try {
+    let rrQuery;
+    await planSlTrip(
+      'SL: Jag vill resa från A till Södra Ryd väg 26 imorgon kl 08',
+      null,
+      '',
+      false,
+      {
+        now: () => now,
+        getAddresses: async () => [],
+        getStops: async () => [
+          { id: '1', name: 'A', lat: 59.3, lon: 18 },
+          { id: '26', name: 'Södra Ryd väg 26', lat: 59.3, lon: 18 },
+          { id: '260', name: 'Södra Ryd väg 260', lat: 59.3, lon: 18 },
+        ],
+        fetchImpl: async (url) => {
+          rrQuery = new URL(url).searchParams;
+          return Response.json({ Trip: [] });
+        },
+      },
+    );
+    assert.equal(rrQuery.get('destId'), '26');
+  } finally {
+    if (saved === undefined) delete process.env.RESROBOT_API_KEY;
+    else process.env.RESROBOT_API_KEY = saved;
+  }
 });

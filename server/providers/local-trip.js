@@ -3,6 +3,7 @@ import {
   applyJourneyTime,
   journeyTimeLabel,
   choiceMessage,
+  placeMatches,
   addressCandidates,
 } from './travel-input.js';
 import {
@@ -23,7 +24,11 @@ async function get(path) {
 export async function planTrip(
   message,
   choice,
-  { getImpl = get, now = () => new Date() } = {},
+  {
+    getImpl = get,
+    getAddresses = addressCandidates,
+    now = () => new Date(),
+  } = {},
 ) {
   if (
     !/från.+till/i.test(message) ||
@@ -49,10 +54,12 @@ export async function planTrip(
             types: 'stoparea',
           }),
       )
-    ).results.filter((r) => r.gid && r.locationType === 'stoparea');
+    ).results.filter(
+      (r) => r.gid && r.locationType === 'stoparea' && placeMatches(q, r.name),
+    );
   const [origins, destinations] = await Promise.all([
-    addressCandidates(from).then((rows) => rows ?? find(from)),
-    addressCandidates(to).then((rows) => rows ?? find(to)),
+    getAddresses(from).then((rows) => (rows?.length ? rows : find(from))),
+    getAddresses(to).then((rows) => (rows?.length ? rows : find(to))),
   ]);
   if (!origins.length || !destinations.length)
     return {
