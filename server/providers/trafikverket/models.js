@@ -2,6 +2,19 @@ const minute = 60000;
 const hour = 60 * minute;
 /** Versions accepted by a bounded live probe on 2026-10-11. Not a promise of full API coverage. */
 export const TRAFIKVERKET_MODELS = Object.freeze({
+  ...Object.fromEntries(
+    ['roadworks', 'accident', 'trafficmessage'].map((feed) => [
+      'Datex-' + feed,
+      Object.freeze({
+        version: '3.1',
+        feed,
+        limit: 20000,
+        ttlMs: 300000,
+        maxStaleMs: 900000,
+        maxResponseBytes: 67108864,
+      }),
+    ]),
+  ),
   Camera: Object.freeze({
     version: '1',
     limit: 3000,
@@ -74,6 +87,8 @@ export function normalizeQuery(input) {
   const include = input.include ?? [];
   if (!Array.isArray(include) || include.length > 40 || !include.every(field))
     throw new TypeError('Invalid query fields');
+  if (model.feed && (include.length || input.filter || limit !== model.limit))
+    throw new TypeError('DATEX queries use fixed feed snapshots');
   let nodes = 0;
   const normalizeFilter = (f, depth = 0) => {
     if (

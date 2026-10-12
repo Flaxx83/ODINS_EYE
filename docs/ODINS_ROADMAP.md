@@ -57,3 +57,7 @@ Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [Gi
 ## Källpolicy – issue #7, 2026-10-12
 
 Inventering, källhänvisning, faktisk cache och routingbeslut är implementerade för granskning. Se [ODINS_SOURCE_POLICY.md](ODINS_SOURCE_POLICY.md). Publika demotjänster är inte underlag för bred distribution eller nätbaserade områdessvep. Kontroller av Västtrafiks aktiva avtal, exportmetadata och gamla EEA-fallbacks återstår inför distribution. Nästa planerade funktionsarbete efter granskning är #22, väghändelser på kartan; #7 behålls öppen för de uttryckliga kontrollpunkterna.
+
+### Väghändelser – första etapp, 2026-10-12
+
+#22 har levererat valbart lager, kort och strukturerat AI-verktyg för tre DATEX-feeds. Giltighets-/källbegränsningar finns i ODINS_ROAD_EVENTS.md. Delperiodstolkning och verklig geometribaserad reseanknytning återstår; ursprungligt estimat omvärderas när den första etappen granskats. Nästa funktionsspår efter granskning är #23, vägväder och väglag.

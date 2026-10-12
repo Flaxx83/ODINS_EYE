@@ -40,7 +40,7 @@ test('catalogs construct distinct layers and classification from their supplied 
     signal: b.signal,
     surface: fixtureSurface(b.signal),
   });
-  assert.equal(first.layers.length, 53);
+  assert.equal(first.layers.length, 54);
   assert.ok(first.get('place-labels'), 'optional place labels are registered');
   assert.deepEqual(
     first.metadata.find(({ id }) => id === 'place-labels'),
@@ -158,7 +158,7 @@ test('Mapillary can be omitted or replaced without changing catalog membership',
     surface: fixtureSurface(lifetime.signal),
   };
   const catalog = createApplicationCatalog(options);
-  assert.equal(catalog.layers.length, 53);
+  assert.equal(catalog.layers.length, 54);
   assert.deepEqual(catalog.get('street-level').providerIds, []);
   assert.equal(
     catalogControlServices(catalog).streetLevelLayer,

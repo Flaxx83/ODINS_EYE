@@ -91,3 +91,7 @@ Location och AI använder samma valbara platskandidater; reseplaneringen återan
 ## Källpolicy — issue #7 (2026-10-12)
 
 Villkor, faktisk cache, anropsbudget och förnyelsebeslut finns i [ODINS_SOURCE_POLICY.md](ODINS_SOURCE_POLICY.md). Källhänvisningarna har kompletterats. Gångruttning har begränsad 24-timmarscache, samordnade anrop och konfigurerbar serveradress. Inventeringen är granskningsklar; Västtrafiks aktiva avtal, stationernas särskilda EEA-villkor och routingkapacitet inför distribution är fortfarande öppna kontrollpunkter. Issue #7 ska inte stängas som ett generellt klartecken för distribution.
+
+## Väghändelser — issue #22, första etapp
+
+Lager och strukturerat AI-verktyg för Trafikverkets väghändelser är implementerade för granskning. Tre DATEX II 3.1-feeds återanvänder gemensam cache/budget. Riktiga data, karta och AI provade. Detaljerade återkommande delperioder och geometribaserad reseanknytning återstår; ingen omruttning eller påhittad försening visas. Se [väghändelser](ODINS_ROAD_EVENTS.md).

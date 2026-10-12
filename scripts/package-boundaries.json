@@ -183,9 +183,10 @@
       "src/sources/httpBody.js",
       "server/providers/trafikverket/client.js",
       "server/providers/trafikverket/models.js",
-      "server/providers/trafikverket/status.js"
+      "server/providers/trafikverket/status.js",
+      "server/providers/trafikverket/road-model.js"
     ],
-    "external": []
+    "external": ["saxes"]
   },
   "mapillary-provider": {
     "runtime": "node",
@@ -2228,7 +2229,8 @@
       "src/layers/local-ai/trip-map.js",
       "src/layers/air-quality/index.js",
       "src/layers/local-ai/map-labels.js",
-      "src/ui/placeSuggestions.js"
+      "src/ui/placeSuggestions.js",
+      "src/layers/road-events/index.js"
     ],
     "external": [
       "hls.js",
@@ -2770,7 +2772,8 @@
       "src/layers/local-ai/index.js",
       "src/layers/local-ai/trip-map.js",
       "src/layers/air-quality/index.js",
-      "src/layers/local-ai/map-labels.js"
+      "src/layers/local-ai/map-labels.js",
+      "src/layers/road-events/index.js"
     ],
     "external": [
       "hls.js",

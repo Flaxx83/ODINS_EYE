@@ -98,3 +98,10 @@ Valbart lager **Data Layers → Infrastructure → Ortsnamn · Esri** använder 
 - GeoNames, EEA, Trafiklab, Lantmäteriet och Valhalla/FOSSGIS finns i samlad attribution. Radio Browser bekräftad som aktiv integration; Radio Garden används inte.
 - Gångcache begränsad till 128 rutter/24 h, identiska väntande anrop samordnas och max 32 olika väntande rutter. VALHALLA_BASE_URL kan peka på egen instans. Fel cachas inte.
 - Kvarstående avtals-/distributionskontroller redovisas uttryckligen; inga antagna fria licenser eller garanterad demokapacitet införs.
+
+### 2026-10-12 — Väghändelser, första etapp (#22)
+
+- Valbart Trafikverkslager med DATEX II 3.1 från roadworks, accident och trafficmessage; geografiskt begränsad leverans, klickbart kort och val mellan överlappande poster.
+- Den gemensamma klienten utökad med fasta XML-feeds, begränsad cache, budget och tydlig gammal/partiell källstatus. Tid/geometri/DTD valideras; avslutade och pausade poster filtreras bort.
+- AI-verktyget road_events återanvänder källan. Kollektivtrafikens trafikstatus är ett separat verktyg.
+- Detaljerad/återkommande giltighet märks; ingen bekräftad aktivitet just nu, reseförsening eller omruttning antas. Se ODINS_ROAD_EVENTS.md för provresultat och avgränsningar.

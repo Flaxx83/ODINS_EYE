@@ -676,3 +676,21 @@ test('generic place ambiguity requires a validated choice before navigation', as
   assert.deepEqual(selected.destination, { lat: 58, lon: 13 });
   assert.equal(searches, 1);
 });
+test('road events select their own validated tool rather than public-transport delays', async () => {
+  let selected;
+  const service = createLocalAiService({
+    now,
+    planner: async () => action('road_events', { place: 'Skövde' }),
+    execute: async (_q, _area, _base, _choice, options) => {
+      selected = options.tool;
+      return { answer: 'fixture' };
+    },
+  });
+  const r = await service.ask({
+    message: 'Finns vägarbeten i Skövde?',
+    area,
+    network: 'Hela Sverige',
+  });
+  assert.equal(selected, 'road_events');
+  assert.deepEqual(r.toolsUsed, ['road_events']);
+});

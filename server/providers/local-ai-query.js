@@ -12,6 +12,53 @@ export async function executeLocalQuery(
   toolOptions,
 ) {
   message = normalizeTravelMessage(message);
+  if (toolOptions?.tool === 'road_events') {
+    const dx = 50 / (111 * Math.max(0.2, Math.cos((area.lat * Math.PI) / 180))),
+      dy = 50 / 111;
+    const box = [
+      Math.max(-180, area.lon - dx),
+      Math.max(-90, area.lat - dy),
+      Math.min(180, area.lon + dx),
+      Math.min(90, area.lat + dy),
+    ];
+    const r = await fetch(
+      base + '/api/road-events?' + new URLSearchParams({ bbox: box.join(',') }),
+    );
+    if (!r.ok) throw Error('Väghändelser kunde inte hämtas');
+    const d = await r.json();
+    return {
+      answer:
+        (!d.available
+          ? 'Källorna är otillgängliga.'
+          : (d.partial ? 'Delvis tillgängliga källor. ' : '') +
+            (d.stale ? 'Gammal cache. ' : '') +
+            d.events.length +
+            ' rapporterade händelseposter (flera poster kan tillhöra samma händelse) i ett område cirka 50 km runt vald plats.\n' +
+            d.events
+              .slice(0, 20)
+              .map(
+                (e) =>
+                  e.kind +
+                  ' · ' +
+                  (e.road || e.place || 'Uppgift saknas') +
+                  ': ' +
+                  e.description +
+                  ' (rapporterat slut: ' +
+                  (e.end || 'uppgift saknas') +
+                  ')',
+              )
+              .join('\n')) +
+        '\n' +
+        d.note,
+      sources: d.sources
+        .filter((s) => s.fetchedAt)
+        .map((s) => ({
+          name: 'Trafikverket · ' + s.type,
+          time: s.fetchedAt,
+          url: 'https://data.trafikverket.se/',
+        })),
+    };
+  }
   if (toolOptions?.tool === 'traffic_status')
     return trafficAnswer(message, area, base, {
       selected: true,

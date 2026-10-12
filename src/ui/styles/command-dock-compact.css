@@ -476,3 +476,39 @@ body:not(.ui-clean-view):not(.recording-mode) #cesium-credits {
 .place-suggestions-status a {
   color: #5cd7e5;
 }
+.road-event-card {
+  position: fixed;
+  right: 24px;
+  top: 100px;
+  width: min(360px, calc(100vw - 48px));
+  max-height: calc(100vh - 220px);
+  overflow: auto;
+  z-index: 9500;
+  background: rgba(10, 19, 22, 0.95);
+  color: #d6e3e5;
+  border: 1px solid #247880;
+  border-radius: 18px;
+  padding: 20px;
+  font: 13px/1.5 sans-serif;
+  box-shadow: 0 10px 40px #0008;
+}
+.road-event-card button {
+  float: right;
+  background: #10282d;
+  color: #6ee5ef;
+  border: 1px solid #247880;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.road-event-card a {
+  color: #6ee5ef;
+}
+.road-event-card select {
+  width: 100%;
+  background: #10282d;
+  color: #d6e3e5;
+  border: 1px solid #247880;
+  border-radius: 8px;
+  padding: 8px;
+}
