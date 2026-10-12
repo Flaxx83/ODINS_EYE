@@ -500,6 +500,14 @@ export function findPickPoint({
       centres.push([at.x, at.y]);
     }
   }
+  // Small alpha-masked cone rings can have a transparent centre and no opaque
+  // pixels on the sparse cross below. Search a dense centre patch as well.
+  for (const [cx, cy] of centres)
+    for (let dy = -4; dy <= 4; dy++)
+      for (let dx = -4; dx <= 4; dx++) {
+        const hit = tryAt(cx + dx, cy + dy);
+        if (hit) return hit;
+      }
   for (const [cx, cy] of centres)
     for (let r = 0; r <= 16; r += 2)
       for (const [dx, dy] of [
@@ -1128,8 +1136,9 @@ async function main() {
                 ? fixture.images.map((image) => [image.lon, image.lat])
                 : null,
               billboardIds: null,
-              // Live: the cones' positions are only known from the globe.
-              billboardPrefix: fixtures ? null : 'mly:img:',
+              // Clamping can move a fixture cone away from its ellipsoid
+              // projection too: prefer the actually rendered billboard.
+              billboardPrefix: 'mly:img:',
             },
           );
           assert.ok(await cone.jsonValue(), 'an image cone is pickable');
