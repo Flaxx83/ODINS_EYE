@@ -239,7 +239,15 @@ export function createLocalAiLayer() {
                 }
                 for (const leg of missing) {
                   const p = document.createElement('p');
-                  p.textContent = leg.name + ': ' + leg.from + ' → ' + leg.to;
+                  p.textContent =
+                    leg.name +
+                    ': ' +
+                    leg.from +
+                    ' → ' +
+                    leg.to +
+                    (leg.geometryReason?.message
+                      ? ' · ' + leg.geometryReason.message
+                      : '');
                   report.append(p);
                 }
               };

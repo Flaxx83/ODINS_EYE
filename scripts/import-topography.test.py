@@ -73,4 +73,11 @@ class ImportTests(unittest.TestCase):
         self.assertEqual(manifest.read_bytes(),previous)
 
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__':
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('rail_routing_tests', ROOT/'scripts/rail-routing.test.py')
+    tests = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tests)
+    suite = unittest.TestSuite([unittest.defaultTestLoader.loadTestsFromModule(sys.modules[__name__]), unittest.defaultTestLoader.loadTestsFromModule(tests)])
+    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    sys.exit(0 if result.wasSuccessful() else 1)

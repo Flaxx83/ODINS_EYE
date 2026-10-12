@@ -1,0 +1,277 @@
+{
+  "source": "Data från Trafiklab.se · ResRobot v2.1 · passlist=true · showPassingPoints=true",
+  "capturedAt": "2026-10-12T11:12:31.539Z",
+  "fixtures": [
+    {
+      "train": "164",
+      "date": "2026-10-12",
+      "time": "07:01:00",
+      "from": "Skövde Centralstation",
+      "to": "Hallsberg station",
+      "points": [
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Töreboda station",
+          "lon": 14.128391,
+          "lat": 58.706024
+        },
+        {
+          "name": "Laxå station",
+          "lon": 14.616658,
+          "lat": 58.989391
+        },
+        {
+          "name": "Hallsberg station",
+          "lon": 15.110391,
+          "lat": 59.066698
+        },
+        {
+          "name": "Hallsberg station",
+          "lon": 15.110391,
+          "lat": 59.066698
+        }
+      ]
+    },
+    {
+      "train": "164",
+      "date": "2026-10-12",
+      "time": "07:01:00",
+      "from": "Skövde Centralstation",
+      "to": "Stockholm Centralstation",
+      "points": [
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Töreboda station",
+          "lon": 14.128391,
+          "lat": 58.706024
+        },
+        {
+          "name": "Laxå station",
+          "lon": 14.616658,
+          "lat": 58.989391
+        },
+        {
+          "name": "Hallsberg station",
+          "lon": 15.110391,
+          "lat": 59.066698
+        },
+        {
+          "name": "Kumla station",
+          "lon": 15.14028,
+          "lat": 59.126377
+        },
+        {
+          "name": "Örebro Södra station",
+          "lon": 15.202332,
+          "lat": 59.269989
+        },
+        {
+          "name": "Örebro Centralstation",
+          "lon": 15.211348,
+          "lat": 59.278942
+        },
+        {
+          "name": "Arboga station",
+          "lon": 15.841061,
+          "lat": 59.397105
+        },
+        {
+          "name": "Köping station",
+          "lon": 16.004215,
+          "lat": 59.506675
+        },
+        {
+          "name": "Västerås Centralstation",
+          "lon": 16.551703,
+          "lat": 59.607705
+        },
+        {
+          "name": "Enköping station",
+          "lon": 17.086741,
+          "lat": 59.644327
+        },
+        {
+          "name": "Bålsta station (Håbo kn)",
+          "lon": 17.532813,
+          "lat": 59.568763
+        },
+        {
+          "name": "Sundbyberg station",
+          "lon": 17.970938,
+          "lat": 59.361032
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        }
+      ]
+    },
+    {
+      "train": "422",
+      "date": "2026-10-12",
+      "time": "07:33:00",
+      "from": "Skövde Centralstation",
+      "to": "Stockholm Centralstation",
+      "points": [
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Katrineholm Centralstation",
+          "lon": 16.208324,
+          "lat": 58.996591
+        },
+        {
+          "name": "Södertälje Syd station",
+          "lon": 17.645367,
+          "lat": 59.162415
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        }
+      ]
+    },
+    {
+      "train": "428",
+      "date": "2026-10-12",
+      "time": "09:11:00",
+      "from": "Göteborg Centralstation",
+      "to": "Stockholm Centralstation",
+      "points": [
+        {
+          "name": "Göteborg Centralstation",
+          "lon": 11.973479,
+          "lat": 57.708895
+        },
+        {
+          "name": "Göteborg Centralstation",
+          "lon": 11.973479,
+          "lat": 57.708895
+        },
+        {
+          "name": "Skövde Centralstation",
+          "lon": 13.853195,
+          "lat": 58.390898
+        },
+        {
+          "name": "Katrineholm Centralstation",
+          "lon": 16.208324,
+          "lat": 58.996591
+        },
+        {
+          "name": "Södertälje Syd station",
+          "lon": 17.645367,
+          "lat": 59.162415
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        }
+      ]
+    },
+    {
+      "train": "4132",
+      "date": "2026-10-12",
+      "time": "12:20:00",
+      "from": "Hallsberg station",
+      "to": "Stockholm Centralstation",
+      "points": [
+        {
+          "name": "Hallsberg station",
+          "lon": 15.110391,
+          "lat": 59.066698
+        },
+        {
+          "name": "Hallsberg station",
+          "lon": 15.110391,
+          "lat": 59.066698
+        },
+        {
+          "name": "Vingåker station",
+          "lon": 15.874078,
+          "lat": 59.042184
+        },
+        {
+          "name": "Katrineholm Centralstation",
+          "lon": 16.208324,
+          "lat": 58.996591
+        },
+        {
+          "name": "Flen station",
+          "lon": 16.588918,
+          "lat": 59.057295
+        },
+        {
+          "name": "Gnesta station",
+          "lon": 17.312685,
+          "lat": 59.04854
+        },
+        {
+          "name": "Södertälje Syd station",
+          "lon": 17.645367,
+          "lat": 59.162415
+        },
+        {
+          "name": "Flemingsberg station (Huddinge kn)",
+          "lon": 17.945678,
+          "lat": 59.217959
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        },
+        {
+          "name": "Stockholm Centralstation",
+          "lon": 18.058151,
+          "lat": 59.330136
+        }
+      ]
+    }
+  ],
+  "sourceUrl": "https://www.trafiklab.se/api/our-apis/resrobot-v21/route-planner/"
+}

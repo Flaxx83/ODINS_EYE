@@ -1,0 +1,69 @@
+{
+  "source": "Data från Trafiklab.se · ResRobot v2.1 · passlist=true · showPassingPoints=true",
+  "graphSha256": "da25d4e248baa8cbc40f9ca682b3c8dfef08ec1957c062a4ec33be2afd7bad65",
+  "fixtureCount": 5,
+  "geometryCount": 2,
+  "results": [
+    {
+      "train": "164",
+      "date": "2026-10-12",
+      "time": "07:01:00",
+      "from": "Skövde Centralstation",
+      "to": "Hallsberg station",
+      "status": "ok",
+      "points": 669,
+      "distanceMeters": 113335,
+      "maxSnapMeters": 28
+    },
+    {
+      "train": "164",
+      "date": "2026-10-12",
+      "time": "07:01:00",
+      "from": "Skövde Centralstation",
+      "to": "Stockholm Centralstation",
+      "status": "ok",
+      "points": 2595,
+      "distanceMeters": 341542.1,
+      "maxSnapMeters": 70.7
+    },
+    {
+      "train": "422",
+      "date": "2026-10-12",
+      "time": "07:33:00",
+      "from": "Skövde Centralstation",
+      "to": "Stockholm Centralstation",
+      "status": "missing",
+      "reason": "detour_rejected",
+      "fromStation": "Södertälje Syd station",
+      "toStation": "Stockholm Centralstation",
+      "points": 0,
+      "limitMeters": 72145.5
+    },
+    {
+      "train": "428",
+      "date": "2026-10-12",
+      "time": "09:11:00",
+      "from": "Göteborg Centralstation",
+      "to": "Stockholm Centralstation",
+      "status": "missing",
+      "reason": "detour_rejected",
+      "fromStation": "Södertälje Syd station",
+      "toStation": "Stockholm Centralstation",
+      "points": 0,
+      "limitMeters": 72145.5
+    },
+    {
+      "train": "4132",
+      "date": "2026-10-12",
+      "time": "12:20:00",
+      "from": "Hallsberg station",
+      "to": "Stockholm Centralstation",
+      "status": "missing",
+      "reason": "detour_rejected",
+      "fromStation": "Flemingsberg station (Huddinge kn)",
+      "toStation": "Stockholm Centralstation",
+      "points": 0,
+      "limitMeters": 35304.4
+    }
+  ]
+}
