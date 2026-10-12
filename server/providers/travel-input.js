@@ -356,6 +356,6 @@ export function placeMatches(query, name) {
     .every((part) =>
       /\d/.test(part)
         ? haystack.split(/[^\p{L}\p{N}]+/u).includes(part)
-        : haystack.includes(part),
+        : haystack.split(/\s+/).some((word) => word.startsWith(part)),
     );
 }
