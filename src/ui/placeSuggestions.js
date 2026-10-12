@@ -6,7 +6,7 @@ export class PlaceSuggestions {
     getArea,
     onSelect,
     fallback,
-    fetchImpl = fetch,
+    fetchImpl = (...args) => globalThis.fetch(...args),
     doc = document,
     debounceMs = 850,
   }) {

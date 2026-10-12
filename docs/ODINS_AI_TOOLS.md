@@ -64,3 +64,7 @@ Källor: Västtrafiks platsregister (adresser, hållplatser och platser) samt Ph
 Begränsningar: källornas täckning och svarstid varierar. Vid en otillgänglig källa märks listan som partiell och kräver uttryckligt val. Ett gatunamn motsvarar en gatupunkt, inte en känd entré. Ett verkligt prov med Storgatan i Skövde gav en valbar lista även genom Qwen/Bionic. Liveprovet hittade hållplatsen Lillegården i Skövde. Photon svarade inte inom tidsgränsen på vissa frågor, vilket verifierade partiell-listan; komplett nationell träfftäckning kan därför inte garanteras.
 
 Validering: 156 integrationstester, 18 riktade sök-/Location-tester, produktionens build och paketgränser passerade. Webbläsarprov verifierade att flera träffar inte flyttar kartan före val, att tangentbordsval fungerar och att koordinater behåller sitt navigeringsflöde.
+
+#### Rättning av webbläsarens fetch-anrop
+
+Location-widgetens standardtransport anropades först som en objektmetod, vilket gav `Illegal invocation` med webbläsarens inbyggda fetch. Standardtransporten anropar nu `globalThis.fetch` med rätt mottagare. De tidigare simulerade UI-svaren upptäckte inte felet. Ett nytt Chrome-prov med riktig fetch och lokala API:t verifierade sökningen Lillegårdsvägen och en valbar träfflista med Skövde-alternativ först.
