@@ -49,3 +49,5 @@ Tidigare daterade roadmapfönster ersätts av denna prioritering. Inga nya kalen
 Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [GitHub-projekt 3](https://github.com/users/Flaxx83/projects/3). Röst har fortsatt lägre prioritet.
 
 - #4: ankomsttid, datum och förtydliganden implementerat, inväntar granskning. Se [reseindata](ODINS_TRAVEL_INPUT.md). Nästa kärnuppgift i lösningsordningen är #3, kvarvarande järnvägsgeometri, samordnat med #30.
+
+- #3: utredning, säkrare nätkoppling och geometriorsaker implementerat, inväntar granskning. Se [järnvägsutredningen](ODINS_RAIL_GEOMETRY.md). 422/428/4132 har fortfarande en dokumenterad databegränsning; fortsatt geometriarbete samordnas med #30. Nästa kärnuppgift i ordningen är #1, validerade AI-verktyg och samtalskontext.

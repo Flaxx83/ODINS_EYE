@@ -68,3 +68,7 @@ Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet o
 ## Resefrågor: ankomsttid och datum (2026-10-12)
 
 #4: gemensam kalender- och tidsvalidering för Västtrafik, SL och Hela Sverige, riktiga ankomstsökningar, bevarat trafiknätsval, svensk lokal tid och förtydliganden för ogiltiga/tvetydiga uppgifter. Exakt adressmatchning för 11A/11 A och datum som bevaras vid platsval. Följdfrågor kräver hela resvägen tills #1 ger samtalskontext. Se [reseindata](ODINS_TRAVEL_INPUT.md).
+
+## Järnvägsgeometri och diagnostik (2026-10-12)
+
+#3: stationer kopplas till segment i nätet, osäkra omvägar/återkörningar avvisas och varje saknad sträcka får en orsak i panelen. Gles SJ-geometri blir inte en riktig spårlinje. Fem sparade fall omfattar 422/428/4132 och fungerande jämförelser; dessa tre tågsträckor saknar fortfarande säker geometri i det aktuella underlaget. `npm run qa:rail` återkör diagnosen. Se [utredning och begränsningar](ODINS_RAIL_GEOMETRY.md).

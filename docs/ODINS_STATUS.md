@@ -73,3 +73,7 @@ Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [
 ## Resefrågor – issue #4
 
 Ankomsttid, datum och gemensam tidsvalidering implementerat på feat/travel-arrival-dates, inväntar granskning. [Exempel, kalenderregler och begränsningar](ODINS_TRAVEL_INPUT.md). 111 integrationstester passerade. Valt trafiknät behålls; tvetydiga datum/tider behöver förtydligande. Automatisk kontext för följdfrågor återstår i #1.
+
+## Järnvägsutredning – issue #3
+
+Utredning, säkrare segmentkoppling och orsaker per delsträcka implementerat på fix/rail-network-routing-diagnostics, inväntar granskning. 125 integrationstester och nio offlineprov passerade. Två av fem sparade fall fick beräknad geometri; 422/428/4132 avvisades med konkret orsak. [Resultat och kvarstående databegränsningar](ODINS_RAIL_GEOMETRY.md). Kvarvarande geometriarbete inklusive expressbussar följs i #30.

@@ -96,6 +96,7 @@ test('a clean clone without geometry keeps trips and explains missing imports', 
       'sj-trip-geometry.js',
       'sl-trip-geometry.js',
       'rail-network-geometry.js',
+      'local-ai-data.js',
       'geometry-availability.js',
       'python-runtime.js',
       'topography.js',
@@ -131,6 +132,8 @@ test('a clean clone without geometry keeps trips and explains missing imports', 
             LegList: {
               Leg: [
                 {
+                  Origin: { name: 'Start', lon: 13, lat: 58 },
+                  Destination: { name: 'Slut', lon: 18, lat: 59 },
                   Product: [
                     { name: 'tåg', operatorInfo: { name: 'SJ' } },
                     { operatorInfo: { name: 'Storstockholm' } },
@@ -146,6 +149,7 @@ test('a clean clone without geometry keeps trips and explains missing imports', 
       assert.equal(result[0].legs[0].approximate, true);
     }
     assert.equal(mapped[0].geometryWarnings.length, 3);
+    assert.equal(mapped[0].legs[0].geometryReason.code, 'graph_unavailable');
     let handler;
     const { topographyPlugin } = await import(
       pathToFileURL(join(providers, 'topography.js'))
