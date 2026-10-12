@@ -109,3 +109,8 @@ Valbart lager **Data Layers → Infrastructure → Ortsnamn · Esri** använder 
 ### 2026-10-12 — Vägväder och kamerastation (#23)
 
 Valbart Trafikverkslager och validerat AI-verktyg för stationernas senaste mätningar. Svensk CCTV-position får explicit knapp för närmaste station med avstånd/mättid. Rapporterat väglag visas separat för angivna vägsträckor; inget halklöfte eller automatisk omruttning. WeatherMeasurepoint-cache nu 5/15 min eftersom svaret innehåller observationer. Se ODINS_ROAD_WEATHER.md för geometriavgränsningar och prov.
+
+
+### Fast AI-knapp i dockan (2026-10-12)
+
+AI-knappen visas även när Lokal AI är avstängt. Klick aktiverar lagret och öppnar panelen; minimering behåller samtalet. Avstängning via Data Layers stänger panelen men lämnar knappen kvar för nästa öppning. Knappens bredd och panelens placering mot Location är oförändrade. Inga modell- eller API-anrop görs förrän användaren skickar en fråga.

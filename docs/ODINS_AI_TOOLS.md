@@ -68,3 +68,8 @@ Validering: 156 integrationstester, 18 riktade sök-/Location-tester, produktion
 #### Rättning av webbläsarens fetch-anrop
 
 Location-widgetens standardtransport anropades först som en objektmetod, vilket gav `Illegal invocation` med webbläsarens inbyggda fetch. Standardtransporten anropar nu `globalThis.fetch` med rätt mottagare. De tidigare simulerade UI-svaren upptäckte inte felet. Ett nytt Chrome-prov med riktig fetch och lokala API:t verifierade sökningen Lillegårdsvägen och en valbar träfflista med Skövde-alternativ först.
+
+
+### Fast AI-knapp i dockan (2026-10-12)
+
+AI-knappen visas även när Lokal AI är avstängt. Klick aktiverar lagret och öppnar panelen; minimering behåller samtalet. Avstängning via Data Layers stänger panelen men lämnar knappen kvar för nästa öppning. Knappens bredd och panelens placering mot Location är oförändrade. Inga modell- eller API-anrop görs förrän användaren skickar en fråga.
