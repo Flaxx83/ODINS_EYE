@@ -44,12 +44,17 @@ export async function trafficAnswer(
     );
   let center = area;
   let centerName = 'kartans position';
-  const place = message
-    .match(
-      /\bi\s+(\p{L}[\p{L} -]*?)(?:\s+(?:är|just|nu|idag|i dag|som)|[?.!]|$)/iu,
-    )?.[1]
-    ?.trim();
-  if (place && !/^tid$/i.test(place)) {
+  const places = [
+    ...message.matchAll(
+      /\bi\s+(\p{L}[\p{L} -]*?)(?=\s+i\s|\s+(?:är|just|nu|idag|som)|[?.!]|$)/giu,
+    ),
+  ]
+    .map((m) => m[1].trim())
+    .filter((p) => !/^(?:tid|dag|området|närheten)$/i.test(p));
+  if (places.length > 1)
+    return unknown('Ange en stad åt gången för trafikläget.');
+  const place = places[0];
+  if (place) {
     const normalized = place.toLocaleLowerCase('sv');
     const matches = towns.filter(
       (t) =>

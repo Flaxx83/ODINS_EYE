@@ -68,4 +68,4 @@ AI-dockans placering har justerats: knappen är 160 px på rymliga skärmar (tid
 
 ## Trafikläge – issue #5
 
-Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [Urval, prognoser, begränsningar och verifiering](ODINS_TRAFFIC_COVERAGE.md). 90 integrationstester och liveprov via AI-endpointen för Göteborg och Stockholm passerade. Statistik avser hållplatsavgångar i ett avgränsat urval; hela stadens fordon ingår inte.
+Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [Urval, prognoser, begränsningar och verifiering](ODINS_TRAFFIC_COVERAGE.md). 91 integrationstester och liveprov via AI-endpointen för Göteborg och Stockholm passerade. Statistik avser hållplatsavgångar i ett avgränsat urval; hela stadens fordon ingår inte.

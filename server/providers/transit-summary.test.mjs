@@ -340,3 +340,20 @@ test('coalesced and cached departure responses retain the actual upstream fetch 
   assert.equal(fresh.gev.fetchedAt, new Date(clock).toISOString());
   assert.equal(calls, 2);
 });
+
+test('i tid i Göteborg uses Göteborg rather than treating the status phrase as a place', async () => {
+  let target;
+  await trafficAnswer(
+    'Är bussarna i tid i Göteborg?',
+    { lat: 59.33, lon: 18.06 },
+    '',
+    {
+      getToken: async () => 'dummy',
+      fetchImpl: async (url) => {
+        target = url;
+        return Response.json({ results: [] });
+      },
+    },
+  );
+  assert.match(target, /latitude=57.70716/);
+});

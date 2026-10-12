@@ -28,7 +28,7 @@ Trafiklab-proxyn bevarar `gev.fetchedAt` från den faktiska uppströmshämtninge
 
 ## Verifiering 2026-10-12
 
-- 90 integrationstester passerade, varav 16 nya fall för identitet, dubbletter, konflikter, tidsfönster, falsk realtime, gamla/felaktiga svar, urval, API-begränsning och bevarad cacheklocka.
+- 91 integrationstester passerade, varav 17 nya fall för identitet, dubbletter, konflikter, tidsfönster, falsk realtime, gamla/felaktiga svar, urval, API-begränsning och bevarad cacheklocka.
 - Live Göteborg: fem hållplatsområden, 122 buss-/spårvagnsavgångar, tre begränsade tavlor, status partial. Antal är provets ögonblicksbild.
 - Live Stockholm: fem hållplatsområden, 25 bussavgångar, varav 16 okända prognoser; status sample. Okända tolkades inte som i tid.
 - Det faktiska `/api/local-ai` gav HTTP 200 och strukturerat trafikläge för båda städerna med kartcentrum i en annan region.
