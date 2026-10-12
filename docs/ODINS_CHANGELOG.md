@@ -114,3 +114,10 @@ Valbart Trafikverkslager och validerat AI-verktyg för stationernas senaste mät
 ### Fast AI-knapp i dockan (2026-10-12)
 
 AI-knappen visas även när Lokal AI är avstängt. Klick aktiverar lagret och öppnar panelen; minimering behåller samtalet. Avstängning via Data Layers stänger panelen men lämnar knappen kvar för nästa öppning. Knappens bredd och panelens placering mot Location är oförändrade. Inga modell- eller API-anrop görs förrän användaren skickar en fråga.
+
+
+### Fristående gångväg via AI (2026-10-12)
+
+Verktyget `walk_route` hanterar frågor som ”Kortaste vägen att gå från Storgatan i Skövde till Torget i Skövde?”. Servern bevarar uttryckliga start- och målnamn inklusive husnummer. Gemensam adressökning ger platsval om flera träffar finns; endast senaste svarets ID:n accepteras. Gångvägen kan visas på kartan med befintlig Valhalla/OSM-geometri. Avstånd mäts längs geometrin och gångtid uppskattas vid 6 km/h. Det är en beräknad gångväg utan garanti för absolut kortaste sträcka. Befintlig lokal gångruttning (cirka 5 km mellan ändpunkterna), cache och anropsbudget återanvänds. Om geometri saknas visas ett tydligt fel och ingen fågelväg. Ingen kollektivtrafikplanering behövs för detta verktyg.
+
+Validering: tre regressioner för platsval, bokstavlig adress och utebliven geometri; liveprov med lokal modell och Valhalla gav sammanhängande gånggeometri.

@@ -26,6 +26,100 @@ const trip = () =>
   });
 const first =
   'Jag vill resa från Göteborg central till Vällingby imorgon kl 07:00';
+test('walking route preserves ambiguity and uses only validated latest choices', async () => {
+  let planned = 0,
+    routed = 0;
+  const service = createLocalAiService({
+    now,
+    planner: async () => {
+      planned++;
+      return action('walk_route', {
+        origin: 'Storgatan',
+        destination: 'Torget',
+      });
+    },
+    findPlaces: async (q) => ({
+      rows: (q === 'Storgatan' ? [1, 2] : [3]).map((i) => ({
+        id: String(i),
+        name: q + i,
+        lat: 58.4 + i / 1000,
+        lon: 13.85,
+        exact: true,
+      })),
+    }),
+    routeWalking: async (trips) => {
+      routed++;
+      const leg = trips[0].legs[0];
+      leg.approximate = false;
+      leg.geometrySource = 'fixture';
+      return trips;
+    },
+  });
+  const result = await service.ask({
+    message: 'Kortaste vägen att gå från Storgatan till Torget?',
+    area,
+  });
+  assert.equal(result.tripChoices.origins.length, 2);
+  assert.equal(routed, 0);
+  await assert.rejects(
+    service.ask({
+      message: 'val',
+      area,
+      conversationId: result.conversationId,
+      choice: { origin: 'invented', destination: '3' },
+    }),
+  );
+  const route = await service.ask({
+    message: 'val',
+    area,
+    conversationId: result.conversationId,
+    choice: { origin: '2', destination: '3' },
+  });
+  assert.equal(planned, 1);
+  assert.equal(routed, 1);
+  assert.equal(route.mapTrips[0].legs[0].from, 'Storgatan2');
+  assert.match(route.answer, /6 km\/h/);
+  assert.match(route.answer, /kortaste vägen kan inte garanteras/);
+});
+test('walking routing failure never returns a straight map line', async () => {
+  const service = createLocalAiService({
+    now,
+    planner: async () =>
+      action('walk_route', { origin: 'Start', destination: 'Mål' }),
+    findPlaces: async (q) => ({
+      rows: [{ id: q, name: q, lat: 58.4, lon: 13.85 }],
+    }),
+    routeWalking: async (trips) => trips,
+  });
+  const result = await service.ask({ message: 'Gå från Start till Mål', area });
+  assert.equal(result.mapTrips, undefined);
+  assert.match(result.answer, /kunde inte beräknas/);
+  assert.throws(() =>
+    validateToolPlan(
+      action('walk_route', { origin: 'Start', destination: 'påhittat' }),
+      ['Gå från Start till Mål'],
+    ),
+  );
+});
+test('walking endpoints retain the literal street and house number despite model rewriting', async () => {
+  const searched = [];
+  const service = createLocalAiService({
+    now,
+    planner: async () =>
+      action('walk_route', { origin: 'Storgården', destination: 'Torget' }),
+    findPlaces: async (q) => {
+      searched.push(q);
+      return { rows: [{ id: q, name: q, lat: 58.4, lon: 13.85 }] };
+    },
+    routeWalking: async (trips) => trips,
+  });
+  await service.ask({
+    message:
+      'Vad är kortaste vägen att gå från Storgårdsvägen 11A till Torget?',
+    area,
+  });
+  assert.deepEqual(searched, ['Storgårdsvägen 11A', 'Torget']);
+});
 test('model selects tools for a question outside the old fixed patterns', async () => {
   let query;
   const service = createLocalAiService({

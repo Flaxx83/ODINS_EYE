@@ -324,7 +324,10 @@ export function createLocalAiLayer() {
               selects.push(select);
             }
             const go = document.createElement('button');
-            go.textContent = 'Hämta resor';
+            go.textContent =
+              tripChoice.tool === 'walk_route'
+                ? 'Beräkna gångväg'
+                : 'Hämta resor';
             go.onclick = () =>
               submit(tripChoice.message, {
                 origin: selects[0].value,
