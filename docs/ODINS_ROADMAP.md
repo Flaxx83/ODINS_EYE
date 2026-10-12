@@ -39,7 +39,7 @@ Tidigare daterade roadmapfönster ersätts av denna prioritering. Inga nya kalen
 ## Genomfört arbete som inväntar granskning
 
 - #2: installation och importer i PR #11.
-- #1: paneldesign och dockning i PR #12, #14 och #17; AI-verktygsintegrationen återstår.
+- #1: paneldesign och dockning i PR #12, #14 och #17; validerade AI-verktyg och samtalskontext nu implementerade, inväntar granskning. Se [AI-integration](ODINS_AI_TOOLS.md).
 - #4: tidstolkning och robust inklistrad text i PR #13; övrig frågetolkning återstår.
 - #15: fartygskort i PR #16, In review.
 - #18: svenska vägkameror i PR #19, In review. Lokal konfiguration: tak 5 000, Texas 200 och Kalifornien 100. Senaste katalogprov innehöll alla 1 548 svenska kameror; antal kan ändras med källan och andra leverantörers svar.
@@ -51,3 +51,5 @@ Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [Gi
 - #4: ankomsttid, datum och förtydliganden implementerat, inväntar granskning. Se [reseindata](ODINS_TRAVEL_INPUT.md). Nästa kärnuppgift i lösningsordningen är #3, kvarvarande järnvägsgeometri, samordnat med #30.
 
 - #3: utredning, säkrare nätkoppling och geometriorsaker implementerat, inväntar granskning. Se [järnvägsutredningen](ODINS_RAIL_GEOMETRY.md). 422/428/4132 har fortfarande en dokumenterad databegränsning; fortsatt geometriarbete samordnas med #30. Nästa kärnuppgift i ordningen är #1, validerade AI-verktyg och samtalskontext.
+
+- #1: validerade verktyg och tillfälligt samtalsminne implementerat, inväntar granskning. Se [AI-integration](ODINS_AI_TOOLS.md). Fem verktyg återanvänder befintliga källor; nya datalager behöver egna verktygsadaptrar. Nästa kärnuppgift enligt ordningen är #7, attribution, routingvillkor och cachepolicy.

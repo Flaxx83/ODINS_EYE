@@ -22,7 +22,7 @@ Klockslag utan ankomstuttryck gäller avgång. Ankomst anges med exempelvis anko
 - Tidsuttryck kan stå före eller efter resvägen. Inklistrade radbrytningar och osynliga blanksteg normaliseras. Adress 11A och 11 A behandlas lika; 110 eller 11B väljs inte istället.
 - Kommunangivelse kan matchas även när hållplatsnamnet har en mellanliggande trafikslagstext. Flera platsmatchningar kräver ett explicit val. Ett gammalt/felaktigt valt ID ersätts inte automatiskt med en annan plats.
 - När användaren väljer bland platser behålls explicit datum, tid och avgång/ankomst i en fullständig fråga. Imorgon räknas inte om efter midnatt under platsvalet. Sökning utan klockslag gäller aktuell tid när valet skickas.
-- Följdfrågor som Och imorgon kl 07? kräver att hela resvägen anges igen. Automatisk samtalskontext återstår i #1.
+- Följdfrågor som Och imorgon kl 07? kan återanvända resvägen i samma aktiva AI-samtal via #1. Datum och ankomst/avgång behålls när de inte ändras. Utgånget samtal eller Nytt samtal kräver nya reseuppgifter. Se [AI-kontext](ODINS_AI_TOOLS.md).
 
 API:ernas tidtabellsperiod begränsar möjliga framtida datum. API-fel eller tomma förslag ger inga påhittade resor. Geometritäckning följs separat i #3/#30.
 

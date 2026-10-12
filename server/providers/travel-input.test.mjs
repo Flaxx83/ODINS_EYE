@@ -27,6 +27,7 @@ test('user journey request preserves both stop names and departure at 07', () =>
     ),
     {
       date: '2026-10-12',
+      hasDate: true,
       time: '07:00',
       clean: 'Jag vill resa från Göteborg central till Vällingby T-bana',
       mode: 'departure',

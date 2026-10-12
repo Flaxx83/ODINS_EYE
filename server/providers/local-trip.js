@@ -13,6 +13,7 @@ import {
 import { resolveVasttrafikGeometry } from './trip-geometry.js';
 import { vasttrafikMapTrips } from './trip-map.js';
 import { token } from './vasttrafik.js';
+import { journeyMatchesMode } from './journey-mode.js';
 async function get(path) {
   const r = await fetch('https://ext-api.vasttrafik.se/pr/v4/' + path, {
     headers: { Authorization: 'Bearer ' + (await token()) },
@@ -101,6 +102,7 @@ export async function planTrip(
   if (bus) q.append('transportModes', 'bus');
   const data = await getImpl('journeys?' + q);
   const trips = (data.results || [])
+    .filter((j) => journeyMatchesMode(j.tripLegs || [], message, 'vasttrafik'))
     .filter(
       (j) =>
         !bus ||

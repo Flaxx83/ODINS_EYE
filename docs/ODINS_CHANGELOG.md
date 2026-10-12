@@ -72,3 +72,7 @@ Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet o
 ## Järnvägsgeometri och diagnostik (2026-10-12)
 
 #3: stationer kopplas till segment i nätet, osäkra omvägar/återkörningar avvisas och varje saknad sträcka får en orsak i panelen. Gles SJ-geometri blir inte en riktig spårlinje. Fem sparade fall omfattar 422/428/4132 och fungerande jämförelser; dessa tre tågsträckor saknar fortfarande säker geometri i det aktuella underlaget. `npm run qa:rail` återkör diagnosen. Se [utredning och begränsningar](ODINS_RAIL_GEOMETRY.md).
+
+## AI-verktyg och samtalskontext (2026-10-12)
+
+#1: modellen väljer validerade verktyg för resor, avgångsurval, polisnotiser, luftmätningar och ortnavigering. Servern tolkar datum/tid och formatterar källfakta. Tillfälligt samtalsminne gör följdfrågor möjliga; Nytt samtal och nätbyte rensar kontext. Platsval, argument, anropsbudget och samtidighet skyddas. 17 nya offlineprov samt riktiga Qwen-/källprov. Se [AI-verktyg, begränsningar och verifiering](ODINS_AI_TOOLS.md).
