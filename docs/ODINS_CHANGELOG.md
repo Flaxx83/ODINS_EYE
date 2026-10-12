@@ -76,3 +76,7 @@ Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet o
 ## AI-verktyg och samtalskontext (2026-10-12)
 
 #1: modellen väljer validerade verktyg för resor, avgångsurval, polisnotiser, luftmätningar och ortnavigering. Servern tolkar datum/tid och formatterar källfakta. Tillfälligt samtalsminne gör följdfrågor möjliga; Nytt samtal och nätbyte rensar kontext. Platsval, argument, anropsbudget och samtidighet skyddas. 18 nya offlineprov samt riktiga Qwen-/källprov. Se [AI-verktyg, begränsningar och verifiering](ODINS_AI_TOOLS.md).
+
+## Hemadress som rese-start (2026-10-12)
+
+Uttryckliga hemadresser och hela hållplatsnamn får inte förkortas till ortnamn. ”Behöver vara [plats] vid [tid]” ger ankomst. Entydig start visas utan rullista; endast återstående tvetydigheter behöver väljas. Koordinaterna används av reseplaneraren för gång/kollektivtrafik, utan att låsa användaren till närmaste hållplats. Sex regressionstester och riktiga adress-/reseprov. Se [AI-integrationen](ODINS_AI_TOOLS.md).

@@ -486,3 +486,136 @@ test('calendar-leading data question reaches the model instead of the legacy rou
   assert.deepEqual(r.toolsUsed, ['air_quality']);
   assert.deepEqual(queries, ['luftkvalitet']);
 });
+test('literal home address overrides model-shortened town and implicit arrival stays arrival', async () => {
+  let query;
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'Skövde',
+        destination: 'Vällingby Centrum',
+        mode: 'any',
+      }),
+    execute: async (q) => ((query = q), { answer: 'fixture' }),
+  });
+  await s.ask({
+    message:
+      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Lillegårdsvägen 11 A i Skövde.',
+    area,
+    network: 'Hela Sverige',
+  });
+  assert.match(
+    query,
+    /från Lillegårdsvägen 11 A i Skövde till Vällingby Centrum/,
+  );
+  assert.match(query, /2026-10-13 ankomst kl 11:00/);
+});
+test('explicit departure overrides home context and model cannot shorten its stop name', async () => {
+  let query;
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'Göteborg',
+        destination: 'Stockholm',
+        mode: 'any',
+      }),
+    execute: async (q) => ((query = q), { answer: 'fixture' }),
+  });
+  await s.ask({
+    message:
+      'Jag bor på Lillegårdsvägen 11 A i Skövde. Jag vill resa från Göteborg central till Stockholm Centralstation imorgon kl 07:00.',
+    area,
+  });
+  assert.match(query, /från Göteborg central till Stockholm Centralstation/);
+  assert.doesNotMatch(query, /från Lillegård/);
+});
+test('follow-up preserves full home address when the model reverts to the town', async () => {
+  let queries = [];
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'Skövde',
+        destination: 'Vällingby',
+        mode: 'any',
+      }),
+    execute: async (q) => (queries.push(q), { answer: 'fixture' }),
+  });
+  const a = await s.ask({
+    message:
+      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Lillegårdsvägen 11 A i Skövde.',
+    area,
+  });
+  await s.ask({
+    message: 'Och kl 10:30 istället',
+    area,
+    conversationId: a.conversationId,
+  });
+  assert.match(
+    queries[1],
+    /från Lillegårdsvägen 11 A i Skövde till Vällingby Centrum/,
+  );
+  assert.match(queries[1], /2026-10-13 ankomst kl 10:30/);
+});
+test('two explicit home addresses ask for clarification instead of selecting a guessed start', async () => {
+  let calls = 0;
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'Skövde',
+        destination: 'Vällingby',
+        mode: 'any',
+      }),
+    execute: async () => {
+      calls++;
+    },
+  });
+  const r = await s.ask({
+    message:
+      'Jag bor på Lillegårdsvägen 11 A i Skövde. Jag bor på Annagatan 2 i Skövde. Jag vill till Vällingby imorgon kl 11:00.',
+    area,
+  });
+  assert.equal(r.needsClarification, true);
+  assert.equal(calls, 0);
+});
+test('period within a stop name is retained instead of treated as a sentence boundary', async () => {
+  let query;
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'St. Eriksplan',
+        destination: 'Stockholm',
+        mode: 'any',
+      }),
+    execute: async (q) => ((query = q), { answer: 'fixture' }),
+  });
+  await s.ask({
+    message:
+      'Jag vill resa från St. Eriksplan till Stockholm Centralstation imorgon kl 07:00.',
+    area,
+  });
+  assert.match(query, /från St\. Eriksplan till Stockholm Centralstation/);
+});
+test('literal street without number remains a street rather than falling back to the whole town', async () => {
+  let query;
+  const s = createLocalAiService({
+    now,
+    planner: async () =>
+      action('plan_trip', {
+        origin: 'Skövde',
+        destination: 'Stockholm',
+        mode: 'any',
+      }),
+    execute: async (q) => ((query = q), { answer: 'fixture' }),
+  });
+  await s.ask({
+    message:
+      'Jag bor på Lillegårdsvägen i Skövde. Jag behöver vara Stockholm imorgon kl 11:00.',
+    area,
+  });
+  assert.match(query, /från Lillegårdsvägen i Skövde till Stockholm/);
+  assert.doesNotMatch(query, /Lillegårdsvägen 11/);
+});
