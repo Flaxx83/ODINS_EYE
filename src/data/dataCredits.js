@@ -92,6 +92,10 @@ export function hideOsmCredit(viewer, owner) {
 }
 
 export const DATA_CREDITS = [
+  {
+    key: 'esri-place-labels',
+    html: 'Place names and boundaries: <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer" target="_blank" rel="noopener">Esri World Boundaries and Places</a>',
+  },
   // ── Live sources ────────────────────────────────────────────────
   {
     key: 'opensky',

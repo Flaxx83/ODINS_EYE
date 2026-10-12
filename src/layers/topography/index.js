@@ -102,3 +102,55 @@ export function createTopographyLayers() {
     return layer;
   });
 }
+
+/** Transparent reference tiles above satellite imagery; includes place names and boundaries. */
+export function createPlaceNamesLayer() {
+  let viewer,
+    imagery,
+    enabled = false,
+    error = null;
+  return {
+    id: 'place-labels',
+    name: 'Ortsnamn · Esri',
+    category: 'infrastructure',
+    init(v) {
+      viewer = v;
+      imagery = C.ImageryLayer.fromProviderAsync(
+        C.ArcGisMapServerImageryProvider.fromUrl(
+          'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer',
+          {
+            enablePickFeatures: false,
+            credit: 'Esri · World Boundaries and Places',
+          },
+        ),
+        { show: false },
+      );
+      imagery.errorEvent.addEventListener(() => {
+        error = 'Ortsnamn kunde inte hämtas från Esri.';
+      });
+      viewer.imageryLayers.add(imagery);
+    },
+    enable() {
+      enabled = true;
+      imagery.show = true;
+      viewer.imageryLayers.raiseToTop(imagery);
+      viewer.scene.requestRender();
+    },
+    disable() {
+      enabled = false;
+      if (imagery) imagery.show = false;
+      viewer?.scene.requestRender();
+    },
+    update() {
+      if (enabled && imagery) viewer.imageryLayers.raiseToTop(imagery);
+    },
+    getStats() {
+      return { count: imagery?.ready ? 1 : 0, error };
+    },
+    destroy() {
+      enabled = false;
+      if (viewer && imagery) viewer.imageryLayers.remove(imagery, true);
+      imagery = null;
+    },
+  };
+}

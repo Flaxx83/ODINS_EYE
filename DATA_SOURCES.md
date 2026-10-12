@@ -338,3 +338,7 @@ NOAA density imagery with the raw GLM product.
 ## In-app attribution
 
 The required Google Maps / Cesium credit renders on the on-globe credit line (`#cesium-credits`, bottom-left) and must stay visible — including in clean-view and recording modes (the whole line, logo + "Google Maps" + the "Data attribution" link, stays on screen; only the GEV panels/HUD fade). The layer-specific credits (adsb.lol, adsbdb, TeleGeography, OSM datacenters/dams/roads, NASA FIRMS, CelesTrak, USGS, City of Austin, Fintraffic, GBFS, Radio Browser, OpenSky, AISStream) are registered into the expandable **"Data attribution"** popover on that credit line via `viewer.creditDisplay.addStaticCredit(new Cesium.Credit(html, /* showOnScreen */ false))` — see `src/data/dataCredits.js`. When you add a new data source, add its license and attribution to this file **and** append an entry to `DATA_CREDITS` in `src/data/dataCredits.js` so it surfaces in the app.
+
+## Esri ortsnamn och gränser
+
+Valbart transparent referenslager ovanpå satellitbilden: https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer . Esri World Boundaries and Places; namn och administrativa gränser väljs av tjänsten vid respektive zoomnivå. Källa och tjänstens egna credits visas i Cesiums attribution. Data omfattas av Esris tjänstevillkor, inte projektets MIT-licens. Kräver nätåtkomst; detta är inte Lantmäteriets lokala filer. Ingen massnedladdning eller offlinekopiering införs.

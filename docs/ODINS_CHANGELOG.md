@@ -87,3 +87,7 @@ Uttryckliga hemadresser och hela hållplatsnamn får inte förkortas till ortnam
 - Kartpositionen prioriterar närhet utan geografisk spärr. Exakta husnummer/suffix skyddas. AI-val valideras mot senaste samtalssvar.
 - Västtrafik + Photon/OpenStreetMap med cache, anropsbegränsning, tydlig partiell källa och källhänvisning.
 - 156 integrationstester och riktade Location-/webbläsarprov passerade. Se ODINS_AI_TOOLS.md för beteende och begränsningar.
+
+### 2026-10-12 — Ortsnamn ovanpå satellitkartan
+
+Valbart lager **Data Layers → Infrastructure → Ortsnamn · Esri** använder transparenta World Boundaries and Places-plattor. Även administrativa gränser ingår. Zoomnivån styr vilka namn tjänsten visar. Kräver nätåtkomst. Samma lokala lagerbeteende som Lantmäteriets tillägg: slås på via lagerpanelen och ingår inte i delningslänkar. Chrome verifierade fem riktiga namnplattor och på/av; build och katalogprov passerade.
