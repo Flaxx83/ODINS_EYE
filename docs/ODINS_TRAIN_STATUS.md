@@ -12,7 +12,7 @@ Avgång och ankomst matchas var för sig med stationssignatur, annonserat tågnu
 
 ## Status och källor
 
-Planerad, beräknad och faktisk tid hålls separat. Faktisk tid i framtiden ignoreras. Avvikelse mer än en minut blir sen/tidig; en uttrycklig beräknad eller faktisk tid inom en minut kan visas som i tid enligt uppgiften. Saknad prognos betyder aldrig i tid. Inställt, spår, preliminär prognos och Deviation.Description visas när fälten finns. Saknade värden visas som Uppgift saknas.
+Planerad, beräknad och faktisk tid hålls separat. Felaktiga kalenderdatum ignoreras utan datum-normalisering. Faktisk tid i framtiden ignoreras; beräknad/faktisk tid mer än 48 timmar från den planerade händelsen behandlas som saknad uppgift. Avvikelse mer än en minut blir sen/tidig; en uttrycklig beräknad eller faktisk tid inom en minut kan visas som i tid enligt uppgiften. Saknad prognos betyder aldrig i tid. Inställt, spår, preliminär prognos och Deviation.Description visas när fälten finns. Saknade värden visas som Uppgift saknas.
 
 Endast tågetapper berikas: buss, spårvagn, tunnelbana och gång får inte dessa statusvärden. Källans ModifiedTime redovisas separat från fetchedAt. En gammal klientcache, gammal stationskatalog eller saknad/felaktig/mer än sex timmar gammal ModifiedTime får inte beskrivas som färsk trafikstatus. Äldre rapporterad inställning visas uttryckligen som äldre information med okänd aktuell status.
 
@@ -28,7 +28,7 @@ TrainMessage 1.7 och 1.3 accepterades inte av endpointen i modellproverna för #
 
 ## Verifiering
 
-`npm run test:integrations` innehåller fixtures för Skövde–Stockholm, Göteborg–Stockholm, försening, inställt, midnatt, sommartid, saknad prognos, gammal data, tvetydighet, konflikter i trafikdatum, felaktigt tågnummersfält, begränsade svar, anropsbudget och hängande källa. 70 integrationsprov passerade lokalt.
+`npm run test:integrations` innehåller fixtures för Skövde–Stockholm, Göteborg–Stockholm, försening, inställt, midnatt, sommartid, saknad prognos, gammal data, tvetydighet, konflikter i trafikdatum, felaktigt tågnummersfält, begränsade svar, anropsbudget och hängande källa. 71 integrationsprov passerade lokalt.
 
 Liveprov 2026-10-12: stationsfrågan gav 719 annonserade stationer utan limit-trunkering. ResRobot Göteborg–Stockholm matchade båda ändpunkterna för tåg 426 och returnerade beräknade förseningar, spår och preliminära avvikelser. Det kompletta `/api/local-ai`-flödet returnerade HTTP 200, tre reseförslag, tågstatus och separata tider i svarstexten. Detta är ett tidsbundet verifieringsprov, inte en beständig trafikutskrift. Slutliga CI-resultat registreras i issue #21 och PR:n.
 

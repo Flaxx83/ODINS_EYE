@@ -575,3 +575,32 @@ test('source footer uses real cache fetch time and never invents a fetch for fut
   });
   assert.deepEqual(unavailable.sources, []);
 });
+
+test('malformed calendar clocks and outlier actual/forecast dates cannot imply punctuality', () => {
+  const bad = announcementMatch(
+    ep,
+    '422',
+    [
+      row({
+        EstimatedTimeAtLocation: '2026-02-30T07:00:00+02:00',
+        TimeAtLocation: '1999-10-12T07:00:00+02:00',
+      }),
+    ],
+    meta,
+    now,
+  );
+  assert.equal(bad.status, 'unknown');
+  assert.equal(bad.estimated, null);
+  assert.equal(bad.actual, null);
+  const invalidPlan = { ...ep, planned: '2026-03-02T05:00:00Z' };
+  assert.equal(
+    announcementMatch(
+      invalidPlan,
+      '422',
+      [row({ AdvertisedTimeAtLocation: '2026-02-30T07:00:00+02:00' })],
+      meta,
+      now,
+    ).reason,
+    'train_unmatched',
+  );
+});

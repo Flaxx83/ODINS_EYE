@@ -54,10 +54,14 @@ export function stockholmTime(date, time) {
     });
   return candidates.length === 1 ? new Date(candidates[0]).toISOString() : null;
 }
-const explicitTime = (v) =>
-  Number.isFinite(parseReportedTime(v))
-    ? new Date(parseReportedTime(v)).toISOString()
-    : null;
+const explicitTime = (v) => {
+  const parsed = parseReportedTime(v);
+  if (!Number.isFinite(parsed) || Number(v.slice(11, 13)) > 23) return null;
+  // Date.parse normalizes e.g. February 30; a source clock must not do so silently.
+  const calendar = new Date(v.slice(0, 10) + 'T00:00:00Z');
+  if (calendar.toISOString().slice(0, 10) !== v.slice(0, 10)) return null;
+  return new Date(parsed).toISOString();
+};
 const point = (p) => {
   const lat = p?.lat ?? p?.latitude,
     lon = p?.lon ?? p?.longitude;
@@ -139,8 +143,9 @@ export function announcementMatch(
       r.LocationSignature === endpoint.signature &&
       r.ActivityType === endpoint.activity &&
       number(r.AdvertisedTrainIdent) === trainNumber &&
-      Math.abs(parseReportedTime(r.AdvertisedTimeAtLocation) - planned) <=
-        60000,
+      Math.abs(
+        Date.parse(explicitTime(r.AdvertisedTimeAtLocation)) - planned,
+      ) <= 60000,
   );
   // Identical ActivityId revisions may coalesce, but distinct activities must not silently win.
   const groups = new Map();
@@ -162,8 +167,14 @@ export function announcementMatch(
     !modified ||
     now - Date.parse(modified) > 6 * 3600000 ||
     Date.parse(modified) > now + 300000;
-  const estimated = explicitTime(r.EstimatedTimeAtLocation),
-    actual = explicitTime(r.TimeAtLocation);
+  const eventTime = (value) => {
+    const valid = explicitTime(value);
+    return valid && Math.abs(Date.parse(valid) - planned) <= 48 * 3600000
+      ? valid
+      : null;
+  };
+  const estimated = eventTime(r.EstimatedTimeAtLocation),
+    actual = eventTime(r.TimeAtLocation);
   // Neither a future actual time nor a very old record may assert present status.
   const usableActual =
     actual && Date.parse(actual) <= now + 60000 ? actual : null;
