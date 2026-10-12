@@ -1,28 +1,39 @@
 import { recordTrafiklabRequest } from './trafiklab-budget.js';
-const cache = new Map();
-async function load(path, ttl) {
-  let e = cache.get(path);
-  if (!e || Date.now() - e.at > ttl) {
-    e = {
-      at: Date.now(),
-      promise: (async () => {
-        await recordTrafiklabRequest('timetable');
-        const key = process.env.TRAFIKLAB_TIMETABLE_KEY;
-        if (!key) throw new Error('API key missing');
-        const r = await fetch(
-          `https://realtime-api.trafiklab.se/v1/${path}?key=${encodeURIComponent(key)}`,
-          { signal: AbortSignal.timeout(20000), redirect: 'error' },
-        );
-        if (!r.ok) throw new Error('Trafiklab unavailable');
-        return r.json();
-      })(),
-    };
-    cache.set(path, e);
-    e.promise.catch(() => cache.delete(path));
-  }
-  if (cache.size > 200) cache.delete(cache.keys().next().value);
-  return e.promise;
+export function createTimetableLoader({
+  fetchImpl = fetch,
+  recordRequest = recordTrafiklabRequest,
+  getKey = () => process.env.TRAFIKLAB_TIMETABLE_KEY,
+  now = Date.now,
+} = {}) {
+  const cache = new Map();
+  return async function load(path, ttl) {
+    let e = cache.get(path);
+    if (!e || now() - e.at > ttl) {
+      e = {
+        at: now(),
+        promise: (async () => {
+          await recordRequest('timetable');
+          const key = getKey();
+          if (!key) throw new Error('API key missing');
+          const r = await fetchImpl(
+            `https://realtime-api.trafiklab.se/v1/${path}?key=${encodeURIComponent(key)}`,
+            { signal: AbortSignal.timeout(20000), redirect: 'error' },
+          );
+          if (!r.ok) throw new Error('Trafiklab unavailable');
+          const payload = await r.json();
+          return path.startsWith('departures/')
+            ? { ...payload, gev: { fetchedAt: new Date(now()).toISOString() } }
+            : payload;
+        })(),
+      };
+      cache.set(path, e);
+      e.promise.catch(() => cache.delete(path));
+    }
+    if (cache.size > 200) cache.delete(cache.keys().next().value);
+    return e.promise;
+  };
 }
+const load = createTimetableLoader();
 export function timetablePlugin() {
   return {
     name: 'trafiklab-timetables',

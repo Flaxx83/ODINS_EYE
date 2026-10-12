@@ -60,3 +60,7 @@ Issue #20 inför serverklient med validerade XML-frågor, begränsade svar, samo
 ## Trafikverket: tågstatus i reseförslag (#21)
 
 Befintliga resor kompletteras med källmärkt tågstatus: planerad/beräknad/faktisk tid, inställning, spår och avvikelser. Matchning kräver station, annonserat nummer, aktivitet och tid; tvetydiga och framtida statusar blir uttryckligen okända. Se [matchningspolicy, begränsningar och verifiering](ODINS_TRAIN_STATUS.md). Separata TrainMessage-meddelanden ingår inte; rapporterade Deviation-fält används när de finns.
+
+## Trafikläge: täckning och unika avgångar (2026-10-12)
+
+Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet och skiljer försening, tidig avgång, inställt och okänd prognos. Samma tur vid olika hållplatser försvinner inte längre i dedupliceringen. Västtrafiks explicita hållplatsprognoser används; SL:s tidtabellsfallback är inte realtid. Urval, 60-minutersfönster, centrum, hämtfel, gamla/begränsade tavlor och konflikter redovisas. Trafiklab-cacheträffar bevarar uppströmshämtningens tid. Se [täckning och verifiering](ODINS_TRAFFIC_COVERAGE.md).

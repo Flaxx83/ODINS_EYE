@@ -45,3 +45,5 @@ Tidigare daterade roadmapfönster ersätts av denna prioritering. Inga nya kalen
 - #18: svenska vägkameror i PR #19, In review. Lokal konfiguration: tak 5 000, Texas 200 och Kalifornien 100. Senaste katalogprov innehöll alla 1 548 svenska kameror; antal kan ändras med källan och andra leverantörers svar.
 
 Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [GitHub-projekt 3](https://github.com/users/Flaxx83/projects/3). Röst har fortsatt lägre prioritet.
+
+- #5: täckning, deduplicering och prognosstatus implementerat, inväntar granskning. Se [trafikläge](ODINS_TRAFFIC_COVERAGE.md). Nästa kärnuppgift i ordningen är #4, ankomsttid och datum i resefrågor.
