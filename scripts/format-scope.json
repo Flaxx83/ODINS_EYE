@@ -970,5 +970,8 @@
   "src/tools/globePanel.test.mjs",
   "src/costEndpointThrottle.test.mjs",
   "scripts/qa-local-ai.mjs",
-  "server/providers/local-ai-tools.test.mjs"
+  "server/providers/local-ai-tools.test.mjs",
+  "server/providers/address-search.js",
+  "server/providers/address-search.test.mjs",
+  "src/ui/placeSuggestions.js"
 ]

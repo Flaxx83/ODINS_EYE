@@ -80,3 +80,10 @@ Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet o
 ## Hemadress som rese-start (2026-10-12)
 
 Uttryckliga hemadresser och hela hållplatsnamn får inte förkortas till ortnamn. ”Behöver vara [plats] vid [tid]” ger ankomst. Entydig start visas utan rullista; endast återstående tvetydigheter behöver väljas. Koordinaterna används av reseplaneraren för gång/kollektivtrafik, utan att låsa användaren till närmaste hållplats. Sex regressionstester och riktiga adress-/reseprov. Se [AI-integrationen](ODINS_AI_TOOLS.md).
+
+### 2026-10-12 — Gemensam platsökning
+
+- Location, AI-navigering och reseplanering delar adress-/namnkandidater. Ofullständiga gatu- och platsnamn ger valbara alternativ med ort/platstyp.
+- Kartpositionen prioriterar närhet utan geografisk spärr. Exakta husnummer/suffix skyddas. AI-val valideras mot senaste samtalssvar.
+- Västtrafik + Photon/OpenStreetMap med cache, anropsbegränsning, tydlig partiell källa och källhänvisning.
+- 156 integrationstester och riktade Location-/webbläsarprov passerade. Se ODINS_AI_TOOLS.md för beteende och begränsningar.

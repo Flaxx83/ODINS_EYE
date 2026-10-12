@@ -305,6 +305,25 @@ export function createLocalAiLayer() {
               });
             choices.append(go);
           }
+          if (d.placeChoices) {
+            for (const place of d.placeChoices) {
+              const pick = document.createElement('button');
+              pick.textContent =
+                place.name +
+                ' · ' +
+                ({
+                  street: 'gata',
+                  address: 'adress',
+                  stop: 'hållplats',
+                  city: 'ort',
+                  area: 'område',
+                  place: 'plats',
+                }[place.kind] || 'plats');
+              pick.title = place.source?.name || '';
+              pick.onclick = () => submit(message, { place: place.id });
+              choices.append(pick);
+            }
+          }
           if (d.destination)
             viewer.camera.flyTo({
               destination: C.Cartesian3.fromDegrees(

@@ -1,3 +1,4 @@
+import { tripAddressCandidates } from './address-search.js';
 import { planSlTrip } from './local-sl-trip.js';
 import { normalizeTravelMessage, needsTravelRoute } from './travel-input.js';
 import { trafficAnswer } from './local-traffic.js';
@@ -23,13 +24,18 @@ export async function executeLocalQuery(
         'Skriv hela resan med från, till, datum och klockslag. Tidigare resefrågor återanvänds inte automatiskt.',
       needsClarification: true,
     };
+  const tripOptions =
+    toolOptions?.tool === 'plan_trip'
+      ? { getAddresses: tripAddressCandidates }
+      : undefined;
   const isTrip =
     /från.+till/i.test(message) &&
     /åka|resa|buss|spårvagn|tunnelbana|tåg/i.test(message);
   if (isTrip && /^Sverige:/i.test(message))
-    return planSlTrip(message, choice, base, true);
-  if (isTrip && /^SL:/i.test(message)) return planSlTrip(message, choice, base);
-  const trip = await planTrip(message, choice);
+    return planSlTrip(message, choice, base, true, tripOptions);
+  if (isTrip && /^SL:/i.test(message))
+    return planSlTrip(message, choice, base, false, tripOptions);
+  const trip = await planTrip(message, choice, tripOptions);
   if (trip) return trip;
   const traffic = await trafficAnswer(message, area, base);
   if (traffic) return traffic;
