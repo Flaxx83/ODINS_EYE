@@ -20,7 +20,6 @@ Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md
 - Externa tjänster kan returnera preliminära, gamla eller ofullständiga data.
 - Befintliga upstream-CI-tester behöver utvärderas mot våra nya lager.
 
-
 ## Installation och dataimporter – PR #11 / issue #2
 
 - Gemensam Pythonkonfiguration för EEA, järnvägsruttning och lokal transkribering.
@@ -43,7 +42,6 @@ Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md
 
 Installations-CI passerar, men bredare CI stoppar på äldre runtimefilers formatering. Den lokala paketgränskontrollen stoppar även på radio-provider och dess oägda sweden-garden.json. Detta följs upp i [#6](https://github.com/Flaxx83/ODINS_EYE/issues/6); hela CI ska därför inte beskrivas som grön.
 
-
 ## Reseformuleringar – del av issue #4
 
 Tidstolkningen stöder nu även hela timmar och svenska tidsuttryck som `vid 07 tiden`, `vid 7-tiden`, `kl 7` och `klockan 7`. Uttrycket används som avgångstid 07:00. Ogiltiga eller ofullständiga explicit angivna tider ger ett förtydligande i stället för att sökningen tyst använder aktuell tid. `Imorgon` beräknas som nästa kalenderdag i Stockholm även vid övergång till sommartid.
@@ -54,11 +52,9 @@ Fem regressionstester finns i `server/providers/travel-input.test.mjs` och körs
 
 Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll en inklistrad radbrytning efter bindestrecket. Backend normaliserar nu radbrytningar, NBSP och osynliga formateringstecken innan verktygsval och reseparsning. Fem regressionstester täcker detta tillsammans med tidstolkningen.
 
-
 ## Dockning av lokal AI
 
 När Lokal AI-lagret är aktivt visas en AI-knapp direkt till vänster om Location i nederdockan. Panelen öppnas ovanför knappen och följer dockans placering vid storleksändring. Minimering döljer panelen; text, nätval och svar behålls vid återöppning under samma aktivering. Escape i panelen minimerar den och återför fokus till dockknappen. Avaktivering av lagret tar bort panel, knapp och händelselyssnare. Verifierat i användarens öppna app: placering, minimering och bibehållen text vid återöppning. Produktionsbygget passerar.
-
 
 ## Fartygskort
 
@@ -68,5 +64,8 @@ Knappen Visa senaste spår använder samma insamlade AIS-spår som befintlig far
 
 27 riktade tester och produktionsbygget passerar. Visuell kontroll, stängning och meddelande om saknat spår verifierades med tydligt märkt testdata. Liveflödet var tillgängligt, men ett komplett end-to-end-prov med ett faktiskt fartygsval verifierades inte under denna kontroll. Fälttäckning varierar mellan fartyg och AIS-rapporter.
 
-
 AI-dockans placering har justerats: knappen är 160 px på rymliga skärmar (tidigare 80 px) och utökas åt vänster med bibehållen nettobredd i dockans layout. Location flyttas därför inte. Panelens högerkant riktas mot Locations högerkant och klampas inom skärmen. Breddningen begränsas på smala skärmar för att undvika att knappen hamnar utanför vyn.
+
+## Trafikläge – issue #5
+
+Implementerat på grenen fix/transit-departure-coverage, inväntar granskning. [Urval, prognoser, begränsningar och verifiering](ODINS_TRAFFIC_COVERAGE.md). 91 integrationstester och liveprov via AI-endpointen för Göteborg och Stockholm passerade. Statistik avser hållplatsavgångar i ett avgränsat urval; hela stadens fordon ingår inte.
