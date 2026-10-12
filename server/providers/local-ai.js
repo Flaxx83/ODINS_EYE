@@ -1,5 +1,9 @@
 import { planSlTrip } from './local-sl-trip.js';
-import { normalizeTravelMessage } from './travel-input.js';
+import {
+  normalizeTravelMessage,
+  TravelInputError,
+  needsTravelRoute,
+} from './travel-input.js';
 import { trafficAnswer } from './local-traffic.js';
 import { planTrip } from './local-trip.js';
 import { localDataContext } from './local-ai-data.js';
@@ -11,20 +15,18 @@ export async function askLocalAi(
   choice,
 ) {
   message = normalizeTravelMessage(message);
+  if (needsTravelRoute(message))
+    return {
+      answer:
+        'Skriv hela resan med från, till, datum och klockslag. Tidigare resefrågor återanvänds inte automatiskt.',
+      needsClarification: true,
+    };
   const isTrip =
     /från.+till/i.test(message) &&
-    /åka|resa|buss|spårvagn|tunnelbana/i.test(message);
-  if (
-    isTrip &&
-    /imorgon|i morgon|kl\.?\s*\d|klockan|vid\s*\d|från[^]*\d+[^]*till/i.test(
-      message,
-    )
-  )
-    return planSlTrip(message, choice, base, true);
+    /åka|resa|buss|spårvagn|tunnelbana|tåg/i.test(message);
   if (isTrip && /^Sverige:/i.test(message))
     return planSlTrip(message, choice, base, true);
-  if (isTrip && /^SL:|stockholm/i.test(message))
-    return planSlTrip(message, choice, base);
+  if (isTrip && /^SL:/i.test(message)) return planSlTrip(message, choice, base);
   const trip = await planTrip(message, choice);
   if (trip) return trip;
   const traffic = await trafficAnswer(message, area, base);
@@ -201,6 +203,13 @@ export function localAiPlugin() {
           ),
         );
       } catch (e) {
+        if (e instanceof TravelInputError) {
+          res.statusCode = 200;
+          res.end(
+            JSON.stringify({ answer: e.message, needsClarification: true }),
+          );
+          return;
+        }
         res.statusCode = 502;
         res.end(JSON.stringify({ error: e.message }));
       }

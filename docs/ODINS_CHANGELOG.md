@@ -64,3 +64,7 @@ Befintliga resor kompletteras med källmärkt tågstatus: planerad/beräknad/fak
 ## Trafikläge: täckning och unika avgångar (2026-10-12)
 
 Issue #5: trafiksvaret räknar unika hållplatsavgångar med korrekt identitet och skiljer försening, tidig avgång, inställt och okänd prognos. Samma tur vid olika hållplatser försvinner inte längre i dedupliceringen. Västtrafiks explicita hållplatsprognoser används; SL:s tidtabellsfallback är inte realtid. Urval, 60-minutersfönster, centrum, hämtfel, gamla/begränsade tavlor och konflikter redovisas. Trafiklab-cacheträffar bevarar uppströmshämtningens tid. Se [täckning och verifiering](ODINS_TRAFFIC_COVERAGE.md).
+
+## Resefrågor: ankomsttid och datum (2026-10-12)
+
+#4: gemensam kalender- och tidsvalidering för Västtrafik, SL och Hela Sverige, riktiga ankomstsökningar, bevarat trafiknätsval, svensk lokal tid och förtydliganden för ogiltiga/tvetydiga uppgifter. Exakt adressmatchning för 11A/11 A och datum som bevaras vid platsval. Följdfrågor kräver hela resvägen tills #1 ger samtalskontext. Se [reseindata](ODINS_TRAVEL_INPUT.md).
