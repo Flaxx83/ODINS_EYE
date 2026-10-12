@@ -95,3 +95,7 @@ Villkor, faktisk cache, anropsbudget och förnyelsebeslut finns i [ODINS_SOURCE_
 ## Väghändelser — issue #22, första etapp
 
 Lager och strukturerat AI-verktyg för Trafikverkets väghändelser är implementerade för granskning. Tre DATEX II 3.1-feeds återanvänder gemensam cache/budget. Riktiga data, karta och AI provade. Detaljerade återkommande delperioder och geometribaserad reseanknytning återstår; ingen omruttning eller påhittad försening visas. Se [väghändelser](ODINS_ROAD_EVENTS.md).
+
+## Vägväder — #23
+
+Första leveransen innehåller valbart lager, stationskort, explicit kamerakoppling och road_weather till lokal AI. Liveprov verifierade station/mättid/värden och en separat väglagsrapport. Exakt kamera-/vägytematchning och reseanknytning är inte utlovade. Se [vägväder](ODINS_ROAD_WEATHER.md).

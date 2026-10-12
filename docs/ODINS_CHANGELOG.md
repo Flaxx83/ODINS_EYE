@@ -105,3 +105,7 @@ Valbart lager **Data Layers → Infrastructure → Ortsnamn · Esri** använder 
 - Den gemensamma klienten utökad med fasta XML-feeds, begränsad cache, budget och tydlig gammal/partiell källstatus. Tid/geometri/DTD valideras; avslutade och pausade poster filtreras bort.
 - AI-verktyget road_events återanvänder källan. Kollektivtrafikens trafikstatus är ett separat verktyg.
 - Detaljerad/återkommande giltighet märks; ingen bekräftad aktivitet just nu, reseförsening eller omruttning antas. Se ODINS_ROAD_EVENTS.md för provresultat och avgränsningar.
+
+### 2026-10-12 — Vägväder och kamerastation (#23)
+
+Valbart Trafikverkslager och validerat AI-verktyg för stationernas senaste mätningar. Svensk CCTV-position får explicit knapp för närmaste station med avstånd/mättid. Rapporterat väglag visas separat för angivna vägsträckor; inget halklöfte eller automatisk omruttning. WeatherMeasurepoint-cache nu 5/15 min eftersom svaret innehåller observationer. Se ODINS_ROAD_WEATHER.md för geometriavgränsningar och prov.

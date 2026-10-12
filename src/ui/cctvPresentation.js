@@ -1,3 +1,4 @@
+import { showWeatherCard } from '../layers/road-weather/card.js';
 import { createCctvVideoSurface } from './cctvVideo.js';
 export function _calBadgeLabel(badge) {
   switch (badge) {
@@ -26,6 +27,60 @@ export function _renderCctvState(state) {
   const enabled = !!state?.enabled && !!this.actions.isEnabled();
   const activeId = state?.activeCameraId || '';
   const activeCamera = state?.activeCamera || null;
+
+  if (
+    this._cctvSummary?.parentElement?.ownerDocument &&
+    enabled &&
+    activeCamera &&
+    activeCamera.lat > 54 &&
+    activeCamera.lat < 70 &&
+    activeCamera.lon > 10 &&
+    activeCamera.lon < 25
+  ) {
+    let button =
+      this._cctvSummary.parentElement.querySelector('.cctv-road-weather');
+    if (!button) {
+      button = document.createElement('button');
+      button.className = 'cctv-road-weather';
+      button.textContent = 'Vägväder nära kameran';
+      this._cctvSummary.parentElement.append(button);
+    }
+    button.onclick = async () => {
+      if (this.destroyed) return;
+      const id = activeId;
+      button.disabled = true;
+      try {
+        const r = await fetch(
+          '/api/road-weather?' +
+            new URLSearchParams({
+              lat: activeCamera.lat,
+              lon: activeCamera.lon,
+            }),
+        );
+        if (!r.ok) throw Error();
+        const d = await r.json();
+        if (this.destroyed || this._cctvState?.activeCameraId !== id) return;
+        showWeatherCard(
+          d.nearest,
+          d.sources,
+          (!d.available
+            ? 'Vägväderkällan är otillgänglig. '
+            : !d.nearest
+              ? 'Ingen station inom 30 km. '
+              : '') + d.note,
+          d.reports,
+        );
+      } catch {
+        if (!this.destroyed && this._cctvState?.activeCameraId === id)
+          showWeatherCard(null, [], 'Vägväder kunde inte hämtas.');
+      } finally {
+        button.disabled = false;
+      }
+    };
+  } else
+    this._cctvSummary?.parentElement
+      ?.querySelector('.cctv-road-weather')
+      ?.remove();
 
   // Auto-expand the panel when the active camera CHANGES to a new non-null
   // id while the layer is enabled. Covers click-on-globe, panel controls,

@@ -350,3 +350,7 @@ Inventering, primärkällor, faktiska TTL/budgetar och kvarstående avtalskontro
 ## Trafikverket DATEX II 3.1 – väghändelser
 
 Valbar visning och AI-urval från roadworks, accident och trafficmessage. Källhänvisning: Trafikverket, öppna trafikinformationsdata CC0 enligt [registreringsavtal](https://data.trafikverket.se/oauth2/Account/register). Rapporterade visningspunkter och tidsmässigt/geografiskt urval är bearbetade i appen. Ingen händelseutbredning eller faktisk reseförsening härleds från dessa punkter. Se [ODINS_ROAD_EVENTS.md](docs/ODINS_ROAD_EVENTS.md) för snapshot-cache och källstatus; API-nyckel är serverlokal.
+
+## Trafikverkets vägväder och väglag
+
+WeatherMeasurepoint v2 med stationsgeometri och senaste Observation samt RoadCondition v1.2 för vägsträckerapporter. Källhänvisning: Trafikverket, öppna trafikinformationsdata CC0 enligt [registreringsavtal](https://data.trafikverket.se/oauth2/Account/register). Temperatur i °C, vind i m/s/grader och rapporterad nederbördskod; ingen härledd halkgaranti. Se [ODINS_ROAD_WEATHER.md](docs/ODINS_ROAD_WEATHER.md) för mättid, cache, kameraavstånd och punktbaserad linjeavgränsning.

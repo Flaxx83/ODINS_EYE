@@ -1,3 +1,4 @@
+import { roadWeatherPlugin } from '../providers/trafikverket/road-weather.js';
 import { roadEventsPlugin } from '../providers/trafikverket/road-events.js';
 import { localVoicePlugin } from '../providers/local-voice.js';
 import { localAiPlugin } from '../providers/local-ai.js';
@@ -49,6 +50,7 @@ export default defineConfig(({ command, mode }) => {
       localAiPlugin(),
       addressSearchPlugin(),
       roadEventsPlugin(),
+      roadWeatherPlugin(),
       airQualityPlugin(),
       policePlugin(),
       topographyPlugin(),

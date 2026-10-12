@@ -979,5 +979,9 @@
   "server/providers/trafikverket/road-model.js",
   "server/providers/trafikverket/road-events.js",
   "server/providers/trafikverket/road-events.test.mjs",
-  "src/layers/road-events/index.js"
+  "src/layers/road-events/index.js",
+  "server/providers/trafikverket/road-weather.js",
+  "server/providers/trafikverket/road-weather.test.mjs",
+  "src/layers/road-weather/index.js",
+  "src/layers/road-weather/card.js"
 ]

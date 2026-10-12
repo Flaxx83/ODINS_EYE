@@ -481,7 +481,8 @@
       "src/ui/cctvControls.js",
       "src/ui/cctvFrames.js",
       "src/ui/cctvVideo.js",
-      "src/ui/cctvPresentation.js"
+      "src/ui/cctvPresentation.js",
+      "src/layers/road-weather/card.js"
     ],
     "external": []
   },
@@ -676,7 +677,8 @@
       "src/layers/localAdsb/feedNames.js",
       "src/ui/localSdrPresentation.js",
       "src/data/cameraArrival.js",
-      "src/ui/placeSuggestions.js"
+      "src/ui/placeSuggestions.js",
+      "src/layers/road-weather/card.js"
     ],
     "external": ["cesium"]
   },
@@ -2230,7 +2232,9 @@
       "src/layers/air-quality/index.js",
       "src/layers/local-ai/map-labels.js",
       "src/ui/placeSuggestions.js",
-      "src/layers/road-events/index.js"
+      "src/layers/road-events/index.js",
+      "src/layers/road-weather/index.js",
+      "src/layers/road-weather/card.js"
     ],
     "external": [
       "hls.js",
@@ -2773,7 +2777,9 @@
       "src/layers/local-ai/trip-map.js",
       "src/layers/air-quality/index.js",
       "src/layers/local-ai/map-labels.js",
-      "src/layers/road-events/index.js"
+      "src/layers/road-events/index.js",
+      "src/layers/road-weather/index.js",
+      "src/layers/road-weather/card.js"
     ],
     "external": [
       "hls.js",

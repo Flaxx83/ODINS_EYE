@@ -148,7 +148,11 @@ export function createTrafikverketClient({
       const m = parseReportedTime(row.ModifiedTime);
       if (Number.isFinite(m) && m <= now() + 300000) modified.push(m);
       const value = p.observationField
-        ? parseReportedTime(row[p.observationField])
+        ? parseReportedTime(
+            p.observationField
+              .split('.')
+              .reduce((value, key) => value?.[key], row),
+          )
         : NaN;
       if (!Number.isFinite(value) || value > now() + 300000) {
         unknown++;

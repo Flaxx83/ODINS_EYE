@@ -93,6 +93,10 @@ export function hideOsmCredit(viewer, owner) {
 
 export const DATA_CREDITS = [
   {
+    key: 'trafikverket-road-weather',
+    html: 'Vägväder och väglag: <a href="https://data.trafikverket.se/" target="_blank" rel="noopener">Trafikverket · VViS / RoadCondition</a> · CC0; stations- och vägsträckeurval',
+  },
+  {
     key: 'trafikverket-road-events',
     html: 'Väghändelser: <a href="https://data.trafikverket.se/" target="_blank" rel="noopener">Trafikverket · DATEX II</a> · CC0; geografiskt och tidsmässigt urval',
   },
