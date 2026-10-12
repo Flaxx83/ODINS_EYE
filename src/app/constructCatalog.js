@@ -14,7 +14,10 @@ import { createKrisNews, createVmaLayer } from '../layers/kris/index.js';
 import { createSlLayer } from '../layers/sl/index.js';
 import { createStopsLayer } from '../layers/sl/stops.js';
 import { createVasttrafikLayer } from '../layers/vasttrafik/index.js';
-import { createTopographyLayers } from '../layers/topography/index.js';
+import {
+  createTopographyLayers,
+  createPlaceNamesLayer,
+} from '../layers/topography/index.js';
 import { createPoliceLayer } from '../layers/polisen/index.js';
 import { createWeatherClock } from '../layers/weather/clock.js';
 import { createWeatherLayer } from '../layers/weather/index.js';
@@ -60,6 +63,7 @@ export const LOCAL_ONLY_LAYER_METADATA = Object.freeze([
   Object.freeze({ id: 'sl-live', disposition: 'local-only' }),
   Object.freeze({ id: 'vasttrafik', disposition: 'local-only' }),
   Object.freeze({ id: 'local-ai', disposition: 'local-only' }),
+  Object.freeze({ id: 'place-labels', disposition: 'local-only' }),
   Object.freeze({ id: 'air-quality', disposition: 'local-only' }),
   Object.freeze({ id: 'polisen', disposition: 'local-only' }),
   ...['administrativindelning', 'kommunikation', 'hydrografi'].map((theme) =>
@@ -153,6 +157,7 @@ export function createApplicationCatalog({
         createAirQualityLayer(),
         createPoliceLayer(),
         ...createTopographyLayers(),
+        createPlaceNamesLayer(),
         createStopsLayer(),
         createSlLayer({
           id: 'sweden-transit',
