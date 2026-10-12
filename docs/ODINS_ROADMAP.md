@@ -1,6 +1,8 @@
 # Roadmap
 
-Uppdaterad 2026-10-11 med Trafikverksplanen. Ordningen nedan ersätter den tidigare sekvensen med tio arbetsuppgifter. Den visar rekommenderad prioritering; endast uttryckliga beroenden blockerar arbete. Implementerade PR:er granskas och sammanfogas före beroende arbete.
+Uppdaterad 2026-10-12 med Trafikverksplanen och senaste AI-tillägg. Ordningen nedan ersätter den tidigare sekvensen med tio arbetsuppgifter. Den visar rekommenderad prioritering; endast uttryckliga beroenden blockerar arbete. Implementerade PR:er granskas och sammanfogas före beroende arbete.
+
+Senaste tillägg till #1: fast AI-knapp i dockan ([PR #42](https://github.com/Flaxx83/ODINS_EYE/pull/42)) och fristående gångvägar med platsval ([PR #43](https://github.com/Flaxx83/ODINS_EYE/pull/43)). Båda inväntar granskning. PR #43 bygger på #42, som bygger på vägväder i #41; detta är PR-beroenden, inte färdig leverans på main. Gångvägar återanvänder befintlig lokal ruttning och är inte en fullständig kortaste-väg-funktion. Detaljer och verifiering finns i [statusöversikten](ODINS_STATUS.md).
 
 ## Rekommenderad arbetsordning
 
