@@ -52,3 +52,19 @@ Illustrativt exempel med fiktiv startadress: ”Jag behöver vara Vällingby Cen
 Ett enda matchat alternativ visas som fast text i panelen; bara tvetydiga startpunkter/resmål får rullista. Vällingby Centrum har fortfarande flera möjliga resmål i det befintliga registret. Ingen automatisk gissning på T-bana eller geografiskt centrum införs. Exakt startadress betyder inte att närmaste hållplats alltid används: koordinaterna lämnas till reseplaneraren, som skapar gång- och kollektivtrafiketapper enligt sitt underlag.
 
 Sex nya offlineprov; totalt 149 integrationstester. Riktigt HTTP-prov matchade den angivna Skövdeadressen exakt som koordinat. Efter explicit provval av Vällingby T-bana returnerade ResRobot tre resor; första förslaget började med gång till Norrmalms köpcentrum. Detta är ett tidtabellsprov, inte bevis på att alla närliggande hållplatser ingår i källans sökning. Isolerat UI-prov med märkta testsvar verifierade en fast startadress, endast resmålsrullista och att adressens koordinat-ID skickades oförändrat.
+
+## Gemensam adress- och namnsökning (2026-10-12)
+
+Location och AI-navigering använder `/api/address-search` för adresser, gator, hållplatser, orter och andra platsnamn. Funktionen gäller generellt; inga särskilda sökregler eller förvalda koordinater för exempeladresser har införts. Man kan skriva ett ofullständigt namn utan husnummer och välja bland upp till tio träffar med ort och platstyp. Kartpositionen prioriterar närliggande träffar utan att utesluta andra regioner. En exakt husnummersökning får inte ersättas med ett annat nummer eller suffix.
+
+Location visar förslag efter en kort skrivpaus. Enter väljer endast en ensam exakt träff från en komplett sökning; annars visas alternativen. Piltangenter och Enter kan välja en rad. Escape, klick utanför och nya tecken avbryter gamla svar. Koordinater använder det befintliga navigeringsflödet. AI visar motsvarande alternativ och accepterar bara ett koordinat-ID från samtalets senaste träfflista. Valet kräver inget nytt modellanrop. Reseplanering använder samma kandidatkälla för uttryckliga adresser/namn, med befintligt nationellt hållplatsregister som reserv när inga kandidater matchar.
+
+Källor: Västtrafiks platsregister (adresser, hållplatser och platser) samt Photon/OpenStreetMap. Källhänvisningar visas. Sökningar cachelagras i tio minuter, identiska samtidiga anrop samordnas och externa anrop begränsas. Photon är en publik tjänst för måttlig användning, utan tillgänglighetsgaranti; större användning behöver egen drift eller avtalad leverantör. Se [Photon](https://github.com/komoot/photon) och [API-dokumentationen](https://github.com/komoot/photon/blob/master/docs/api-v1.md). Ingen automatisk sökning mot publika Nominatim införs.
+
+Begränsningar: källornas täckning och svarstid varierar. Vid en otillgänglig källa märks listan som partiell och kräver uttryckligt val. Ett gatunamn motsvarar en gatupunkt, inte en känd entré. Ett verkligt prov med Storgatan i Skövde gav en valbar lista även genom Qwen/Bionic. Liveprovet hittade hållplatsen Lillegården i Skövde. Photon svarade inte inom tidsgränsen på vissa frågor, vilket verifierade partiell-listan; komplett nationell träfftäckning kan därför inte garanteras.
+
+Validering: 156 integrationstester, 18 riktade sök-/Location-tester, produktionens build och paketgränser passerade. Webbläsarprov verifierade att flera träffar inte flyttar kartan före val, att tangentbordsval fungerar och att koordinater behåller sitt navigeringsflöde.
+
+#### Rättning av webbläsarens fetch-anrop
+
+Location-widgetens standardtransport anropades först som en objektmetod, vilket gav `Illegal invocation` med webbläsarens inbyggda fetch. Standardtransporten anropar nu `globalThis.fetch` med rätt mottagare. De tidigare simulerade UI-svaren upptäckte inte felet. Ett nytt Chrome-prov med riktig fetch och lokala API:t verifierade sökningen Lillegårdsvägen och en valbar träfflista med Skövde-alternativ först.

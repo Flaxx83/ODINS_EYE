@@ -1,5 +1,6 @@
 import { localVoicePlugin } from '../providers/local-voice.js';
 import { localAiPlugin } from '../providers/local-ai.js';
+import { addressSearchPlugin } from '../providers/address-search.js';
 import { airQualityPlugin } from '../providers/air-quality.js';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, loadEnv } from 'vite';
@@ -45,6 +46,7 @@ export default defineConfig(({ command, mode }) => {
       vasttrafikPlugin(),
       localVoicePlugin(),
       localAiPlugin(),
+      addressSearchPlugin(),
       airQualityPlugin(),
       policePlugin(),
       topographyPlugin(),

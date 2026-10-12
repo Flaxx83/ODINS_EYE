@@ -455,7 +455,8 @@
       "src/ui/locationControls.js",
       "src/ui/locationSearch.js",
       "src/locationStatus.js",
-      "src/app/stateChannel.js"
+      "src/app/stateChannel.js",
+      "src/ui/placeSuggestions.js"
     ],
     "external": []
   },
@@ -673,7 +674,8 @@
       "src/ui/localSdrControls.js",
       "src/layers/localAdsb/feedNames.js",
       "src/ui/localSdrPresentation.js",
-      "src/data/cameraArrival.js"
+      "src/data/cameraArrival.js",
+      "src/ui/placeSuggestions.js"
     ],
     "external": ["cesium"]
   },
@@ -2225,7 +2227,8 @@
       "src/layers/local-ai/index.js",
       "src/layers/local-ai/trip-map.js",
       "src/layers/air-quality/index.js",
-      "src/layers/local-ai/map-labels.js"
+      "src/layers/local-ai/map-labels.js",
+      "src/ui/placeSuggestions.js"
     ],
     "external": [
       "hls.js",

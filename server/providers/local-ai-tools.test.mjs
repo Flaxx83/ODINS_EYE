@@ -616,3 +616,63 @@ test('literal street without number remains a street rather than falling back to
   assert.match(query, /från Lillegårdsvägen i Skövde till Stockholm/);
   assert.doesNotMatch(query, /Lillegårdsvägen 11/);
 });
+test('generic place ambiguity requires a validated choice before navigation', async () => {
+  const found = {
+    fetchedAt: '2026-10-12T10:00:00Z',
+    partial: false,
+    rows: [
+      {
+        id: 'coord:58:13',
+        name: 'Torget, Skövde',
+        lat: 58,
+        lon: 13,
+        kind: 'stop',
+        exact: true,
+        source: { name: 'fixture', url: 'https://example.com' },
+      },
+      {
+        id: 'coord:59:18',
+        name: 'Torget, Stockholm',
+        lat: 59,
+        lon: 18,
+        kind: 'place',
+        exact: true,
+        source: { name: 'fixture', url: 'https://example.com' },
+      },
+    ],
+  };
+  let searches = 0;
+  const service = createLocalAiService({
+    now,
+    planner: async () => action('navigate', { place: 'Torget' }),
+    findPlaces: async () => {
+      searches++;
+      return found;
+    },
+  });
+  const r = await service.ask({
+    message: 'Visa Torget',
+    area,
+    network: 'Hela Sverige',
+  });
+  assert.equal(r.destination, undefined);
+  assert.equal(r.placeChoices.length, 2);
+  await assert.rejects(
+    service.ask({
+      message: 'Visa Torget',
+      area,
+      network: 'Hela Sverige',
+      conversationId: r.conversationId,
+      choice: { place: 'coord:1:2' },
+    }),
+  );
+  const selected = await service.ask({
+    message: 'Visa Torget',
+    area,
+    network: 'Hela Sverige',
+    conversationId: r.conversationId,
+    choice: { place: 'coord:58:13' },
+  });
+  assert.deepEqual(selected.destination, { lat: 58, lon: 13 });
+  assert.equal(searches, 1);
+});

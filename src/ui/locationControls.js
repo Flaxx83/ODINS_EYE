@@ -1,4 +1,5 @@
 import { locationMiniStatus } from '../locationStatus.js';
+import { PlaceSuggestions } from './placeSuggestions.js';
 const POI_KEYS = ['Q', 'W', 'E', 'R', 'T'];
 
 /** Location DOM, keyboard handling and pending row animation over supplied actions. */
@@ -11,6 +12,8 @@ export class LocationControls {
     onPoi,
     onSearch,
     onReset,
+    onPlace,
+    getArea,
     doc = document,
     requestFrame = (callback) => requestAnimationFrame(callback),
     cancelFrame = (id) => cancelAnimationFrame(id),
@@ -32,6 +35,14 @@ export class LocationControls {
     this.frame = null;
     this.destroyed = false;
     this.rowGeneration = 0;
+    if (onPlace)
+      this.suggestions = new PlaceSuggestions({
+        input: elements.search,
+        getArea,
+        onSelect: onPlace,
+        fallback: onSearch,
+        doc,
+      });
     elements.pills.replaceChildren();
     for (const [id, city] of Object.entries(cities)) {
       const pill = doc.createElement('button');
@@ -60,7 +71,8 @@ export class LocationControls {
         elements.search.focus();
     });
     this.bind(elements.search, 'keydown', (event) => {
-      if (event.key === 'Enter') void onSearch(elements.search.value);
+      if (event.key === 'Enter' && !this.suggestions)
+        void onSearch(elements.search.value);
     });
     for (const button of elements.resetButtons)
       this.bind(button, 'click', onReset);
@@ -152,6 +164,7 @@ export class LocationControls {
   destroy() {
     if (this.destroyed) return;
     this.destroyed = true;
+    this.suggestions?.destroy();
     this.cancelExpansion();
     for (const remove of [
       ...this.poiRemovers.splice(0),

@@ -112,7 +112,25 @@ export class LocationNavigation {
       beforeFly: (generation) => this._reassertNavigationHandoff(generation),
       search: (query, options) =>
         searchAndFlyTo(this.viewer, query, {
-          placeSearch: this.placeSearch,
+          placeSearch: options.candidate
+            ? {
+                geocode: async () => ({
+                  place: {
+                    lat: options.candidate.lat,
+                    lng: options.candidate.lon,
+                    label: options.candidate.name,
+                    types:
+                      options.candidate.kind === 'street'
+                        ? ['route']
+                        : options.candidate.kind === 'city'
+                          ? ['locality']
+                          : [],
+                    exact: true,
+                  },
+                  answered: true,
+                }),
+              }
+            : this.placeSearch,
           ...options,
         }),
       onResult: (destination) => {
@@ -142,6 +160,16 @@ export class LocationNavigation {
       onCity: (id) => this._onCityPillClick(id),
       onPoi: (id, index) => this._onPoiClick(id, index),
       onSearch: (query) => this._locationLookup.run(query),
+      onPlace: (candidate) =>
+        this._locationLookup.run(candidate.name, { candidate }),
+      getArea: () => ({
+        lat: Cesium.Math.toDegrees(
+          this.viewer.camera.positionCartographic.latitude,
+        ),
+        lon: Cesium.Math.toDegrees(
+          this.viewer.camera.positionCartographic.longitude,
+        ),
+      }),
       onReset: () => this.resetToGlobeView(),
     });
   }
