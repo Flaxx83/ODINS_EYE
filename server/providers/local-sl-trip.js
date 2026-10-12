@@ -146,6 +146,16 @@ export async function planSlTrip(
   const lines = [
     `${national ? 'Sverigeresa' : 'SL-resa'} från ${o.name} till ${d.name}, ${journeyTimeLabel(travel)}. ResRobot-underlag.`,
   ];
+  for (const [label, location] of [
+    ['Start', o],
+    ['Resmål', d],
+  ]) {
+    if (location.precision === 'street')
+      lines.push(
+        label +
+          ': gatupunkt enligt adresskällan; husnummer saknas. Ingen särskild entré eller bostad har valts.',
+      );
+  }
   if (!trips.length)
     lines.push('Inga förslag med valt operatörsurval och färdsätt hittades.');
   for (const [i, j] of trips.entries()) {

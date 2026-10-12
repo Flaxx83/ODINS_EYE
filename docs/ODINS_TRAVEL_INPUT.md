@@ -31,3 +31,9 @@ API:ernas tidtabellsperiod begränsar möjliga framtida datum. API-fel eller tom
 111 integrationstester passerade, med 25 tids-/reseindatafall (20 nya) för kalender, avsikt, båda adapterparametrarna, adresser, platsval och förtydliganden. Västtrafiks riktiga API accepterade ankomstsökning och koordinatparametrar; ogiltigt dateTimeRelatesTo gav HTTP 400, utan tyst fallback. Liveprov via appens endpoint omfattar framtida ankomstresa och DST-förtydligande. Slutliga CI-resultat redovisas i issue och PR.
 
 ResRobot-kontraktet beskrivs i [Trafiklabs dokumentation](https://www.trafiklab.se/api/our-apis/resrobot-v21/route-planner/). Västtrafiks parameteranvändning verifierades mot dess autentiserade API; nycklar hålls på servern.
+
+## Gatunamn utan husnummer (2026-10-12)
+
+Gatunamn som Lillegårdsvägen i Skövde söks även som adress utan husnummer. Gatunamn och kommun måste matcha; en tidigare angiven bostad eller ett godtyckligt husnummer återanvänds inte. Resan använder gatupunkten som källan rapporterar och svaret anger att husnummer saknas.
+
+Den exakta frågan Brunnsparken i Göteborg–Lillegårdsvägen i Skövde, ankomst imorgon kl 09:00, gav tre förslag via appens endpoint med både Västtrafik och Hela Sverige. 113 integrationstester passerade, inklusive regressioner för gatunamn utan nummer, fel kommun, fel gatunamn och koordinater i ankomstsökning.
