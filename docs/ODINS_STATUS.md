@@ -1,4 +1,4 @@
-# Status 2026-10-11
+# Status 2026-10-12
 
 Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md](ODINS_CHANGELOG.md). De senaste ändringarna är implementerade på utvecklingsgrenarna och inväntar sammanfogning med main.
 
@@ -54,7 +54,9 @@ Komplettering: samma resefråga kunde ge ett tolkningsfel när T-bana innehöll 
 
 ## Dockning av lokal AI
 
-När Lokal AI-lagret är aktivt visas en AI-knapp direkt till vänster om Location i nederdockan. Panelen öppnas ovanför knappen och följer dockans placering vid storleksändring. Minimering döljer panelen; text, nätval och svar behålls vid återöppning under samma aktivering. Escape i panelen minimerar den och återför fokus till dockknappen. Avaktivering av lagret tar bort panel, knapp och händelselyssnare. Verifierat i användarens öppna app: placering, minimering och bibehållen text vid återöppning. Produktionsbygget passerar.
+AI-knappen visas alltid direkt till vänster om Location i nederdockan. Klick aktiverar Lokal AI och öppnar panelen; inga AI-anrop görs före skickad fråga. Panelens högerkant följer Locations högerkant. Minimering behåller text, nätval och svar; Escape återför fokus till knappen. Avaktivering via Data Layers tar bort panelen men behåller knappen för återaktivering. [PR #42](https://github.com/Flaxx83/ODINS_EYE/pull/42) inväntar granskning. Webbläsarprov av öppning, minimering, avstängning/återaktivering och noll AI-anrop före fråga passerade.
+
+Fristående gångvägar stöds genom `walk_route`: gemensam adressökning och platsval, bevarade bokstavliga start-/målnamn, kartgeometri och uppskattad gångtid vid 6 km/h. Ingen garanti för absolut kortaste väg; saknad geometri ger ingen fågelväg. [PR #43](https://github.com/Flaxx83/ODINS_EYE/pull/43) inväntar granskning. 178 integrationstester passerar. Liveprov gav 171 geometripunkter; webbläsarprov med fixtures verifierade platsval och kartlinje. Se [AI-verktygen](ODINS_AI_TOOLS.md) för räckvidd och begränsningar.
 
 ## Fartygskort
 

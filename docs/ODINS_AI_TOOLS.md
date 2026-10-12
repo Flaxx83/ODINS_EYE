@@ -7,12 +7,15 @@ Issue #1. Implementerat på `codex/validated-ai-tools`, inväntar granskning. Mo
 | Verktyg | Underlag och avgränsning |
 | --- | --- |
 | `plan_trip` | Västtrafik eller ResRobot enligt valt trafiknät. Befintlig tåginformation från Trafikverket och geometri återanvänds. Explicit tåg/spårvagn filtrerar bort andra och okända färdsätt. |
+| `walk_route` | Fristående lokal gångväg via Valhalla/OSM, gemensamt platsval och kartgeometri. Uppskattad tid vid 6 km/h; ingen garanti om absolut kortaste väg. |
+| `road_events` | Trafikverkets väghändelser inom cirka 50 km. Källstatus, ofullständigt urval och rapporterade tider redovisas; ingen beräknad reseförsening. |
+| `road_weather` | Trafikverkets vägväderobservationer och väglagsrapporter. Mättid, stationens avstånd och saknade/gamla värden redovisas; ingen halkprognos. |
 | `traffic_status` | Befintligt begränsat hållplatsavgångsurval för SL/Västtrafik. Hela stadens fordon ingår inte. Källa, hämtning, gammalt underlag och okänd prognos följer #5. |
 | `police_events` | Publicerade preliminära polisnotiser inom 50 km, högst 20 i svaret. Inte alla händelser eller exakta händelseplatser. |
 | `air_quality` | EEA-stationsmätningar inom 50 km, högst 30 serier. Mättid och äldre underlag redovisas; ingen generell riskklassning eller väderprognos. |
-| `navigate` | Exakt, entydig matchning i det lokala ortregistret. Modellen får inte leverera koordinater. |
+| `navigate` | Gemensam adress- och namnsökning med Location, inklusive val bland alternativa träffar. Modellen får inte leverera koordinater. |
 
-Flyg, fartyg, kameror, väder och kommande Trafikverkslager har ännu inga egna AI-verktyg. Verktygskatalogen ska utökas tillsammans med respektive datatjänst. Frågor utan verktyg får ett besked om stöd/ett förtydligande, inga fria faktasvar.
+Flyg, fartyg, kameror och allmänna väderprognoser har ännu inga egna AI-verktyg. Vägväder och väghändelser stöds enligt tabellen. Frågor utan verktyg får ett besked om stöd/ett förtydligande, inga fria faktasvar.
 
 ## Konversation och datum
 
@@ -26,7 +29,7 @@ Knappen **Nytt samtal** tar bort den aktuella kopplingen i panelen och rensar sv
 
 ## Anropsbudget och validering
 
-- Endast fem namngivna verktyg och exakta argumentfält tillåts. URL:er, koordinater, extra argument, okända verktyg, dubbletter och fria svar avvisas före källanrop.
+- Endast åtta namngivna verktyg och exakta argumentfält tillåts. URL:er, koordinater, extra argument, okända verktyg, dubbletter och fria svar avvisas före källanrop.
 - Högst tre olika verktyg per fråga; resa/navigering körs ensamt. Modellens förtydligande är en kod som servern översätter till en fast svensk fråga.
 - Högst sex anrop per samtal/minut och 20 totalt/minut. Högst tre samtidiga frågor, endast en per samtal. Befintliga leverantörers cache och tidsgränser fortsätter gälla. Gränserna gäller per serverprocess och är inte en distribuerad kvotlösning.
 - Ett lokalt modellanrop per fråga, ingen obegränsad agentloop eller automatisk modellreparation. Lokalt API på port 1235, modellen `qwen3.5-4b`, svar högst 1 000 token, 60 sekunders tidsgräns och 24 000 bytes för modellsvaret. HTTP-frågan kräver JSON och högst 16 000 tecken/2 000 tecken användartext.
