@@ -471,3 +471,82 @@ test('numeric literal stop survives empty address results in both planners', asy
     else process.env.RESROBOT_API_KEY = saved;
   }
 });
+
+test('street without house number uses exact street and municipality, never an earlier house number', async () => {
+  const rows = await addressCandidates('Lillegårdsvägen i Skövde', {
+    getToken: async () => 'dummy',
+    fetchImpl: async () =>
+      Response.json({
+        results: [
+          {
+            name: 'Lillegårdsvägen, 549 42 Skövde',
+            locationType: 'address',
+            latitude: 58.4,
+            longitude: 13.8,
+          },
+          {
+            name: 'Lillegårdsvägen 11A, Skövde',
+            locationType: 'address',
+            latitude: 58.5,
+            longitude: 13.8,
+          },
+          {
+            name: 'Lillegårdsvägen, Lidköping',
+            locationType: 'address',
+            latitude: 58.6,
+            longitude: 13.8,
+          },
+          {
+            name: 'Källegårdsvägen, Skövde',
+            locationType: 'address',
+            latitude: 58.3,
+            longitude: 13.8,
+          },
+        ],
+      }),
+  });
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].name, 'Lillegårdsvägen, 549 42 Skövde');
+  assert.equal(rows[0].precision, 'street');
+});
+test('street target is routed as coordinates and explicitly described as a street point', async () => {
+  let q;
+  const r = await planTrip(
+    'Jag vill resa från Brunnsparken i Göteborg till Lillegårdsvägen i Skövde imorgon och vara framme kl 09:00',
+    null,
+    {
+      now: () => now,
+      getAddresses: async (name) =>
+        name.includes('Lillegårdsvägen')
+          ? [
+              {
+                name: 'Lillegårdsvägen, Skövde',
+                gid: 'coord:58.4:13.8',
+                lat: 58.4,
+                lon: 13.8,
+                precision: 'street',
+              },
+            ]
+          : null,
+      getImpl: async (path) => {
+        if (path.startsWith('journeys?')) {
+          q = new URLSearchParams(path.split('?')[1]);
+          return { results: [] };
+        }
+        return {
+          results: [
+            {
+              gid: '9021014001760000',
+              name: 'Brunnsparken, Göteborg',
+              locationType: 'stoparea',
+            },
+          ],
+        };
+      },
+    },
+  );
+  assert.equal(q.get('destinationLatitude'), '58.4');
+  assert.equal(q.get('destinationLongitude'), '13.8');
+  assert.equal(q.get('dateTimeRelatesTo'), 'arrival');
+  assert.match(r.answer, /husnummer saknas/);
+});

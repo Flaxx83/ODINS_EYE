@@ -280,7 +280,12 @@ export async function addressCandidates(
   query,
   { fetchImpl = fetch, getToken = token } = {},
 ) {
-  if (!/\d/.test(query)) return null;
+  if (
+    !/\d|(?:gatan|gata|vägen|väg|gränden|gränd|allén|allé|allen|avenyn|boulevarden|stigen)(?=\s|,|$)/i.test(
+      query,
+    )
+  )
+    return null;
   const q = query.replace(/\s+i\s+/i, ', ');
   const r = await fetchImpl(
     'https://ext-api.vasttrafik.se/pr/v4/locations/by-text?' +
@@ -309,6 +314,7 @@ export async function addressCandidates(
     )
     .map((x) => ({
       name: x.name,
+      precision: /\d/.test(street) ? 'address' : 'street',
       id: 'coord:' + x.latitude + ':' + x.longitude,
       gid: 'coord:' + x.latitude + ':' + x.longitude,
       lat: x.latitude,
