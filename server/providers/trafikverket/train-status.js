@@ -270,6 +270,7 @@ export async function enrichTrainTrips(
   const details = trainLegs(trips, format);
   const deadline = Date.now() + Math.max(1, Math.min(25000, timeoutMs));
   let queries = 0;
+  const fetchedTimes = new Map();
   const source = {
     name: 'Trafikverket · tågannonsering',
     url: SOURCE,
@@ -283,12 +284,19 @@ export async function enrichTrainTrips(
     if (++queries > 19 || Date.now() >= deadline) return unavailable;
     let timer;
     try {
-      return await Promise.race([
+      const result = await Promise.race([
         (client || getTrafikverketClient()).query(spec),
         new Promise((resolve) => {
           timer = setTimeout(() => resolve(unavailable), deadline - Date.now());
         }),
       ]);
+      const fetched = parseReportedTime(result?.metadata?.fetchedAt);
+      if (Array.isArray(result?.rows) && Number.isFinite(fetched))
+        fetchedTimes.set(
+          spec.type,
+          Math.max(fetchedTimes.get(spec.type) || 0, fetched),
+        );
+      return result;
     } catch {
       return unavailable;
     } finally {
@@ -386,7 +394,23 @@ export async function enrichTrainTrips(
         leg.arrival = unknown('traffic_date_conflict');
       }
     }
-  return { trips: details, sources: [source] };
+  const fetched =
+    fetchedTimes.get('TrainAnnouncement') ?? fetchedTimes.get('TrainStation');
+  return {
+    trips: details,
+    sources:
+      fetched == null
+        ? []
+        : [
+            {
+              ...source,
+              name: fetchedTimes.has('TrainAnnouncement')
+                ? source.name
+                : 'Trafikverket · stationsregister',
+              time: new Date(fetched).toISOString(),
+            },
+          ],
+  };
 }
 
 const labels = {

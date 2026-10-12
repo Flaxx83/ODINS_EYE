@@ -554,3 +554,24 @@ test('SL commuter train is eligible while metro with the same number is excluded
   t[0].LegList.Leg[0].Product[0].name = 'Tunnelbana 422';
   assert.equal(trainLegs(t, 'resrobot')[0].length, 0);
 });
+
+test('source footer uses real cache fetch time and never invents a fetch for future trips', async () => {
+  const future = await enrichTrainTrips(trip(), {
+    client: fakeClient(),
+    now: now - 86400000,
+  });
+  assert.deepEqual(future.sources, []);
+  const old = { ...meta, fetchedAt: '2026-10-12T04:59:30Z' };
+  const d = await enrichTrainTrips(trip(), {
+    client: fakeClient([row()], old),
+    now,
+  });
+  assert.equal(d.sources[0].time, '2026-10-12T04:59:30.000Z');
+  const unavailable = await enrichTrainTrips(trip(), {
+    client: {
+      query: async () => ({ rows: null, metadata: { status: 'unavailable' } }),
+    },
+    now,
+  });
+  assert.deepEqual(unavailable.sources, []);
+});
