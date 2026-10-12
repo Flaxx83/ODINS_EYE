@@ -480,7 +480,12 @@ export function findPickPoint({
       if (typeof collection?.get !== 'function' || !collection.length) continue;
       for (let j = 0; j < collection.length; j++) {
         const billboard = collection.get(j);
-        if (!aimed(billboard?.id) || !billboard.show) continue;
+        if (
+          !aimed(billboard?.id) ||
+          !billboard.show ||
+          billboard.ready === false
+        )
+          continue;
         const at = billboard.computeScreenSpacePosition?.(scene);
         if (at) {
           Cartesian2 ??= at.constructor;
@@ -489,7 +494,13 @@ export function findPickPoint({
       }
     }
   }
-  for (const [lon, lat] of points || []) {
+  if (billboardPrefix !== null && centres.length === 0) {
+    // Yield to the next frame while images/texture resources are loading.
+    // Thousands of premature GPU reads can otherwise starve their first render.
+    scene.requestRender?.();
+    return null;
+  }
+  for (const [lon, lat] of billboardPrefix === null ? points || [] : []) {
     const at = scene.cartesianToCanvasCoordinates(
       scene.globe.ellipsoid.cartographicToCartesian(
         Cartographic.fromDegrees(lon, lat, 0),
@@ -1126,21 +1137,73 @@ async function main() {
           if (fixtures)
             assert.equal(sequence.images, fixture.images.length, 'every photo');
           // The cones are on the globe: one of them picks as an image.
-          const cone = await page.waitForFunction(
-            findPickPoint,
-            { timeout: 15_000, polling: 250 },
-            {
-              prefix: 'mly:img:',
-              id: null,
-              points: fixtures
-                ? fixture.images.map((image) => [image.lon, image.lat])
-                : null,
-              billboardIds: null,
-              // Clamping can move a fixture cone away from its ellipsoid
-              // projection too: prefer the actually rendered billboard.
-              billboardPrefix: 'mly:img:',
-            },
-          );
+          const cone = await page
+            .waitForFunction(
+              findPickPoint,
+              { timeout: 15_000, polling: 250 },
+              {
+                prefix: 'mly:img:',
+                id: null,
+                points: fixtures
+                  ? fixture.images.map((image) => [image.lon, image.lat])
+                  : null,
+                billboardIds: null,
+                // Clamping can move a fixture cone away from its ellipsoid
+                // projection too: prefer the actually rendered billboard.
+                billboardPrefix: 'mly:img:',
+              },
+            )
+            .catch(async (error) => {
+              const info = await page.evaluate(() => {
+                const scene = window.__godsEyeView.viewer.scene;
+                const records = [];
+                for (let i = 0; i < scene.primitives.length; i++) {
+                  const c = scene.primitives.get(i);
+                  if (typeof c?.get !== 'function') continue;
+                  for (let j = 0; j < (c.length || 0); j++) {
+                    const b = c.get(j);
+                    if (
+                      typeof b?.id !== 'string' ||
+                      !b.id.startsWith('mly:img:')
+                    )
+                      continue;
+                    const p = b.computeScreenSpacePosition?.(scene);
+                    const rect = scene.canvas.getBoundingClientRect();
+                    const top = p
+                      ? document.elementFromPoint(
+                          rect.left + p.x,
+                          rect.top + p.y,
+                        )
+                      : null;
+                    const inside =
+                      p &&
+                      p.x >= 0 &&
+                      p.y >= 0 &&
+                      p.x < rect.width &&
+                      p.y < rect.height;
+                    const hit = b.ready && inside ? scene.pick(p) : null;
+                    const picked =
+                      typeof hit?.id === 'string' ? hit.id : hit?.id?.id;
+                    records.push({
+                      id: b.id,
+                      show: b.show,
+                      ready: b.ready,
+                      screen: p ? [p.x, p.y] : null,
+                      top: top?.tagName,
+                      picked: typeof picked === 'string' ? picked : null,
+                    });
+                  }
+                }
+                return {
+                  count: records.length,
+                  ready: records.filter((b) => b.ready).length,
+                  shown: records.filter((b) => b.show).length,
+                  examples: records.slice(0, 12),
+                };
+              });
+              console.log('cone-render-diagnostics', JSON.stringify(info));
+              throw error;
+            });
           assert.ok(await cone.jsonValue(), 'an image cone is pickable');
           await page.evaluate(() =>
             window.__godsEyeView.dataManager.layers

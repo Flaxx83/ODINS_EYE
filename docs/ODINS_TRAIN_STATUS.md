@@ -28,7 +28,7 @@ TrainMessage 1.7 och 1.3 accepterades inte av endpointen i modellproverna för #
 
 ## Verifiering
 
-`npm run test:integrations` innehåller fixtures för Skövde–Stockholm, Göteborg–Stockholm, försening, inställt, midnatt, sommartid, saknad prognos, gammal data, tvetydighet, konflikter i trafikdatum, felaktigt tågnummersfält, begränsade svar, anropsbudget och hängande källa. 73 integrationsprov passerade lokalt.
+`npm run test:integrations` innehåller fixtures för Skövde–Stockholm, Göteborg–Stockholm, försening, inställt, midnatt, sommartid, saknad prognos, gammal data, tvetydighet, konflikter i trafikdatum, felaktigt tågnummersfält, begränsade svar, anropsbudget och hängande källa. 74 integrationsprov passerade lokalt.
 
 Liveprov 2026-10-12: stationsfrågan gav 719 annonserade stationer utan limit-trunkering. ResRobot Göteborg–Stockholm matchade båda ändpunkterna för tåg 426 och returnerade beräknade förseningar, spår och preliminära avvikelser. Det kompletta `/api/local-ai`-flödet returnerade HTTP 200, tre reseförslag, tågstatus och separata tider i svarstexten. Detta är ett tidsbundet verifieringsprov, inte en beständig trafikutskrift. Slutliga CI-resultat registreras i issue #21 och PR:n.
 

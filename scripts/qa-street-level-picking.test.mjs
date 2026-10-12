@@ -22,14 +22,13 @@ function sceneFixture(t, blocked = false) {
       return {};
     }
   }
-  const collection = {
-    length: 1,
-    get: () => ({
-      id: 'mly:img:photo',
-      show: true,
-      computeScreenSpacePosition: () => new ScreenPoint(100, 80),
-    }),
+  const billboard = {
+    id: 'mly:img:photo',
+    show: true,
+    ready: true,
+    computeScreenSpacePosition: () => new ScreenPoint(100, 80),
   };
+  const collection = { length: 1, get: () => billboard };
   let actualPicks = 0;
   const scene = {
     canvas,
@@ -61,7 +60,7 @@ function sceneFixture(t, blocked = false) {
   globalThis.document = {
     elementFromPoint: () => (blocked ? {} : canvas),
   };
-  return { picks: () => actualPicks };
+  return { picks: () => actualPicks, billboard: collection.get(), scene };
 }
 test('pick proof finds an opaque diagonal pixel of a clamped alpha-masked billboard', (t) => {
   const f = sceneFixture(t);
@@ -93,4 +92,25 @@ test('a panel covering the marker cannot count as a clickable cone', (t) => {
     null,
   );
   assert.equal(f.picks(), 0);
+});
+
+test('an unloaded billboard yields without GPU picking until a render makes it ready', (t) => {
+  const f = sceneFixture(t);
+  f.billboard.ready = false;
+  let renders = 0;
+  f.scene.requestRender = () => {
+    renders++;
+    f.billboard.ready = true;
+  };
+  const input = {
+    prefix: 'mly:img:',
+    id: null,
+    points: [[0, 0]],
+    billboardIds: null,
+    billboardPrefix: 'mly:img:',
+  };
+  assert.equal(findPickPoint(input), null);
+  assert.equal(f.picks(), 0);
+  assert.equal(renders, 1);
+  assert.equal(findPickPoint(input).id, 'photo');
 });
