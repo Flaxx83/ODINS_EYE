@@ -87,3 +87,7 @@ Adressuppföljning till #1: exakt hemadress, bevarade hela hållplatsnamn, ankom
 ### Gemensam adress-/namnsökning — granskningsklar 2026-10-12
 
 Location och AI använder samma valbara platskandidater; reseplaneringen återanvänder kandidatkällan. Namn/gator behöver inte vara fullständiga adresser. Partiella källsvar synliggörs. Photon kan vara långsam/otillgänglig; generell funktion innebär inte garanterad träff för varje adress. 156 integrationstester, riktade UI-/Location-prov, build och paketgränser passerade lokalt. Ändringen väntar på granskning och sammanslagning.
+
+## Källpolicy — issue #7 (2026-10-12)
+
+Villkor, faktisk cache, anropsbudget och förnyelsebeslut finns i [ODINS_SOURCE_POLICY.md](ODINS_SOURCE_POLICY.md). Källhänvisningarna har kompletterats. Gångruttning har begränsad 24-timmarscache, samordnade anrop och konfigurerbar serveradress. Inventeringen är granskningsklar; Västtrafiks aktiva avtal, stationernas särskilda EEA-villkor och routingkapacitet inför distribution är fortfarande öppna kontrollpunkter. Issue #7 ska inte stängas som ett generellt klartecken för distribution.

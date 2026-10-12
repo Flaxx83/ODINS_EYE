@@ -1,3 +1,11 @@
+const PLACE_KIND_LABELS = {
+  street: 'gata',
+  address: 'adress',
+  stop: 'hållplats',
+  city: 'ort',
+  area: 'område',
+  place: 'plats',
+};
 let nextId = 0;
 /** Shared address/name endpoint; no camera move until an unambiguous submit or choice. */
 export class PlaceSuggestions {
@@ -153,14 +161,7 @@ export class PlaceSuggestions {
       b.textContent =
         row.name +
         ' · ' +
-        ({
-          street: 'gata',
-          address: 'adress',
-          stop: 'hållplats',
-          city: 'ort',
-          area: 'område',
-          place: 'plats',
-        }[row.kind] || 'plats');
+        (PLACE_KIND_LABELS[row.kind] || PLACE_KIND_LABELS.place);
       b.title = row.source?.name || '';
       b.onclick = () => this.choose(row);
       this.popup.append(b);

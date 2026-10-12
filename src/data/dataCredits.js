@@ -93,6 +93,26 @@ export function hideOsmCredit(viewer, owner) {
 
 export const DATA_CREDITS = [
   {
+    key: 'odins-geonames',
+    html: 'Ortspunkter: <a href="https://www.geonames.org/" target="_blank" rel="noopener">GeoNames</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>; bearbetad ortsmatchning',
+  },
+  {
+    key: 'odins-eea',
+    html: 'Luftmätningar: <a href="https://www.eea.europa.eu/en/legal-notice" target="_blank" rel="noopener">European Environment Agency (EEA)</a> och rapporterande stationer; urval och diagram bearbetade',
+  },
+  {
+    key: 'odins-transit',
+    html: 'Kollektivtrafik: <a href="https://www.trafiklab.se/" target="_blank" rel="noopener">Trafiklab / Samtrafiken</a> (GTFS Regional, ResRobot · CC0); <a href="https://developer.vasttrafik.se/" target="_blank" rel="noopener">Västtrafik</a>',
+  },
+  {
+    key: 'odins-lm',
+    html: 'Topografi: <a href="https://www.lantmateriet.se/sv/geodata/vara-produkter/avgiftsfria-produkter/oppna-data/" target="_blank" rel="noopener">Lantmäteriet</a> · CC0; utvalda linjer och beräknat spårnät',
+  },
+  {
+    key: 'odins-walking',
+    html: 'Beräknade gångvägar: <a href="https://valhalla.openstreetmap.de/" target="_blank" rel="noopener">Valhalla / FOSSGIS</a> · © OpenStreetMap contributors · <a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener">Fix the map</a>',
+  },
+  {
     key: 'esri-place-labels',
     html: 'Place names and boundaries: <a href="https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer" target="_blank" rel="noopener">Esri World Boundaries and Places</a>',
   },

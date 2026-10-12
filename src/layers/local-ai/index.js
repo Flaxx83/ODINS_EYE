@@ -1,5 +1,13 @@
 import { createTripMap } from './trip-map.js';
 import * as C from 'cesium';
+const PLACE_KIND_LABELS = {
+  street: 'gata',
+  address: 'adress',
+  stop: 'hållplats',
+  city: 'ort',
+  area: 'område',
+  place: 'plats',
+};
 export function createLocalAiLayer() {
   let map,
     viewer,
@@ -311,14 +319,7 @@ export function createLocalAiLayer() {
               pick.textContent =
                 place.name +
                 ' · ' +
-                ({
-                  street: 'gata',
-                  address: 'adress',
-                  stop: 'hållplats',
-                  city: 'ort',
-                  area: 'område',
-                  place: 'plats',
-                }[place.kind] || 'plats');
+                (PLACE_KIND_LABELS[place.kind] || PLACE_KIND_LABELS.place);
               pick.title = place.source?.name || '';
               pick.onclick = () => submit(message, { place: place.id });
               choices.append(pick);

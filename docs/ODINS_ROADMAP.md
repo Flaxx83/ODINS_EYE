@@ -53,3 +53,7 @@ Se [ändringsloggen](ODINS_CHANGELOG.md), [installation](ODINS_SETUP.md) och [Gi
 - #3: utredning, säkrare nätkoppling och geometriorsaker implementerat, inväntar granskning. Se [järnvägsutredningen](ODINS_RAIL_GEOMETRY.md). 422/428/4132 har fortfarande en dokumenterad databegränsning; fortsatt geometriarbete samordnas med #30. Nästa kärnuppgift i ordningen är #1, validerade AI-verktyg och samtalskontext.
 
 - #1: validerade verktyg och tillfälligt samtalsminne implementerat, inväntar granskning. Se [AI-integration](ODINS_AI_TOOLS.md). Fem verktyg återanvänder befintliga källor; nya datalager behöver egna verktygsadaptrar. Nästa kärnuppgift enligt ordningen är #7, attribution, routingvillkor och cachepolicy.
+
+## Källpolicy – issue #7, 2026-10-12
+
+Inventering, källhänvisning, faktisk cache och routingbeslut är implementerade för granskning. Se [ODINS_SOURCE_POLICY.md](ODINS_SOURCE_POLICY.md). Publika demotjänster är inte underlag för bred distribution eller nätbaserade områdessvep. Kontroller av Västtrafiks aktiva avtal, exportmetadata och gamla EEA-fallbacks återstår inför distribution. Nästa planerade funktionsarbete efter granskning är #22, väghändelser på kartan; #7 behålls öppen för de uttryckliga kontrollpunkterna.

@@ -342,3 +342,7 @@ The required Google Maps / Cesium credit renders on the on-globe credit line (`#
 ## Esri ortsnamn och gränser
 
 Valbart transparent referenslager ovanpå satellitbilden: https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer . Esri World Boundaries and Places; namn och administrativa gränser väljs av tjänsten vid respektive zoomnivå. Källa och tjänstens egna credits visas i Cesiums attribution. Data omfattas av Esris tjänstevillkor, inte projektets MIT-licens. Kräver nätåtkomst; detta är inte Lantmäteriets lokala filer. Ingen massnedladdning eller offlinekopiering införs.
+
+## ODINS svenska data och cachepolicy
+
+Inventering, primärkällor, faktiska TTL/budgetar och kvarstående avtalskontroller finns i [ODINS_SOURCE_POLICY.md](docs/ODINS_SOURCE_POLICY.md), granskad 2026-10-12. GeoNames (CC BY 4.0), EEA (käll-/datamängdsvillkor), Trafiklab GTFS Regional och ResRobot (CC0), Lantmäteriets öppna topografi (CC0), Västtrafiks separat avtalade API och FOSSGIS/Valhallas tjänstevillkor ska hållas isär. Appens Data attribution har kompletterats med dessa källor och bearbetningsuppgifter. Radio Browser är den aktiva katalogkällan; Radio Garden är inte en aktiv integration.
