@@ -1,3 +1,4 @@
+import { parseRoadDatex } from './road-model.js';
 import { readResponseTextCapped } from '../../../src/sources/httpBody.js';
 import {
   TRAFIKVERKET_MODELS,
@@ -240,10 +241,19 @@ export function createTrafikverketClient({
         }, timeoutMs);
       });
       const work = (async () => {
-        const response = await fetchImpl(API_URL, {
-          method: 'POST',
+        const model = TRAFIKVERKET_MODELS[spec.type];
+        const datexUrl = model.feed
+          ? new URL(
+              'https://api.trafikinfo.trafikverket.se/v2/datex2/3.1/' +
+                model.feed +
+                '/sit:situation',
+            )
+          : null;
+        if (datexUrl) datexUrl.searchParams.set('authenticationkey', apiKey);
+        const response = await fetchImpl(datexUrl?.href || API_URL, {
+          method: datexUrl ? 'GET' : 'POST',
           headers: { 'Content-Type': 'text/xml' },
-          body: queryXml(spec, apiKey),
+          ...(datexUrl ? {} : { body: queryXml(spec, apiKey) }),
           redirect: 'error',
           signal: controller.signal,
         });
@@ -259,10 +269,17 @@ export function createTrafikverketClient({
         }
         const text = await readResponseTextCapped(
           response,
-          maxResponseBytes,
+          model.maxResponseBytes || maxResponseBytes,
           controller.signal,
         );
         if (text.includes(apiKey)) throw failure('credential_in_response');
+        if (model.feed) {
+          try {
+            return parseRoadDatex(text, model.feed);
+          } catch {
+            throw failure('invalid_schema');
+          }
+        }
         let payload;
         try {
           payload = JSON.parse(text);

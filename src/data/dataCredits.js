@@ -93,6 +93,10 @@ export function hideOsmCredit(viewer, owner) {
 
 export const DATA_CREDITS = [
   {
+    key: 'trafikverket-road-events',
+    html: 'Väghändelser: <a href="https://data.trafikverket.se/" target="_blank" rel="noopener">Trafikverket · DATEX II</a> · CC0; geografiskt och tidsmässigt urval',
+  },
+  {
     key: 'odins-geonames',
     html: 'Ortspunkter: <a href="https://www.geonames.org/" target="_blank" rel="noopener">GeoNames</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>; bearbetad ortsmatchning',
   },

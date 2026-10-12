@@ -346,3 +346,7 @@ Valbart transparent referenslager ovanpå satellitbilden: https://services.arcgi
 ## ODINS svenska data och cachepolicy
 
 Inventering, primärkällor, faktiska TTL/budgetar och kvarstående avtalskontroller finns i [ODINS_SOURCE_POLICY.md](docs/ODINS_SOURCE_POLICY.md), granskad 2026-10-12. GeoNames (CC BY 4.0), EEA (käll-/datamängdsvillkor), Trafiklab GTFS Regional och ResRobot (CC0), Lantmäteriets öppna topografi (CC0), Västtrafiks separat avtalade API och FOSSGIS/Valhallas tjänstevillkor ska hållas isär. Appens Data attribution har kompletterats med dessa källor och bearbetningsuppgifter. Radio Browser är den aktiva katalogkällan; Radio Garden är inte en aktiv integration.
+
+## Trafikverket DATEX II 3.1 – väghändelser
+
+Valbar visning och AI-urval från roadworks, accident och trafficmessage. Källhänvisning: Trafikverket, öppna trafikinformationsdata CC0 enligt [registreringsavtal](https://data.trafikverket.se/oauth2/Account/register). Rapporterade visningspunkter och tidsmässigt/geografiskt urval är bearbetade i appen. Ingen händelseutbredning eller faktisk reseförsening härleds från dessa punkter. Se [ODINS_ROAD_EVENTS.md](docs/ODINS_ROAD_EVENTS.md) för snapshot-cache och källstatus; API-nyckel är serverlokal.

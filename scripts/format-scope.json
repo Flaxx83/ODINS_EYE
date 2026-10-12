@@ -975,5 +975,9 @@
   "server/providers/address-search.test.mjs",
   "src/ui/placeSuggestions.js",
   "server/providers/walking-geometry.js",
-  "server/providers/walking-geometry.test.mjs"
+  "server/providers/walking-geometry.test.mjs",
+  "server/providers/trafikverket/road-model.js",
+  "server/providers/trafikverket/road-events.js",
+  "server/providers/trafikverket/road-events.test.mjs",
+  "src/layers/road-events/index.js"
 ]
