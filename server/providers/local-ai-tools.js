@@ -9,6 +9,7 @@ import {
 import { readResponseTextCapped } from '../../src/sources/httpBody.js';
 import towns from './sweden-towns.json' with { type: 'json' };
 import { stockholmTime } from './trafikverket/train-status.js';
+import { explicitTripDetails } from './trip-details.js';
 
 const toolNames = [
   'plan_trip',
@@ -406,6 +407,31 @@ export function createLocalAiService({
       for (const { tool, args } of plan.actions) {
         if (tool === 'plan_trip') {
           const previous = session.memory;
+          const detailDay = new Intl.DateTimeFormat('sv-SE', {
+            timeZone: 'Europe/Stockholm',
+            dateStyle: 'short',
+          }).format(new Date(stamp));
+          const explicit = explicitTripDetails(
+            message,
+            new Date(stockholmTime(detailDay, '00:00')),
+          );
+          if (explicit.ambiguous)
+            return finish({
+              answer: 'Vilken av adresserna vill du starta från?',
+              needsClarification: true,
+              toolsUsed: [],
+            });
+          for (const endpoint of ['origin', 'destination']) {
+            if (explicit[endpoint]) args[endpoint] = explicit[endpoint];
+            else if (
+              previous?.[endpoint] &&
+              args[endpoint] &&
+              textKey(previous[endpoint]).includes(textKey(args[endpoint])) &&
+              !textKey(message).includes(textKey(args[endpoint]))
+            )
+              args[endpoint] = previous[endpoint];
+          }
+          validateToolPlan(plan, evidence);
           if (!args.origin || !args.destination) {
             session.memory = { ...args };
             return finish({
@@ -429,7 +455,7 @@ export function createLocalAiService({
             timeZone: 'Europe/Stockholm',
             dateStyle: 'short',
           }).format(new Date(stamp));
-          let timeInput = message;
+          let timeInput = message + (explicit.arrival ? ' ankomst' : '');
           if (sameRoute && previous.time && !/\bnu\b/i.test(message)) {
             const clockGiven =
               /(?:kl\.?|klockan|vid)\s*\d|\d{1,2}:\d{2}|halv|kvart/i.test(

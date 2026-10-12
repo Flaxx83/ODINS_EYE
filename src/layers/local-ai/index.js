@@ -275,6 +275,13 @@ export function createLocalAiLayer() {
               ['Från', tripChoice.origins],
               ['Till', tripChoice.destinations],
             ]) {
+              if (rows.length === 1) {
+                const fixed = document.createElement('p');
+                fixed.textContent = label + ': ' + rows[0].name;
+                choices.append(fixed);
+                selects.push({ value: rows[0].gid });
+                continue;
+              }
               const l = document.createElement('label');
               l.textContent = label;
               const select = document.createElement('select');

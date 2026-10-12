@@ -81,3 +81,5 @@ Utredning, säkrare segmentkoppling och orsaker per delsträcka implementerat p�
 ## AI-integration – issue #1
 
 Implementerat på codex/validated-ai-tools, inväntar granskning. [Verktyg, samtalskontext och anropsbudget](ODINS_AI_TOOLS.md). Följdfrågor behåller resväg, kalenderdatum och ankomst/avgång. Nya källanrop görs för datafrågor; äldre källsvar blir inte nya fakta. Trafiknät och användarens senaste platsval valideras. Tidigare begränsning om att alltid skriva hela resvägen i #4 ersätts av detta tillfälliga samtalsminne.
+
+Adressuppföljning till #1: exakt hemadress, bevarade hela hållplatsnamn, ankomst via ”behöver vara [plats]” och rullista endast vid tvetydigheter. 149 integrationstester; liveadress/tre reseförslag och UI med fixerad start verifierade. Vällingby Centrum behöver fortfarande ett exakt resmål i befintlig katalog. Se [AI-integrationen](ODINS_AI_TOOLS.md).
