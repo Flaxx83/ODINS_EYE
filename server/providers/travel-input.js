@@ -327,3 +327,15 @@ export function choiceMessage(message, travel) {
         travel.time
     : message;
 }
+
+export function needsTravelRoute(message) {
+  if (/från.+till/i.test(message)) return false;
+  return (
+    /^(?:(?:Sverige|SL):\s*)?(?:(?:och|men)\s+)?(?:imorgon|i morgon|idag|i dag|den\s+\d|\d{4}-\d{2}-\d{2}|(?:kl\.?|klockan|vid)\s*\d|samma resa|(?:istället|i stället)\s+(?:kl|imorgon)|ankomst|vara framme|senast\s*\d)/i.test(
+      message,
+    ) ||
+    /\b(?:jag vill|kan jag|kan vi)\s+(?:åka|resa)\b|\b(?:vara|komma)\s+(?:framme|fram)\b/i.test(
+      message,
+    )
+  );
+}

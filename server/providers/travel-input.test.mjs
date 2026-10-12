@@ -1,3 +1,4 @@
+import { needsTravelRoute } from './travel-input.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseTravelTime, normalizeTravelMessage } from './travel-input.js';
@@ -364,4 +365,21 @@ test('municipality-qualified stop matches around the stop type without selecting
   );
   assert.equal(r.tripChoices.origins.length, 1);
   assert.equal(r.tripChoices.origins[0].id, '1');
+});
+
+test('short clock follow-up needs a route while unrelated follow-ups retain their own intent', async () => {
+  for (const message of [
+    'kl 07:00',
+    'Och imorgon kl 07?',
+    'Jag vill åka till Stockholm',
+  ]) {
+    const r = await askLocalAi(message, {}, '');
+    assert.equal(r.needsClarification, true);
+  }
+  for (const message of [
+    'Och polishändelser i Göteborg?',
+    'Och hur många bussar är sena i Göteborg?',
+    'Jag vill resa från A till B imorgon kl 07',
+  ])
+    assert.equal(needsTravelRoute(message), false);
 });

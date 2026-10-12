@@ -1,5 +1,9 @@
 import { planSlTrip } from './local-sl-trip.js';
-import { normalizeTravelMessage, TravelInputError } from './travel-input.js';
+import {
+  normalizeTravelMessage,
+  TravelInputError,
+  needsTravelRoute,
+} from './travel-input.js';
 import { trafficAnswer } from './local-traffic.js';
 import { planTrip } from './local-trip.js';
 import { localDataContext } from './local-ai-data.js';
@@ -11,12 +15,7 @@ export async function askLocalAi(
   choice,
 ) {
   message = normalizeTravelMessage(message);
-  if (
-    !/från.+till/i.test(message) &&
-    /^(?:(?:Sverige|SL):\s*)?(?:och |men |samma resa|istället|i stället|imorgon|i morgon|ankomst|vara framme|senast)/i.test(
-      message,
-    )
-  )
+  if (needsTravelRoute(message))
     return {
       answer:
         'Skriv hela resan med från, till, datum och klockslag. Tidigare resefrågor återanvänds inte automatiskt.',

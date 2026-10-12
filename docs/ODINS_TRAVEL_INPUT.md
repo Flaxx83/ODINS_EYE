@@ -28,6 +28,6 @@ API:ernas tidtabellsperiod begränsar möjliga framtida datum. API-fel eller tom
 
 ## Verifiering
 
-108 integrationstester passerade, med 22 tids-/reseindatafall (17 nya) för kalender, avsikt, båda adapterparametrarna, adresser, platsval och förtydliganden. Västtrafiks riktiga API accepterade ankomstsökning och koordinatparametrar; ogiltigt dateTimeRelatesTo gav HTTP 400, utan tyst fallback. Liveprov via appens endpoint omfattar framtida ankomstresa och DST-förtydligande. Slutliga CI-resultat redovisas i issue och PR.
+109 integrationstester passerade, med 23 tids-/reseindatafall (18 nya) för kalender, avsikt, båda adapterparametrarna, adresser, platsval och förtydliganden. Västtrafiks riktiga API accepterade ankomstsökning och koordinatparametrar; ogiltigt dateTimeRelatesTo gav HTTP 400, utan tyst fallback. Liveprov via appens endpoint omfattar framtida ankomstresa och DST-förtydligande. Slutliga CI-resultat redovisas i issue och PR.
 
 ResRobot-kontraktet beskrivs i [Trafiklabs dokumentation](https://www.trafiklab.se/api/our-apis/resrobot-v21/route-planner/). Västtrafiks parameteranvändning verifierades mot dess autentiserade API; nycklar hålls på servern.
