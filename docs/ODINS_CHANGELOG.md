@@ -56,3 +56,7 @@ Issue #6 och PR #26 samlar offlineintegrationstester och reparation av befintlig
 ## Gemensam Trafikverksklient (2026-10-11)
 
 Issue #20 inför serverklient med validerade XML-frågor, begränsade svar, samordnade anrop, cache, backoff och lokal anropsbudget. Kamerorna återanvänder klienten och visar katalogens staleness/begränsning. Observationstid och hämtningstid hålls isär. Sex modellversioner accepterades i begränsade liveprover; störningsmodellerna TrainMessage/Situation kräver ytterligare verifiering i #21/#22. Inga nya tågsvar eller väghändelselager levereras här. Se [API-guiden](ODINS_TRAFIKVERKET.md) för verifierade versioner och policies, och issue #20 för slutliga provresultat.
+
+## Trafikverket: tågstatus i reseförslag (#21)
+
+Befintliga resor kompletteras med källmärkt tågstatus: planerad/beräknad/faktisk tid, inställning, spår och avvikelser. Matchning kräver station, annonserat nummer, aktivitet och tid; tvetydiga och framtida statusar blir uttryckligen okända. Se [matchningspolicy, begränsningar och verifiering](ODINS_TRAIN_STATUS.md). Separata TrainMessage-meddelanden ingår inte; rapporterade Deviation-fält används när de finns.

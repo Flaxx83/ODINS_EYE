@@ -1,3 +1,7 @@
+import {
+  enrichTrainTrips,
+  trainStatusText,
+} from './trafikverket/train-status.js';
 import { resolveRailNetwork } from './rail-network-geometry.js';
 import { resolveSjGeometry } from './sj-trip-geometry.js';
 import { resolveWalking } from './walking-geometry.js';
@@ -118,6 +122,7 @@ export async function planSlTrip(message, choice, base, national = false) {
         ),
     )
     .slice(0, 3);
+  const trainStatus = await enrichTrainTrips(trips);
   const lines = [
     `${national ? 'Sverigeresa' : 'SL-resa'} från ${o.name} till ${d.name}, avgång ${travel.date}${travel.time ? ' kl ' + travel.time : ' från aktuell tid'}. ResRobot-underlag.`,
   ];
@@ -125,12 +130,15 @@ export async function planSlTrip(message, choice, base, national = false) {
     lines.push('Inga förslag med valt operatörsurval och färdsätt hittades.');
   for (const [i, j] of trips.entries()) {
     lines.push('\nFörslag ' + (i + 1));
+    for (const train of trainStatus.trips[i] || [])
+      lines.push(trainStatusText(train));
     for (const l of legs(j))
       lines.push(
         `${l.type === 'WALK' ? 'Gång' : (l.Product?.[0]?.name || 'Kollektivtrafik') + (l.Product?.[0]?.operatorInfo?.name ? ' · ' + l.Product[0].operatorInfo.name.trim() : '')}: ${l.Origin.name} → ${l.Destination.name}, ${l.Origin.rtDate || l.Origin.date} ${(l.Origin.rtTime || l.Origin.time).slice(0, 5)}–${l.Destination.rtDate || l.Destination.date} ${(l.Destination.rtTime || l.Destination.time).slice(0, 5)}${l.cancelled ? ' · INSTÄLLD' : ''}`,
       );
   }
   return {
+    trainStatus: trainStatus.trips,
     mapTrips: await resolveWalking(
       await resolveRailNetwork(
         trips,
@@ -147,6 +155,7 @@ export async function planSlTrip(message, choice, base, national = false) {
       lines.join('\n') +
       '\nPrognostid när sådan finns, annars tidtabell. Kontrollera avgångsstatus separat.',
     sources: [
+      ...trainStatus.sources,
       {
         name: national
           ? 'Trafiklab ResRobot · hela Sverige'

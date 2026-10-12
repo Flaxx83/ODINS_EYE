@@ -72,3 +72,5 @@ Kamerornas katalogtid och stale/refreshFailed/complete följer med till frontend
 `npm run test:integrations` inkluderar klient-, status- och kamerafunktionens regressionsprover. De testar bland annat coalescing, isolerade kopior, tomt kontra okänt, timeout, byte/struktur/heapbudget, queryvalidering, credential-echo, schema-/API-fel, rate limit, nyckelbyte, klockor och begränsade resultat. Fixtures kräver inga riktiga nycklar. Unit discovery inkluderar testerna även i den breda sviten.
 
 Liveprov efter koppling till klienten: 1 548 svenska kameror i appens katalog och HTTP 200 image/jpeg från bildproxyn. Status och katalog kontrollerades mot den lokala nyckeln för att säkerställa att den inte exponerades. Slutliga lokala/Actions-resultat registreras i issue #20 och PR:n. Fulla geografiska/tidsmässiga dataurval för tåg, väghändelser och vägväder ingår i kommande adaptrar, inte i dessa modellprover.
+
+Tågstatus i reseförslagen beskrivs i [ODINS_TRAIN_STATUS.md](ODINS_TRAIN_STATUS.md), inklusive stödda nummerfält, matchning och status för framtida resor.

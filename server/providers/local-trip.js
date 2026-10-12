@@ -1,3 +1,7 @@
+import {
+  enrichTrainTrips,
+  trainStatusText,
+} from './trafikverket/train-status.js';
 import { resolveVasttrafikGeometry } from './trip-geometry.js';
 import { vasttrafikMapTrips } from './trip-map.js';
 import { token } from './vasttrafik.js';
@@ -64,6 +68,7 @@ export async function planTrip(message, choice) {
         ),
     )
     .slice(0, 3);
+  const trainStatus = await enrichTrainTrips(trips, { format: 'vasttrafik' });
   const clock = (s) =>
     s
       ? new Date(s).toLocaleTimeString('sv-SE', {
@@ -77,6 +82,8 @@ export async function planTrip(message, choice) {
     lines.push('Inga reseförslag för valt färdsätt returnerades.');
   trips.forEach((j, i) => {
     lines.push('\nFörslag ' + (i + 1));
+    for (const train of trainStatus.trips[i] || [])
+      lines.push(trainStatusText(train));
     for (const l of [
       ...(j.tripLegs || []),
       ...(j.connectionLinks || []),
@@ -97,11 +104,13 @@ export async function planTrip(message, choice) {
     }
   });
   return {
+    trainStatus: trainStatus.trips,
     mapTrips: await resolveVasttrafikGeometry(trips, vasttrafikMapTrips(trips)),
     answer:
       lines.join('\n') +
       '\nTider är prognos när tillgänglig, annars tidtabell. Kontrollera trafikmeddelanden hos Västtrafik.',
     sources: [
+      ...trainStatus.sources,
       {
         name: 'Västtrafik reseplanering',
         url: 'https://www.vasttrafik.se/',
