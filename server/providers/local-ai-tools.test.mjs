@@ -467,3 +467,22 @@ test('model time fields and free factual answers are not executable arguments', 
     /valideras/,
   );
 });
+test('calendar-leading data question reaches the model instead of the legacy route matcher', async () => {
+  let calls = 0,
+    queries = [];
+  const s = createLocalAiService({
+    now,
+    planner: async () => (calls++, action('air_quality')),
+    execute: async (q) => (
+      queries.push(q),
+      { answer: 'Fixture: aktuell mätning, ingen prognos' }
+    ),
+  });
+  const r = await s.ask({
+    message: 'Imorgon vill jag veta hur luften ser ut här',
+    area,
+  });
+  assert.equal(calls, 1);
+  assert.deepEqual(r.toolsUsed, ['air_quality']);
+  assert.deepEqual(queries, ['luftkvalitet']);
+});

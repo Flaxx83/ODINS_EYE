@@ -4,7 +4,6 @@ import {
   normalizeTravelMessage,
   parseTravelTime,
   choiceMessage,
-  needsTravelRoute,
   TravelInputError,
 } from './travel-input.js';
 import { readResponseTextCapped } from '../../src/sources/httpBody.js';
@@ -370,13 +369,6 @@ export function createLocalAiService({
         return finish(result);
       }
       session.pending = null;
-      if (!session.messages.length && needsTravelRoute(message)) {
-        session.messages = [message];
-        return finish({
-          answer: 'Skriv hela resan med från, till, datum och klockslag.',
-          needsClarification: true,
-        });
-      }
       if (/från.+till/i.test(message))
         parseTravelTime(message, new Date(stamp));
       const messages = [...session.messages, message].slice(-6);

@@ -1,7 +1,17 @@
 import { createLocalAiService, AiInputError } from './local-ai-tools.js';
-import { TravelInputError } from './travel-input.js';
+import {
+  TravelInputError,
+  normalizeTravelMessage,
+  needsTravelRoute,
+} from './travel-input.js';
 const service = createLocalAiService();
 export function askLocalAi(message, area, base, choice) {
+  // Compatibility helper has no conversation token; only the HTTP service can reuse context.
+  if (needsTravelRoute(normalizeTravelMessage(message)))
+    return Promise.resolve({
+      answer: 'Skriv hela resan med från, till, datum och klockslag.',
+      needsClarification: true,
+    });
   const network = /^Sverige:/i.test(message)
     ? 'Hela Sverige'
     : /^SL:/i.test(message)

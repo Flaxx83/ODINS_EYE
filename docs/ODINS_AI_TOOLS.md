@@ -37,7 +37,7 @@ Modellen kan fortfarande välja fel verktyg för en ovanlig formulering. Valider
 
 ## Verifiering 2026-10-12
 
-17 nya offlineprov täcker verktygsval, argument/proveniens, tidigare datum/ankomst, samtalsisolering och utgång, nätbyte, platsval, kvot/samtidighet, källfel, begränsat modellsvar och explicit färdsätt. Totalt 142 integrationstester och tre installationsprov passerar lokalt. Bygge, formatering och paketgränser verifieras också.
+18 nya offlineprov täcker verktygsval, argument/proveniens, tidigare datum/ankomst, samtalsisolering och utgång, nätbyte, platsval, kvot/samtidighet, källfel, begränsat modellsvar och explicit färdsätt. Totalt 143 integrationstester och tre installationsprov passerar lokalt. Bygge, formatering och paketgränser verifieras också.
 
 `npm run qa:ai` kräver Bionic på port 1235 och återkör sju frågor mot den riktiga modellen. Det prövar verktygsval/validering, inte live-avgångar, och körs inte i vanlig CI. Extra liveprov kontrollerade unsupported väderfråga och byte från trafik till luftfråga. Följdfrågekedjan ovan provades mot den riktiga modellen och en tydligt simulerad datatjänst.
 
