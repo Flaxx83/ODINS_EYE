@@ -500,14 +500,11 @@ test('literal home address overrides model-shortened town and implicit arrival s
   });
   await s.ask({
     message:
-      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Lillegårdsvägen 11 A i Skövde.',
+      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Exempelvägen 12 A i Skövde.',
     area,
     network: 'Hela Sverige',
   });
-  assert.match(
-    query,
-    /från Lillegårdsvägen 11 A i Skövde till Vällingby Centrum/,
-  );
+  assert.match(query, /från Exempelvägen 12 A i Skövde till Vällingby Centrum/);
   assert.match(query, /2026-10-13 ankomst kl 11:00/);
 });
 test('explicit departure overrides home context and model cannot shorten its stop name', async () => {
@@ -524,7 +521,7 @@ test('explicit departure overrides home context and model cannot shorten its sto
   });
   await s.ask({
     message:
-      'Jag bor på Lillegårdsvägen 11 A i Skövde. Jag vill resa från Göteborg central till Stockholm Centralstation imorgon kl 07:00.',
+      'Jag bor på Exempelvägen 12 A i Skövde. Jag vill resa från Göteborg central till Stockholm Centralstation imorgon kl 07:00.',
     area,
   });
   assert.match(query, /från Göteborg central till Stockholm Centralstation/);
@@ -544,7 +541,7 @@ test('follow-up preserves full home address when the model reverts to the town',
   });
   const a = await s.ask({
     message:
-      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Lillegårdsvägen 11 A i Skövde.',
+      'Jag behöver vara Vällingby Centrum imorgon vid 11-tiden. Jag bor på Exempelvägen 12 A i Skövde.',
     area,
   });
   await s.ask({
@@ -554,7 +551,7 @@ test('follow-up preserves full home address when the model reverts to the town',
   });
   assert.match(
     queries[1],
-    /från Lillegårdsvägen 11 A i Skövde till Vällingby Centrum/,
+    /från Exempelvägen 12 A i Skövde till Vällingby Centrum/,
   );
   assert.match(queries[1], /2026-10-13 ankomst kl 10:30/);
 });
@@ -574,7 +571,7 @@ test('two explicit home addresses ask for clarification instead of selecting a g
   });
   const r = await s.ask({
     message:
-      'Jag bor på Lillegårdsvägen 11 A i Skövde. Jag bor på Annagatan 2 i Skövde. Jag vill till Vällingby imorgon kl 11:00.',
+      'Jag bor på Exempelvägen 12 A i Skövde. Jag bor på Annagatan 2 i Skövde. Jag vill till Vällingby imorgon kl 11:00.',
     area,
   });
   assert.equal(r.needsClarification, true);
