@@ -13,6 +13,7 @@ export function createLocalAiLayer() {
     viewer,
     panel,
     dockButton,
+    launchPanel,
     dockObserver,
     positionPanel,
     escapePanel,
@@ -30,11 +31,33 @@ export function createLocalAiLayer() {
     id: 'local-ai',
     name: 'Lokal AI · Bionic',
     category: 'tools',
+    attachDataManager(manager) {
+      dockButton = document.createElement('button');
+      dockButton.type = 'button';
+      dockButton.className = 'local-ai-dock-button';
+      dockButton.textContent = 'AI';
+      dockButton.setAttribute('aria-controls', 'local-ai-popover');
+      launchPanel = async () => {
+        dockButton.disabled = true;
+        try {
+          await manager.setEnabled('local-ai', true, { origin: 'user' });
+        } finally {
+          dockButton.disabled = false;
+        }
+      };
+      dockButton.setAttribute('aria-expanded', 'false');
+      dockButton.setAttribute('aria-label', 'Öppna lokal AI');
+      dockButton.onclick = launchPanel;
+      const dock = document.getElementById('command-dock');
+      if (dock) dock.prepend(dockButton);
+      else document.body.append(dockButton);
+    },
     init(v) {
       viewer = v;
       map = createTripMap(v);
     },
     enable() {
+      if (enabled) return;
       enabled = true;
       panel = document.createElement('aside');
       panel.className = 'local-ai-panel';
@@ -51,10 +74,6 @@ export function createLocalAiLayer() {
       fold.setAttribute('aria-label', 'Minimera AI-panelen');
       fold.setAttribute('aria-expanded', 'true');
       panel.id = 'local-ai-popover';
-      dockButton = document.createElement('button');
-      dockButton.type = 'button';
-      dockButton.className = 'local-ai-dock-button';
-      dockButton.textContent = 'AI';
       dockButton.setAttribute('aria-controls', panel.id);
       dockButton.setAttribute('aria-expanded', 'true');
       dockButton.setAttribute('aria-label', 'Minimera lokal AI');
@@ -418,13 +437,17 @@ export function createLocalAiLayer() {
     disable() {
       enabled = false;
       request?.abort();
-      map.clear();
+      map?.clear();
       stopRecording();
       speechSynthesis.cancel();
       dockObserver?.disconnect();
       window.removeEventListener('resize', positionPanel);
       document.removeEventListener('keydown', escapePanel);
-      dockButton?.remove();
+      if (dockButton) {
+        dockButton.setAttribute('aria-expanded', 'false');
+        dockButton.setAttribute('aria-label', 'Öppna lokal AI');
+        dockButton.onclick = launchPanel;
+      }
       panel?.remove();
     },
     update() {
@@ -435,7 +458,8 @@ export function createLocalAiLayer() {
     },
     destroy() {
       this.disable();
-      map.destroy();
+      map?.destroy();
+      dockButton?.remove();
     },
   };
 }
