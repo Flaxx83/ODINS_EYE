@@ -112,6 +112,7 @@ export class LocationNavigation {
       beforeFly: (generation) => this._reassertNavigationHandoff(generation),
       search: (query, options) =>
         searchAndFlyTo(this.viewer, query, {
+          ...options,
           placeSearch: options.candidate
             ? {
                 geocode: async () => ({
@@ -131,7 +132,6 @@ export class LocationNavigation {
                 }),
               }
             : this.placeSearch,
-          ...options,
         }),
       onResult: (destination) => {
         if (destination.outlineUnavailable)

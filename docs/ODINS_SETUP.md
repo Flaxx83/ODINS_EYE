@@ -109,3 +109,5 @@ Sätt `TRAFIKVERKET_API_KEY` i den lokala `.env` (utan `VITE_`-prefix) och start
 ### Trafikverkets API-grund
 
 Kamerorna använder den gemensamma serverklienten. `TRAFIKVERKET_DAILY_REQUEST_BUDGET` sätter ett lokalt, minnesbaserat tak för XML-anrop (standard 5 000 per UTC-dygn; 0 stoppar nya anrop). Bildhämtning har separat CCTV-policy. `GET /api/trafikverket/status` visar säker lokal diagnostik utan nyckel eller frågevärden och utan att hämta upstreamdata. Se [API-guiden](ODINS_TRAFIKVERKET.md) för modellversioner, cache, backoff och begränsningar.
+
+Gångruttningens endpoint kan konfigureras serverlokalt med `VALHALLA_BASE_URL=http://127.0.0.1:8002/` för en egen Valhalla-instans. Standardvärdet är utvecklingsdemon. Se [källpolicy](ODINS_SOURCE_POLICY.md) innan bred drift eller räckviddsberäkningar.

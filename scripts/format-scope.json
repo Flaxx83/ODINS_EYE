@@ -973,5 +973,7 @@
   "server/providers/local-ai-tools.test.mjs",
   "server/providers/address-search.js",
   "server/providers/address-search.test.mjs",
-  "src/ui/placeSuggestions.js"
+  "src/ui/placeSuggestions.js",
+  "server/providers/walking-geometry.js",
+  "server/providers/walking-geometry.test.mjs"
 ]

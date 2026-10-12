@@ -91,3 +91,10 @@ Uttryckliga hemadresser och hela hållplatsnamn får inte förkortas till ortnam
 ### 2026-10-12 — Ortsnamn ovanpå satellitkartan
 
 Valbart lager **Data Layers → Infrastructure → Ortsnamn · Esri** använder transparenta World Boundaries and Places-plattor. Även administrativa gränser ingår. Zoomnivån styr vilka namn tjänsten visar. Kräver nätåtkomst. Samma lokala lagerbeteende som Lantmäteriets tillägg: slås på via lagerpanelen och ingår inte i delningslänkar. Chrome verifierade fem riktiga namnplattor och på/av; build och katalogprov passerade.
+
+### 2026-10-12 — Källpolicy, attribution och gångcache
+
+- Primärkällor och olika datalicenser/API-villkor dokumenterade i ODINS_SOURCE_POLICY.md, inklusive faktisk TTL, budget, import- och observationsålder.
+- GeoNames, EEA, Trafiklab, Lantmäteriet och Valhalla/FOSSGIS finns i samlad attribution. Radio Browser bekräftad som aktiv integration; Radio Garden används inte.
+- Gångcache begränsad till 128 rutter/24 h, identiska väntande anrop samordnas och max 32 olika väntande rutter. VALHALLA_BASE_URL kan peka på egen instans. Fel cachas inte.
+- Kvarstående avtals-/distributionskontroller redovisas uttryckligen; inga antagna fria licenser eller garanterad demokapacitet införs.
