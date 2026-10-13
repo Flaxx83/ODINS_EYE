@@ -111,3 +111,7 @@ Egna kartplatser med WGS84-koordinater, adress, anteckningar, redigering/flytt o
 ## NVDB-utredning och routingbeslut – #24, 2026-10-13
 
 Utredningen har ett dokumenterat beslut: OSM och egen/avtalad Valhalla för första räckviddsversionen; NVDB som separat, senare kontroll/komplettering. Lokalt OSM-uttag, NVDB-infoklick, begränsade API-prov och tre Valhalla-profiler har kontrollerats. Ingen Lastkajen-export eller NVDB-till-Valhalla-import är verifierad; ingen isokronfunktion levereras i denna etapp. Se [utredningen](ODINS_NVDB_ROUTING.md) och [provresultaten](ODINS_NVDB_SAMPLE.json). Nästa etapp i #9 börjar med routingendpoint och versionsmärkt regionalt OSM-underlag, sedan gångkonturer före fler färdsätt.
+
+## Gångytor – #9
+
+Första gångversionen: lokal Valhalla med daterat OSM-underlag för Skövde, upp till tre tidsgränser, adressval/kartklick/koordinater och synliga antaganden. [Installation och begränsningar](ODINS_REACHABILITY.md). Cykel, bil, elsparkcykel, större täckning och POI-start återstår. #9 är pågående.
