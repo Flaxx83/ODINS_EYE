@@ -1,4 +1,4 @@
-# Status 2026-10-12
+# Status 2026-10-13
 
 Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md](ODINS_CHANGELOG.md). De senaste ändringarna är implementerade på utvecklingsgrenarna och inväntar sammanfogning med main.
 
@@ -101,3 +101,8 @@ Lager och strukturerat AI-verktyg för Trafikverkets väghändelser är implemen
 ## Vägväder — #23
 
 Första leveransen innehåller valbart lager, stationskort, explicit kamerakoppling och road_weather till lokal AI. Liveprov verifierade station/mättid/värden och en separat väglagsrapport. Exakt kamera-/vägytematchning och reseanknytning är inte utlovade. Se [vägväder](ODINS_ROAD_WEATHER.md).
+
+
+## Egna POI – issue #10, 2026-10-13
+
+Egna kartplatser med WGS84-koordinater, adress, anteckningar, redigering/flytt och radering är implementerade för granskning. SQLite lagras beständigt utanför cache och Git. JSON-backup och transaktionell återställning med automatisk förkopia ingår. Adressökning återanvänds; omvänt uppslag sker endast efter knapptryckning. Se [POI-funktionen](ODINS_POI.md) för databasplats, flöden, gränser och verifiering. Kategorier, GeoJSON och AI-koppling återstår som senare tillägg.

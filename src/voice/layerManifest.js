@@ -370,6 +370,7 @@ const layers = [
  * pair belong to a scripted scene and are driven by `control_scene`.
  */
 export const VOICE_OFF_LAYERS = Object.freeze({
+  'own-pois': 'Private POI are managed in the map UI; no voice adapter.',
   'road-weather':
     'Weather is provided by map and local AI; voice adapter not implemented.',
   'road-events':
