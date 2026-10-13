@@ -1,0 +1,148 @@
+{
+  "studyDate": "2026-10-13",
+  "scope": "Evidence for issue #24, not a production reachability calculation",
+  "osm": {
+    "source": "https://api.openstreetmap.org/api/0.6/map?bbox=13.843,58.388,13.847,58.392",
+    "attribution": "© OpenStreetMap contributors, ODbL",
+    "bbox": [
+      13.843,
+      58.388,
+      13.847,
+      58.392
+    ],
+    "fetchedAt": "2026-10-13T17:05:02.630Z",
+    "rawBytes": 900740,
+    "highwaySubsetJsonBytes": 196618,
+    "rawSha256": "76d2eb12a6f62acf295ab0a6cd45538a8251eb3ccf88d7658d4e302bd6bad098",
+    "highwayWays": 219,
+    "highwayTypes": {
+      "living_street": 8,
+      "service": 12,
+      "unclassified": 9,
+      "tertiary": 7,
+      "residential": 8,
+      "pedestrian": 17,
+      "path": 39,
+      "secondary": 4,
+      "footway": 98,
+      "corridor": 10,
+      "platform": 2,
+      "steps": 5
+    },
+    "graphNodes": 756,
+    "segmentOccurrences": 839,
+    "missingNodeReferences": 0,
+    "totalSegmentKm": 12.309,
+    "undirectedComponents": 5,
+    "largestComponentNodes": 716,
+    "largestComponentFraction": 0.947,
+    "onewayExplicitWays": 21,
+    "roundabouts": 2,
+    "waysWithNumericMaxspeed": 28,
+    "maxspeedValues": [
+      "40"
+    ],
+    "waysWithFootTags": 39,
+    "waysWithBicycleTags": 47,
+    "waysWithSurface": 134,
+    "restrictionRelations": 3,
+    "limitations": "Undirected structural graph only. Access, barriers, direction and turn restrictions are counted or left unmodeled. Full ways may extend outside the source bbox. Not a reachability result.",
+    "analysisMilliseconds": 5.565,
+    "performanceScope": "Single offline structural pass, excludes acquisition/JSON parsing/Valhalla tile build. Hardware-dependent; not a routing SLA."
+  },
+  "nvdb": {
+    "wmsSource": "https://geo-nvdb.trafikverket.se/mapservice/wms.axd/NvdbPaWebb/",
+    "layer": "Vagnat",
+    "capabilitiesStatus": 200,
+    "advertisedCrs": [
+      "EPSG:3006",
+      "EPSG:4326",
+      "CRS:84"
+    ],
+    "sample": [
+      {
+        "name": "Skövde station",
+        "features": 0
+      },
+      {
+        "name": "Hertig Johans torg",
+        "features": 0
+      },
+      {
+        "name": "Norra centrum",
+        "features": 1,
+        "networkType": 1,
+        "networkLabel": "bilnät"
+      }
+    ],
+    "axisFinding": "WMS EPSG:4326 returned lat,lon in coordinates; explicit CRS:84 returned lon,lat. These are viewer fragments, not a complete exported graph.",
+    "wfsStatus": 503,
+    "apiRoadData": {
+      "version": "1",
+      "http": 200,
+      "county": 14,
+      "roadMainNumber": 26,
+      "limit": 20,
+      "rows": 20,
+      "geometryPresent": false,
+      "geographicScope": "County/road-reference sample; not located inside the Skövde bbox"
+    },
+    "apiRoadNetwork": {
+      "http": 400,
+      "available": false
+    },
+    "lastkajenExportObtained": false
+  },
+  "valhalla": {
+    "endpoint": "https://valhalla1.openstreetmap.de/route",
+    "locations": [
+      {
+        "lat": 58.3897,
+        "lon": 13.8457
+      },
+      {
+        "lat": 58.3916,
+        "lon": 13.8454
+      }
+    ],
+    "options": {
+      "pedestrian": {
+        "walking_speed": 6
+      },
+      "bicycle": {
+        "bicycle_type": "city",
+        "cycling_speed": 18
+      }
+    },
+    "results": [
+      {
+        "costing": "pedestrian",
+        "http": 200,
+        "status": 0,
+        "lengthKm": 0.432,
+        "timeSeconds": 269.051,
+        "legs": 1,
+        "geometry": true
+      },
+      {
+        "costing": "bicycle",
+        "http": 200,
+        "status": 0,
+        "lengthKm": 0.295,
+        "timeSeconds": 63.304,
+        "legs": 1,
+        "geometry": true
+      },
+      {
+        "costing": "auto",
+        "http": 200,
+        "status": 0,
+        "lengthKm": 1.026,
+        "timeSeconds": 192.545,
+        "legs": 1,
+        "geometry": true
+      }
+    ],
+    "restrictions": "Three sequential point-to-point development probes, 1.1 second pause after completion. No isochrone or area sweep on public demo. Server tile version unknown. Downloaded OSM JSON was not imported into this service."
+  }
+}
