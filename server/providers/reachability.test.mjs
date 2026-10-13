@@ -29,6 +29,13 @@ test('configured regional coverage permits other towns but never overrides profi
  assert.throws(()=>validateReachability({...query,lat:60},regional));
  assert.throws(()=>validateReachability({...query,speed:20},regional));
 });
+test('national coverage accepts northern Sweden and the islands while retaining the geographic bound',()=>{
+ const sweden=[10.5,55,24.5,69.3];
+ for(const [lat,lon] of [[68.3499,18.831],[65.8355,24.1322],[57.6348,18.2948],[55.337,13.36]])
+   assert.equal(validateReachability({...query,lat,lon},sweden).lat,lat);
+ assert.throws(()=>validateReachability({...query,lat:70},sweden));
+ assert.throws(()=>validateReachability({...query,lon:25},sweden));
+});
 test('local service limits concurrency, caches only successful results and keeps configuration private',async()=>{
  const directory=await mkdtemp(join(tmpdir(),'odins-range-'));
  try {

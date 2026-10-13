@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import subprocess
 import time
@@ -17,6 +18,7 @@ parser.add_argument('--resume', action='store_true')
 parser.add_argument('--bbox', default='13.55,58.24,14.18,58.55')
 parser.add_argument('--coverage', help='Allowed start bbox, strictly inside the buffered graph')
 parser.add_argument('--name', default='Regionalt gångunderlag')
+parser.add_argument('--whole-source', action='store_true', help='Build the entire source PBF without another regional clipping pass')
 args = parser.parse_args()
 source = Path(args.source).resolve(strict=True)
 output = Path(args.output).resolve()
@@ -37,12 +39,16 @@ digest = hashlib.sha256()
 with source.open('rb') as reader:
     for chunk in iter(lambda: reader.read(1024 * 1024), b''):
         digest.update(chunk)
-stamp = {'sourceSha256': digest.hexdigest(), 'bbox': bbox}
+stamp = {'sourceSha256': digest.hexdigest(), 'bbox': bbox, 'wholeSource': args.whole_source}
 completion = output / 'extract-complete.json'
 if args.resume and (not extract.is_file() or not completion.is_file() or json.loads(completion.read_text(encoding='utf8')) != stamp):
     raise RuntimeError('Resume requires completed extraction from matching source and bbox')
 print('Extracting buffered road/footway network and complete references', flush=True)
-if not args.resume:
+if not args.resume and args.whole_source:
+    print('Using the entire dated PBF; no additional regional clipping', flush=True)
+    shutil.copyfile(source, extract)
+    completion.write_text(json.dumps(stamp), encoding='utf8')
+elif not args.resume:
     with osmium.BackReferenceWriter(str(extract), ref_src=str(source), remove_tags=False) as writer:
         processor = osmium.FileProcessor(str(source)).with_locations().with_filter(osmium.filter.KeyFilter('highway', 'route'))
         for obj in processor:
@@ -78,11 +84,18 @@ if os.name == 'nt':
     runtime_env['PATH'] = str(package.parent / 'pyvalhalla.libs') + os.pathsep + str(package / 'bin') + os.pathsep + runtime_env.get('PATH', '')
 with (output / 'build.log').open('w', encoding='utf8') as log:
     subprocess.run([str(binary), '-c', str(config_path), '-j', '4', str(extract)], env=runtime_env, stdout=log, stderr=log, check=True)
-selected = set(obj.id for obj in osmium.FileProcessor(str(extract), entities=osmium.osm.WAY))
+ways_total = 0
+ways_routable = 0
+for way in osmium.FileProcessor(str(extract), entities=osmium.osm.WAY):
+    ways_total += 1
+    if way.tags.get('highway') or way.tags.get('route') == 'ferry':
+        ways_routable += 1
 restriction_count = sum(1 for obj in osmium.FileProcessor(str(extract), entities=osmium.osm.RELATION) if obj.tags.get('type') == 'restriction')
 with osmium.io.Reader(str(source), osmium.osm.NOTHING) as reader:
     data_time = reader.header().get('osmosis_replication_timestamp')
 manifest = {'version': 1, 'engine': 'pyvalhalla', 'engineVersion': valhalla.__version__, 'builtAt': datetime.now(timezone.utc).isoformat(), 'sourceFile': source.name, 'sourceSha256': digest.hexdigest(), 'sourceBytes': source.stat().st_size, 'extractBytes': extract.stat().st_size, 'bbox': bbox, 'waysSelected': len(selected), 'restrictionRelations': restriction_count, 'buildSeconds': round(time.monotonic()-started, 2), 'dataTime': data_time, 'attribution': '© OpenStreetMap contributors, ODbL', 'notes': 'Buffered complete ways/restrictions. No elevation, admin or timezone databases built. Coverage and contours require separate checks.'}
-manifest.update(coverage=coverage, coverageName=args.name)
+manifest.update(coverage=coverage, coverageName=args.name, wholeSource=args.whole_source,
+    waysTotal=ways_total, waysSelected=ways_routable if args.whole_source else ways_total,
+    boundaryNote='Underlaget följer landextraktets gräns. Gångvägar över landsgränsen kan saknas eller vara avklippta; kontrollera gränsnära resultat.' if args.whole_source else None)
 (output / 'manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf8')
 print(json.dumps(manifest), flush=True)

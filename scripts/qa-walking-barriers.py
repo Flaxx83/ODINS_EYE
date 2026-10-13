@@ -49,6 +49,14 @@ with tempfile.TemporaryDirectory(prefix='odins-walking-') as directory:
     rejected = subprocess.run(mismatched+['--resume'],capture_output=True,text=True)
     assert rejected.returncode != 0, 'Resume with different bbox must be refused'
     print('PASS build/update: complete extract resume succeeds; different bbox rejected',flush=True)
+    full_args = build_args.copy()
+    full_args[3] = str(root/'whole-graph')
+    with (root/'whole-build.log').open('w') as log:
+        subprocess.run(full_args+['--whole-source'],stdout=log,stderr=log,check=True)
+    full_manifest = json.loads((root/'whole-graph'/'manifest.json').read_text(encoding='utf8'))
+    assert full_manifest['wholeSource'] is True
+    assert (root/'whole-graph'/'region.osm.pbf').read_bytes() == (root/'test.osm.pbf').read_bytes()
+    print('PASS whole-source build preserves the complete PBF',flush=True)
     config = json.loads((root/'graph'/'valhalla.json').read_text(encoding='utf8'))
     config['logging']['type']=''
     actor=valhalla.Actor(config)
@@ -87,3 +95,13 @@ with tempfile.TemporaryDirectory(prefix='odins-walking-') as directory:
     assert json.loads((root/'active.json').read_text())['version']=='graph'
     assert json.loads((root/'active.previous.json').read_text())['version']=='old'
     print('PASS activation: older data rejected, valid version selected, rollback preserved on repeat',flush=True)
+    original = (root/'graph'/'region.osm.pbf').read_bytes()
+    (root/'missing.osm').write_text('<osm version="0.6"><node id="1" lat="57.7" lon="12"/><way id="1"><nd ref="1"/><nd ref="999"/><tag k="highway" v="footway"/></way></osm>',encoding='utf8')
+    with osmium.SimpleWriter(str(root/'missing.osm.pbf')) as writer:
+        for obj in osmium.FileProcessor(str(root/'missing.osm')): writer.add(obj)
+    (root/'graph'/'region.osm.pbf').write_bytes((root/'missing.osm.pbf').read_bytes())
+    rejected = subprocess.run(activate_args,capture_output=True,text=True)
+    assert rejected.returncode != 0 and 'Missing node references' in rejected.stderr
+    assert json.loads((root/'active.json').read_text())['version']=='graph'
+    (root/'graph'/'region.osm.pbf').write_bytes(original)
+    print('PASS native index rejects missing references before activation',flush=True)

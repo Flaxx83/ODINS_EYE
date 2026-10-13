@@ -1,7 +1,7 @@
 import * as C from 'cesium';
 
 export function createReachabilityLayer() {
-  let viewer, data, panel, handler, status, inputs, choices;
+  let viewer, data, panel, handler, status, inputs, choices, coverageStatus;
   let active = false,
     selecting = false,
     epoch = 0,
@@ -71,6 +71,13 @@ export function createReachabilityLayer() {
         ' Anslutning till gånglänk: ' +
         result.networkOrigin.distanceMeters +
         ' m. Tiderna räknas från gånglänken; vägen dit ingår inte och tillträde måste kontrolleras.';
+    if (result.boundaryNote) status.textContent += ' ' + result.boundaryNote;
+    if (coverageStatus)
+      coverageStatus.textContent =
+        result.coverageName +
+        ' · Underlag: ' +
+        result.dataTime +
+        (result.boundaryNote ? '. ' + result.boundaryNote : '');
     void viewer.flyTo(data, { duration: 1 });
     viewer.scene.requestRender();
   }
@@ -302,6 +309,7 @@ export function createReachabilityLayer() {
       panel.append(header, body);
       document.body.append(panel);
       const coverage = element('p', 'Kontrollerar underlag…');
+      coverageStatus = coverage;
       body.append(coverage);
       fetch('/api/reachability')
         .then(async (r) => {
@@ -318,7 +326,8 @@ export function createReachabilityLayer() {
               '–' +
               d.coverage[2] +
               '° E. Underlag: ' +
-              d.dataTime
+              d.dataTime +
+              (d.boundaryNote ? '. ' + d.boundaryNote : '')
             : d.error;
         })
         .catch(() => {
@@ -358,6 +367,7 @@ export function createReachabilityLayer() {
       handler = undefined;
       panel?.remove();
       panel = undefined;
+      coverageStatus = undefined;
       if (data) data.show = false;
       viewer?.scene.requestRender();
     },
