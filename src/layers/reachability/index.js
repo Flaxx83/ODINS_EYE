@@ -45,18 +45,13 @@ export function createReachabilityLayer() {
         });
     }
     data.entities.add({
+      name: 'Start · gång',
       position: C.Cartesian3.fromDegrees(result.origin.lon, result.origin.lat),
       point: {
         pixelSize: 10,
         color: C.Color.WHITE,
         outlineColor: C.Color.CYAN,
         outlineWidth: 2,
-        heightReference: C.HeightReference.CLAMP_TO_GROUND,
-      },
-      label: {
-        text: 'Start · gång',
-        font: '13px sans-serif',
-        pixelOffset: new C.Cartesian2(0, -20),
         heightReference: C.HeightReference.CLAMP_TO_GROUND,
       },
     });
