@@ -66,6 +66,11 @@ export function createReachabilityLayer() {
       '. ' +
       result.attribution +
       '. Största ytan cyan, därefter gul och orange.';
+    if (result.networkOrigin)
+      status.textContent +=
+        ' Anslutning till gånglänk: ' +
+        result.networkOrigin.distanceMeters +
+        ' m. Tiderna räknas från gånglänken; vägen dit ingår inte och tillträde måste kontrolleras.';
     void viewer.flyTo(data, { duration: 1 });
     viewer.scene.requestRender();
   }
@@ -83,6 +88,7 @@ export function createReachabilityLayer() {
     enable() {
       if (active) return;
       active = true;
+      data.entities.removeAll();
       data.show = true;
       const token = ++epoch;
       panel = element('aside');
@@ -190,6 +196,49 @@ export function createReachabilityLayer() {
         }
       };
       const map = element('button', 'Välj start på kartan');
+      const poi = element('button', 'Välj sparad POI');
+      poi.type = 'button';
+      poi.onclick = async () => {
+        controller?.abort();
+        const request = (controller = new AbortController());
+        try {
+          const r = await fetch('/api/pois', { signal: request.signal });
+          const payload = await r.json();
+          if (!active || token !== epoch || controller !== request) return;
+          if (!r.ok)
+            throw Error(payload.error || 'Sparade platser kunde inte hämtas.');
+          const rows = payload.pois;
+          choices.replaceChildren();
+          for (const row of rows) {
+            const pick = element(
+              'button',
+              row.name + (row.address ? ' · ' + row.address : ''),
+            );
+            pick.type = 'button';
+            pick.onclick = () => {
+              controller?.abort();
+              inputs.lat.value = row.lat;
+              inputs.lon.value = row.lon;
+              data.entities.removeAll();
+              viewer.scene.requestRender();
+              choices.replaceChildren();
+              status.textContent = 'Start från sparad POI: ' + row.name;
+            };
+            choices.append(pick);
+          }
+          status.textContent = rows.length
+            ? 'Välj en sparad startplats.'
+            : 'Inga sparade POI finns ännu.';
+        } catch (e) {
+          if (
+            active &&
+            token === epoch &&
+            controller === request &&
+            e.name !== 'AbortError'
+          )
+            status.textContent = e.message;
+        }
+      };
       map.type = 'button';
       map.onclick = () => {
         selecting = !selecting;
@@ -242,15 +291,40 @@ export function createReachabilityLayer() {
       body.append(
         search,
         map,
+        poi,
         choices,
         calculate,
         element(
           'p',
-          'Skövde: 58,34–58,46° N / 13,75–13,98° E. Beräknade ytor är uppskattningar; OSM kan sakna gångvägar.',
+          'Ytor interpoleras från vägnätet och kan täcka vatten/hinder mellan vägar. OSM kan sakna gångvägar. Startpunkten är den vita markören.',
         ),
       );
       panel.append(header, body);
       document.body.append(panel);
+      const coverage = element('p', 'Kontrollerar underlag…');
+      body.append(coverage);
+      fetch('/api/reachability')
+        .then(async (r) => {
+          const d = await r.json();
+          if (!active || token !== epoch) return;
+          coverage.textContent = r.ok
+            ? d.coverageName +
+              ' · ' +
+              d.coverage[1] +
+              '–' +
+              d.coverage[3] +
+              '° N / ' +
+              d.coverage[0] +
+              '–' +
+              d.coverage[2] +
+              '° E. Underlag: ' +
+              d.dataTime
+            : d.error;
+        })
+        .catch(() => {
+          if (active && token === epoch)
+            coverage.textContent = 'Underlagsstatus kunde inte hämtas.';
+        });
       handler = new C.ScreenSpaceEventHandler(viewer.scene.canvas);
       handler.setInputAction((e) => {
         if (!selecting) return;

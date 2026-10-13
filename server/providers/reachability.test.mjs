@@ -23,6 +23,12 @@ test('contours must be complete, closed and within the buffered dataset',()=>{
  g=geometry();g.features[0].geometry.coordinates[0].pop();assert.throws(()=>validateContours(g,query.minutes,CORE));
  g=geometry();g.features[1].properties.contour=5;assert.throws(()=>validateContours(g,query.minutes,CORE));
 });
+test('configured regional coverage permits other towns but never overrides profile limits',()=>{
+ const regional=[10.95,57.05,14.75,59.35];
+ assert.equal(validateReachability({...query,lat:57.708,lon:11.97},regional).lon,11.97);
+ assert.throws(()=>validateReachability({...query,lat:60},regional));
+ assert.throws(()=>validateReachability({...query,speed:20},regional));
+});
 test('local service limits concurrency, caches only successful results and keeps configuration private',async()=>{
  const directory=await mkdtemp(join(tmpdir(),'odins-range-'));
  try {

@@ -8,7 +8,7 @@ const failure = (message, status = 400) =>
 export const CORE = [13.75, 58.34, 13.98, 58.46];
 const inside = (lon, lat, bbox) =>
   lon >= bbox[0] && lon <= bbox[2] && lat >= bbox[1] && lat <= bbox[3];
-export function validateReachability(value) {
+export function validateReachability(value, coverage = CORE) {
   if (
     !value ||
     Array.isArray(value) ||
@@ -24,10 +24,10 @@ export function validateReachability(value) {
     ) ||
     value.speed < 0.5 ||
     value.speed > 8 ||
-    !inside(value.lon, value.lat, CORE)
+    !inside(value.lon, value.lat, coverage)
   )
     throw failure(
-      'Välj en startpunkt i Skövdeområdet och gånghastighet 0,5–8 km/h.',
+      'Startpunkten ligger utanför aktuellt täckningsområde eller gånghastigheten är utanför 0,5–8 km/h.',
     );
   if (
     !Array.isArray(value.minutes) ||
@@ -122,7 +122,18 @@ export function createReachabilityService({
         !manifest.bbox.every(Number.isFinite)
       )
         throw Error('Invalid coverage');
-      return { folder, manifest, version: pointer.version };
+      const coverage = manifest.coverage || CORE;
+      if (
+        !Array.isArray(coverage) ||
+        coverage.length !== 4 ||
+        !coverage.every(Number.isFinite) ||
+        coverage[0] >= coverage[2] ||
+        coverage[1] >= coverage[3] ||
+        !inside(coverage[0], coverage[1], manifest.bbox) ||
+        !inside(coverage[2], coverage[3], manifest.bbox)
+      )
+        throw Error('Invalid start coverage');
+      return { folder, manifest, coverage, version: pointer.version };
     } catch {
       throw failure(
         'Lokal routingdata saknas. Bygg och aktivera underlaget enligt docs/ODINS_REACHABILITY.md.',
@@ -135,18 +146,19 @@ export function createReachabilityService({
     engineVersion: c.manifest.engineVersion,
     dataTime: c.manifest.dataTime,
     attribution: '© OpenStreetMap contributors · ODbL',
-    coverage: CORE,
+    coverage: c.coverage,
+    coverageName: c.manifest.coverageName || 'Skövdeområdet',
     version: c.version,
     model:
-      'Beräknad gångyta längs OSM-nätet. Hastigheten är ett antagande; pauser och individuell förmåga ingår inte.',
+      'Beräknad gångyta längs OSM-nätet. Konturer interpoleras och kan täcka vatten eller hinder mellan vägar. Hastighet är ett antagande; pauser och individuell förmåga ingår inte.',
   });
   return {
     async status() {
       return { available: true, ...info(await configuration()) };
     },
     async calculate(value) {
-      const query = validateReachability(value);
       const config = await configuration();
+      const query = validateReachability(value, config.coverage);
       const key = JSON.stringify([config.version, query]);
       const old = cache.get(key);
       if (old && Date.now() - old.at < 600000) return old.value;
@@ -173,7 +185,7 @@ export function createReachabilityService({
           ));
         } catch {
           throw failure(
-            'Gångytan kunde inte beräknas. Kontrollera det lokala routingunderlaget och requirements-routing.txt.',
+            'Gångytan kunde inte beräknas. Välj start nära en gångbar väg (högst 100 m), eller kontrollera routingunderlaget och requirements-routing.txt.',
             502,
           );
         }
@@ -187,6 +199,7 @@ export function createReachabilityService({
         const value = {
           ...info(config),
           origin: { lat: query.lat, lon: query.lon },
+          networkOrigin: geometry.networkOrigin,
           speed: query.speed,
           minutes: query.minutes,
           geometry,

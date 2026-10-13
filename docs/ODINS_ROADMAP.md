@@ -79,3 +79,7 @@ Utredningen har ett dokumenterat beslut: OSM och egen/avtalad Valhalla för för
 ### #9 – gångversion 2026-10-13
 
 Motorvalet från #24 är implementerat genom lokala Pythonbindningar. Första gångytorna och kartpanelen är klara för granskning inom Skövdeområdet. Nästa steg: hinder-/passagevalidering och större täckning, därefter cykel/bil och elsparkcykelprofil. POI-start och AI/röst återstår. [Teknisk dokumentation](ODINS_REACHABILITY.md).
+
+## Fortsättning #9 – större gångunderlag och POI
+
+Gångytorna använder nu Västra Götaland med omnejd (rektangulär täckning) och sparad POI kan väljas som start. Versionsbyte validerar nodreferenser, daterad data och konturer i fyra orter före atomisk aktivering; föregående version bevaras. Fyra kontrollerade nativeprover tvingar fram gångomväg vid saknad passage, separat järnväg, gångförbjuden motorväg och låst grind. Polygonernas interpolation kan visuellt täcka vatten/hinder och framgår nu tydligt i panelen. Cykel/bil/elsparkcykel och fler faktiska passageprov återstår. [Detaljer och uppdatering](ODINS_REACHABILITY.md).
