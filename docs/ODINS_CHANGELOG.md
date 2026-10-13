@@ -126,3 +126,8 @@ Validering: tre regressioner för platsval, bokstavlig adress och utebliven geom
 ## Egna POI – issue #10, 2026-10-13
 
 Egna kartplatser med WGS84-koordinater, adress, anteckningar, redigering/flytt och radering är implementerade för granskning. SQLite lagras beständigt utanför cache och Git. JSON-backup och transaktionell återställning med automatisk förkopia ingår. Adressökning återanvänds; omvänt uppslag sker endast efter knapptryckning. Se [POI-funktionen](ODINS_POI.md) för databasplats, flöden, gränser och verifiering. Kategorier, GeoJSON och AI-koppling återstår som senare tillägg.
+
+
+## NVDB-utredning och routingbeslut – #24, 2026-10-13
+
+Utredningen har ett dokumenterat beslut: OSM och egen/avtalad Valhalla för första räckviddsversionen; NVDB som separat, senare kontroll/komplettering. Lokalt OSM-uttag, NVDB-infoklick, begränsade API-prov och tre Valhalla-profiler har kontrollerats. Ingen Lastkajen-export eller NVDB-till-Valhalla-import är verifierad; ingen isokronfunktion levereras i denna etapp. Se [utredningen](ODINS_NVDB_ROUTING.md) och [provresultaten](ODINS_NVDB_SAMPLE.json). Nästa etapp i #9 börjar med routingendpoint och versionsmärkt regionalt OSM-underlag, sedan gångkonturer före fler färdsätt.

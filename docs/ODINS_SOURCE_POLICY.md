@@ -65,3 +65,8 @@ Källhänvisningarna finns i appens Data attribution, lokala paneler och DATA_SO
 ## Privata POI (2026-10-13)
 
 Egna namn och anteckningar lagras lokalt i SQLite, utanför cache och Git. Sparning och säkerhetskopiering gör inga externa anrop. Adressökning återanvänder befintlig tjänst; omvänd sökning skickar endast valda koordinater till Photon efter uttryckligt knapptryck. Synlig OSM-attribution, begränsad minnescache och anropsbudget ingår. Se [ODINS_POI.md](ODINS_POI.md).
+
+
+## Beslut efter NVDB-prov – #24, 2026-10-13
+
+Första räckviddsversionen använder versionsmärkt OSM och egen/avtalad Valhalla. NVDB WMS är inte en routingexport och RoadData-provets län-/vägreferenser är inte geometri. Homogeniserad Lastkajen-export föreslås för en senare separat kompletteringskontroll. Paketens CC0 ändrar inte ODbL för OSM eller behovet av tydlig attribution och licensgranskning vid databaskombination. Se [ODINS_NVDB_ROUTING.md](ODINS_NVDB_ROUTING.md) för källor, verifiering och kvarstående luckor. Publik demo användes endast för tre punkt-till-punkt-prov; inga konturer eller områdessvep.
