@@ -14,6 +14,11 @@ qa-shots/
 output/
 .gev-logs/
 .gev-cache/
+# Persistent private POI databases, including custom paths inside the checkout.
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+**/backups/before-restore-*.json
 # Browser QA gate evidence (screenshots, console and network dumps).
 qa-artifacts/
 .DS_Store

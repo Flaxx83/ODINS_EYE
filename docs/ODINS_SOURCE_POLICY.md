@@ -60,3 +60,8 @@ Före #8/bred drift ska följande verifieras: Västtrafiks aktiva avtal/kvot; ra
 ## Granskning och underhåll
 
 Källhänvisningarna finns i appens Data attribution, lokala paneler och DATA_SOURCES.md. Om produkt/endpoint ändras ska dess villkor kontrolleras på nytt innan rätten till cache eller export antas. Spara produkt, licenslänk, kontrollerat datum, importdatum och bearbetning. Om något inte går att verifiera ska det stå öppet som här, inte fyllas med en antagen fri licens. Issue #7 kan granskas som inventering och kodrättning; kvarstående distributionskontroller ska inte döljas genom att stänga den automatiskt.
+
+
+## Privata POI (2026-10-13)
+
+Egna namn och anteckningar lagras lokalt i SQLite, utanför cache och Git. Sparning och säkerhetskopiering gör inga externa anrop. Adressökning återanvänder befintlig tjänst; omvänd sökning skickar endast valda koordinater till Photon efter uttryckligt knapptryck. Synlig OSM-attribution, begränsad minnescache och anropsbudget ingår. Se [ODINS_POI.md](ODINS_POI.md).

@@ -2234,6 +2234,7 @@
       "src/ui/placeSuggestions.js",
       "src/layers/road-events/index.js",
       "src/layers/road-weather/index.js",
+      "src/layers/pois/index.js",
       "src/layers/road-weather/card.js"
     ],
     "external": [
@@ -2779,6 +2780,7 @@
       "src/layers/local-ai/map-labels.js",
       "src/layers/road-events/index.js",
       "src/layers/road-weather/index.js",
+      "src/layers/pois/index.js",
       "src/layers/road-weather/card.js"
     ],
     "external": [

@@ -1,4 +1,5 @@
 import { createRoadWeatherLayer } from '../layers/road-weather/index.js';
+import { createPoiLayer } from '../layers/pois/index.js';
 import { createRoadEventsLayer } from '../layers/road-events/index.js';
 import { createLocalAiLayer } from '../layers/local-ai/index.js';
 import { createAirQualityLayer } from '../layers/air-quality/index.js';
@@ -66,6 +67,7 @@ export const LOCAL_ONLY_LAYER_METADATA = Object.freeze([
   Object.freeze({ id: 'vasttrafik', disposition: 'local-only' }),
   Object.freeze({ id: 'local-ai', disposition: 'local-only' }),
   Object.freeze({ id: 'road-weather', disposition: 'local-only' }),
+  Object.freeze({ id: 'own-pois', disposition: 'local-only' }),
   Object.freeze({ id: 'road-events', disposition: 'local-only' }),
   Object.freeze({ id: 'place-labels', disposition: 'local-only' }),
   Object.freeze({ id: 'air-quality', disposition: 'local-only' }),
@@ -164,6 +166,7 @@ export function createApplicationCatalog({
         createPlaceNamesLayer(),
         createRoadEventsLayer(),
         createRoadWeatherLayer(),
+        createPoiLayer(),
         createStopsLayer(),
         createSlLayer({
           id: 'sweden-transit',
