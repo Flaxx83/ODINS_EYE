@@ -83,3 +83,7 @@ Motorvalet från #24 är implementerat genom lokala Pythonbindningar. Första g�
 ## Fortsättning #9 – större gångunderlag och POI
 
 Gångytorna använder nu Västra Götaland med omnejd (rektangulär täckning) och sparad POI kan väljas som start. Versionsbyte validerar nodreferenser, daterad data och konturer i fyra orter före atomisk aktivering; föregående version bevaras. Fyra kontrollerade nativeprover tvingar fram gångomväg vid saknad passage, separat järnväg, gångförbjuden motorväg och låst grind. Polygonernas interpolation kan visuellt täcka vatten/hinder och framgår nu tydligt i panelen. Cykel/bil/elsparkcykel och fler faktiska passageprov återstår. [Detaljer och uppdatering](ODINS_REACHABILITY.md).
+
+## #9 – gångunderlag för hela Sverige
+
+Hela Sverige-PBF:en används nu utan ytterligare regional klippning: cirka 2,31 miljoner highway/ferry-väglänkar och 5 739 restriktionsrelationer. Täckning visas dynamiskt och gränsöverskridande begränsningar framgår i panelen. Gånghastighet, tidsgränser, anslutningskontroll och POI-start behålls. Övriga färdsätt återstår. [Installation och nationella provpunkter](ODINS_REACHABILITY.md).

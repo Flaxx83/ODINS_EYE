@@ -148,6 +148,7 @@ export function createReachabilityService({
     attribution: '© OpenStreetMap contributors · ODbL',
     coverage: c.coverage,
     coverageName: c.manifest.coverageName || 'Skövdeområdet',
+    boundaryNote: c.manifest.boundaryNote || null,
     version: c.version,
     model:
       'Beräknad gångyta längs OSM-nätet. Konturer interpoleras och kan täcka vatten eller hinder mellan vägar. Hastighet är ett antagande; pauser och individuell förmåga ingår inte.',

@@ -8,9 +8,10 @@ koordinater, sparad POI eller adressökning med valbara träffar. Ange en till t
 Största ytan är cyan, följande gul och orange. Byte av indata rensar tidigare ytor;
 avaktivering döljer panel och geometri. Beräkning startar bara på uttryckligt knapptryck.
 
-Aktivt underlag täcker Västra Götaland med omnejd som ett rektangulärt område,
-inte en administrativ länsgräns. Tillåtna startpunkter: 10,95–14,75° E och
-57,05–59,35° N. Panelen visar aktuell täckning från servern. Start utanför området avslås tydligt.
+Aktivt underlag omfattar hela Sverige genom hela Geofabriks Sverige-PBF,
+utan ytterligare regional klippning. Tekniska startgränser: 10,5–24,5° E och
+55,0–69,3° N. De omsluter Sverige; de är ingen exakt landpolygon.
+En gångbar länk måste ändå finnas inom 100 m. Panelen visar aktuell täckning från servern. Start utanför området avslås tydligt.
 Det är gångytor längs OSM-nätet, inte cirklar eller garanterad individuell räckvidd.
 Höjd/lutning, väder, pauser och personlig förmåga modelleras inte i denna etapp.
 OSM kan sakna gångvägar eller tillträdesuppgifter. Konturer är interpolerade
@@ -106,3 +107,46 @@ Anslutning till gångnätet kontrolleras separat med `locate`; start utan gångb
 inom 100 m avvisas (verifierat mitt i Vänern). Ytornas tidsbudget räknas från
 närmaste gånglänk. Anslutningsavstånd visas och tillträde från vald punkt till
 länken måste kontrolleras; anslutningsgång ingår inte i tiden.
+
+## Hela Sverige – 2026-10-13
+
+Version `sweden-20261012-v1` använder hela den daterade Sverige-PBF:en med samma
+kontrollsumma som ovan. Ingen ytterligare läns- eller kommungräns används för
+importen. 2 309 489 väglänkar med highway/ferry-taggar och 5 739
+restriktionsrelationer; totalt 10 421 430 OSM-vägar, inklusive annan kartgeometri.
+Native tilebygge tog 252 sekunder, totalt 309,5 sekunder inklusive kopiering och
+statistik på utvecklingsdatorn. Ingen ny nedladdning behövdes för denna utökning.
+
+```powershell
+.venv/Scripts/python.exe scripts/build-routing-region.py .gev-cache/routing/source/sweden-261012.osm.pbf .gev-cache/routing/sweden-20261012-v1 --whole-source --bbox 9,54,26,70 --coverage 10.5,55,24.5,69.3 --name "Hela Sverige"
+.venv/Scripts/python.exe scripts/qa-walking-barriers.py
+.venv/Scripts/python.exe scripts/activate-routing-region.py sweden-20261012-v1 --samples scripts/fixtures/routing-sweden-samples.json
+```
+
+`--whole-source` bevarar PBF:en byte för byte. Byggläget ingår i färdigmarkeringen
+så återupptagning inte kan växla mellan hel källa och regionalt klipp.
+Aktiveringsproven kör samma Pythonjobb som API:t, inklusive kontrollen av
+anslutningen till gångnätet. Provpunkterna är offentliga platser och sträcker sig
+från Smygehuk och Malmö till Kiruna och Abisko, med Gotland och Öland.
+
+Landextraktet kan sakna fortsättningen av gångvägar över landsgränsen. Panelen
+visar därför en gränsnotis både vid underlagsstatus och efter beräkning. Ett helt
+Sverigeunderlag betyder tillgång till det svenska OSM-nätet, inte en garanti för
+att varje verklig gångväg är registrerad eller att rutterna utanför Sverige är
+kompletta. Gränsöverskridande områden kräver senare grannlandsdata.
+
+Utökningen gäller gångytorna. Cykel, bil och elsparkcykel är fortfarande egna
+kommande etapper i #9.
+
+Nationell referenskontroll använder Osmiums inbyggda nodpositionsindex och
+validerar referenser på samtliga vägar direkt i C++-hanteraren, utan Pythonloopar
+över råfilens noder eller vägnoder.
+Ett kontrollerat prov med saknad nod avvisas före aktivering. Detta undviker
+att bygga en separat stor Pythonmängd av alla råfilens nod-ID:n.
+
+Nationell aktivering passerade på alla 14 provplatser för 5/15/30 minuter.
+API-prov i Stockholm, Visby och Luleå samt verkligt webbläsarprov med Kirunas
+gångytor, Hela Sverige-status, gränsnotis och mobilbredd passerade.
+186 integrationstester och 14 riktade katalog-/server-/etikettprov passerade.
+Native bygge/återupptagning, hela PBF-innehållet och avvisning av saknad nod
+verifierades separat. Produktionsbygge och paketgränser passerade.

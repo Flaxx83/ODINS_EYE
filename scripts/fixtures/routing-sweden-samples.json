@@ -1,0 +1,16 @@
+[
+  { "name": "Skövde", "location": "58.3897,13.8457" },
+  { "name": "Göteborg", "location": "57.7089,11.9746" },
+  { "name": "Malmö", "location": "55.6050,13.0038" },
+  { "name": "Stockholm", "location": "59.3293,18.0686" },
+  { "name": "Visby, Gotland", "location": "57.6348,18.2948" },
+  { "name": "Borgholm, Öland", "location": "56.8790,16.6580" },
+  { "name": "Sundsvall", "location": "62.3908,17.3069" },
+  { "name": "Östersund", "location": "63.1792,14.6357" },
+  { "name": "Umeå", "location": "63.8258,20.2630" },
+  { "name": "Luleå", "location": "65.5848,22.1567" },
+  { "name": "Kiruna", "location": "67.8558,20.2253" },
+  { "name": "Haparanda", "location": "65.8355,24.1322" },
+  { "name": "Abisko", "location": "68.3499,18.8310" },
+  { "name": "Smygehuk", "location": "55.3370,13.3600" }
+]
