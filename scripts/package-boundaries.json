@@ -2235,6 +2235,7 @@
       "src/layers/road-events/index.js",
       "src/layers/road-weather/index.js",
       "src/layers/pois/index.js",
+      "src/layers/reachability/index.js",
       "src/layers/road-weather/card.js"
     ],
     "external": [
@@ -2781,6 +2782,7 @@
       "src/layers/road-events/index.js",
       "src/layers/road-weather/index.js",
       "src/layers/pois/index.js",
+      "src/layers/reachability/index.js",
       "src/layers/road-weather/card.js"
     ],
     "external": [

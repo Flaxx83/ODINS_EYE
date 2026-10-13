@@ -1,0 +1,3 @@
+# Optional native regional routing (Python 3.12+, Windows amd64 supported).
+pyvalhalla==3.9.1
+osmium==4.3.1
