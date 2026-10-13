@@ -115,3 +115,7 @@ Utredningen har ett dokumenterat beslut: OSM och egen/avtalad Valhalla för för
 ## Gångytor – #9
 
 Första gångversionen: lokal Valhalla med daterat OSM-underlag för Skövde, upp till tre tidsgränser, adressval/kartklick/koordinater och synliga antaganden. [Installation och begränsningar](ODINS_REACHABILITY.md). Cykel, bil, elsparkcykel, större täckning och POI-start återstår. #9 är pågående.
+
+## Fortsättning #9 – större gångunderlag och POI
+
+Gångytorna använder nu Västra Götaland med omnejd (rektangulär täckning) och sparad POI kan väljas som start. Versionsbyte validerar nodreferenser, daterad data och konturer i fyra orter före atomisk aktivering; föregående version bevaras. Fyra kontrollerade nativeprover tvingar fram gångomväg vid saknad passage, separat järnväg, gångförbjuden motorväg och låst grind. Polygonernas interpolation kan visuellt täcka vatten/hinder och framgår nu tydligt i panelen. Cykel/bil/elsparkcykel och fler faktiska passageprov återstår. [Detaljer och uppdatering](ODINS_REACHABILITY.md).

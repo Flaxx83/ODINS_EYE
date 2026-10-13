@@ -135,3 +135,7 @@ Utredningen har ett dokumenterat beslut: OSM och egen/avtalad Valhalla för för
 ## 2026-10-13 – första gångversionen av #9
 
 Lokal Valhalla 3.9.1 via Windows/Python, regional OSM-extraktion, validerat isokron-API och **Räckvidd · Till fots**. 1–3 tidsgränser, 1–30 minuter, standard 6 km/h. Delad adressökning, koordinater och kartklick. Täckningskontroll, timeout, serialisering och cache; inga publika demoanrop. [Installation, prov och begränsningar](ODINS_REACHABILITY.md). Övriga färdsätt återstår.
+
+## Fortsättning #9 – större gångunderlag och POI
+
+Gångytorna använder nu Västra Götaland med omnejd (rektangulär täckning) och sparad POI kan väljas som start. Versionsbyte validerar nodreferenser, daterad data och konturer i fyra orter före atomisk aktivering; föregående version bevaras. Fyra kontrollerade nativeprover tvingar fram gångomväg vid saknad passage, separat järnväg, gångförbjuden motorväg och låst grind. Polygonernas interpolation kan visuellt täcka vatten/hinder och framgår nu tydligt i panelen. Cykel/bil/elsparkcykel och fler faktiska passageprov återstår. [Detaljer och uppdatering](ODINS_REACHABILITY.md).

@@ -3,13 +3,14 @@
 ## Användning
 
 Aktivera **Räckvidd · Till fots** under kartverktygen. Välj start genom kartklick,
-koordinater eller adressökning med valbara träffar. Ange en till tre tidsgränser
+koordinater, sparad POI eller adressökning med valbara träffar. Ange en till tre tidsgränser
 (1–30 minuter) och gånghastighet (0,5–8 km/h, standard 6). Klicka **Beräkna gångytor**.
 Största ytan är cyan, följande gul och orange. Byte av indata rensar tidigare ytor;
 avaktivering döljer panel och geometri. Beräkning startar bara på uttryckligt knapptryck.
 
-Första underlaget täcker ett buffrat område kring Skövde. Tillåtna startpunkter:
-13,75–13,98° E och 58,34–58,46° N. Start utanför området avslås tydligt.
+Aktivt underlag täcker Västra Götaland med omnejd som ett rektangulärt område,
+inte en administrativ länsgräns. Tillåtna startpunkter: 10,95–14,75° E och
+57,05–59,35° N. Panelen visar aktuell täckning från servern. Start utanför området avslås tydligt.
 Det är gångytor längs OSM-nätet, inte cirklar eller garanterad individuell räckvidd.
 Höjd/lutning, väder, pauser och personlig förmåga modelleras inte i denna etapp.
 OSM kan sakna gångvägar eller tillträdesuppgifter. Konturer är interpolerade
@@ -27,14 +28,13 @@ Docker och publik demo behövs inte. Paket och rådata är valfria och inte vers
 ```
 
 Scriptet bygger aldrig över en befintlig version. `--resume` återupptar tilebygget
-från en redan färdig regional extraktion om tilebygget avbröts. Återuppta inte en
-avbruten extraktion. Vägar och refererade noder behålls kompletta; berörda
+från en redan färdig regional extraktion om tilebygget avbröts. Återupptagning kräver en färdigmarkering med matchande källkontrollsumma och bbox;
+avbruten extraktion eller annan PBF avvisas. Vägar och refererade noder behålls kompletta; berörda
 svängrestriktioner och nodtaggar (t.ex. barriärer) följer med. På Windows får den
 packade nativebyggaren en processlokal DLL-sökväg. Systemets PATH ändras inte.
 
-Kontrollera build.log och testa konturerna innan versionen aktiveras. Skapa sedan
-`.gev-cache/routing/active.json` med `{"version":"skovde-20261012-v1"}` och starta
-Vite. Referensen är serverägd; klienten kan inte välja filer eller extern routing-URL.
+Kontrollera build.log och aktivera med scriptet i uppdateringsavsnittet nedan.
+Aktiv referens ligger i `.gev-cache/routing/active.json`. Referensen är serverägd; klienten kan inte välja filer eller extern routing-URL.
 GET `/api/reachability` visar tillgänglighet och proveniens. POST tar endast
 `lat`, `lon`, `minutes` och `speed`. Saknad motor/data ger tydligt fel, ingen cirkelfallback.
 
@@ -57,8 +57,7 @@ GET `/api/reachability` visar tillgänglighet och proveniens. POST tar endast
 
 ## Återstår i #9
 
-Större geografisk täckning och underlagsuppdatering, start från sparad POI,
-validering av hinder/passager, cykel, bil, separat elsparkcykelprofil och jämförelse
+Ytterligare geografisk täckning och validering av verkliga hinder/passager, cykel, bil, separat elsparkcykelprofil och jämförelse
 mellan färdsätt. #9 är därför fortfarande pågående. AI- och röstadapter ingår inte
 i första gångversionen. NVDB från #24 är valfri senare komplettering.
 
@@ -67,3 +66,43 @@ Källor: [Valhalla](https://github.com/valhalla/valhalla),
 [Geofabrik Sverige](https://download.geofabrik.de/europe/sweden.html).
 Kartytorna visar © OpenStreetMap contributors och ODbL. Underlaget är OSM,
 inte ett importerat NVDB-paket.
+
+## Utökning och uppdatering 2026-10-13
+
+Ny version `vastra-gotaland-20261012-v1`: 645 409 kompletta vägar inklusive
+referenser, 1 852 restriktionsrelationer och 63 448 699 byte extrakt. Samma daterade
+Sverige-PBF som ovan. Buffert 10,7–15,0° E / 56,8–59,6° N. Bygge inklusive
+extraktion tog 238 sekunder; native tilebygge 61 sekunder på utvecklingsdatorn.
+
+Deterministiska nativeprover: saknad passage (vattenmodell), separat järnväg utan
+implicit anslutning, motorväg `foot=no` och grindnod `access=no` tvingade alla fram
+2,821 km omväg i stället för genvägen. Detta verifierar små kontrollerade nät,
+inte varje faktisk passage i länet. En färgad polygon är interpolerad och kan
+fortfarande omfatta vatten eller hinder mellan gångbara länkar. Panelen säger detta
+uttryckligen. Start måste ligga högst 100 m från en gångbar länk.
+
+```powershell
+# Vid uppdatering: hämta en ny daterad Geofabrik-PBF till source/.
+# Använd en ny versionskatalog. Ersätt datum och versionsnamn nedan.
+.venv/Scripts/python.exe scripts/build-routing-region.py .gev-cache/routing/source/sweden-261012.osm.pbf .gev-cache/routing/vastra-gotaland-20261012-v1 --bbox 10.7,56.8,15.0,59.6 --coverage 10.95,57.05,14.75,59.35 --name "Västra Götaland med omnejd"
+.venv/Scripts/python.exe scripts/qa-walking-barriers.py
+.venv/Scripts/python.exe scripts/activate-routing-region.py vastra-gotaland-20261012-v1 --sample 58.3897,13.8457 --sample 57.7089,11.9746 --sample 58.3498,11.9356 --sample 57.721,12.94
+```
+
+Aktivering kontrollerar nodreferenser och 5/15/30-minuterskonturer i valda orter.
+Äldre data än aktiv version avvisas. Förra referensen sparas i
+`active.previous.json`; `active.json` byts atomiskt först efter lyckade prov.
+Misslyckat bygge eller prov lämnar aktiv version kvar. Återställ genom att kopiera
+föregående referens till active.json. Servern läser referensen per anrop och
+cachenyckeln innehåller version. Uppdatering är manuell; ingen bakgrundsnedladdning
+eller schemalagd körning har lagts till.
+
+**Välj sparad POI** hämtar lokala SQLite-punkter på uttryckligt knapptryck och visar
+valbara namn/adresser. Endast vald koordinat används till lokal beräkning;
+anteckningar skickas inte till routingmotorn eller adressökningen. Aktivering
+återställer gamla ytor, så nya standardvärden inte visas med föregående geometri.
+
+Anslutning till gångnätet kontrolleras separat med `locate`; start utan gångbar länk
+inom 100 m avvisas (verifierat mitt i Vänern). Ytornas tidsbudget räknas från
+närmaste gånglänk. Anslutningsavstånd visas och tillträde från vald punkt till
+länken måste kontrolleras; anslutningsgång ingår inte i tiden.
