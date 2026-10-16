@@ -9,7 +9,10 @@ export function createReachabilityLayer() {
     inputs,
     choices,
     coverageStatus,
-    detailsText;
+    detailsText,
+    legend,
+    applyRequest,
+    viewBounds;
   let active = false,
     selecting = false,
     epoch = 0,
@@ -19,10 +22,15 @@ export function createReachabilityLayer() {
     if (text) e.textContent = text;
     return e;
   };
+  function clearResult() {
+    data.entities.removeAll();
+    legend?.replaceChildren();
+    if (legend) legend.hidden = true;
+  }
   function draw(result, append = false) {
     const previous = append ? status.textContent : '';
     const previousDetails = append ? detailsText?.textContent : '';
-    if (!append) data.entities.removeAll();
+    if (!append) clearResult();
     const modeName = {
       walk: 'Gång',
       bicycle: 'Cykel',
@@ -44,6 +52,51 @@ export function createReachabilityLayer() {
       car: ['#ff9429', '#ed5900', '#b82c00'],
       scooter: ['#b473ff', '#893de8', '#5d16b0'],
     }[result.mode].map((hex) => C.Color.fromCssColorString(hex));
+    if (legend) {
+      legend.hidden = false;
+      const group = element('section');
+      group.setAttribute('aria-label', modeName + ' – tidsområden');
+      group.append(element('strong', modeName));
+      const list = element('ul');
+      Object.assign(list.style, {
+        listStyle: 'none',
+        padding: '0',
+        margin: '8px 0',
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '12px',
+      });
+      for (const minutes of [...result.minutes].sort((a, b) => a - b)) {
+        const item = element('li');
+        Object.assign(item.style, {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+        });
+        const swatch = element('span');
+        swatch.setAttribute('aria-hidden', 'true');
+        Object.assign(swatch.style, {
+          display: 'inline-block',
+          width: '18px',
+          height: '18px',
+          borderRadius: '3px',
+          border: '1px solid rgba(255,255,255,.6)',
+          backgroundColor: colors[times.indexOf(minutes)].toCssColorString(),
+        });
+        item.append(swatch, element('span', 'Inom ' + minutes + ' min'));
+        list.append(item);
+      }
+      group.append(list);
+      if (result.minutes.length > 1)
+        group.append(
+          element(
+            'p',
+            'Kortare tid = mörkare område. De större områdena innehåller även de mindre.',
+          ),
+        );
+      legend.append(group);
+    }
+
     for (const feature of result.geometry.features) {
       const polygons =
         feature.geometry.type === 'Polygon'
@@ -141,11 +194,50 @@ export function createReachabilityLayer() {
         ' · Underlag: ' +
         result.dataTime +
         (result.boundaryNote ? '. ' + result.boundaryNote : '');
-    void viewer.flyTo(data, { duration: 1 });
+    // Ground-clamped polylines may never provide an entity bounding sphere.
+    // Fit the returned coordinates directly instead of waiting for flyTo(data).
+    const points = result.geometry.features.flatMap((feature) =>
+      feature.geometry.type === 'Polygon'
+        ? feature.geometry.coordinates.flat()
+        : feature.geometry.coordinates.flat(2),
+    );
+    let west = 180,
+      east = -180,
+      south = 90,
+      north = -90;
+    for (const [lon, lat] of points) {
+      west = Math.min(west, lon);
+      east = Math.max(east, lon);
+      south = Math.min(south, lat);
+      north = Math.max(north, lat);
+    }
+    if (append && viewBounds) {
+      west = Math.min(west, viewBounds[0]);
+      south = Math.min(south, viewBounds[1]);
+      east = Math.max(east, viewBounds[2]);
+      north = Math.max(north, viewBounds[3]);
+    }
+    viewBounds = [west, south, east, north];
+    const dx = Math.max((east - west) * 0.15, 0.002);
+    const dy = Math.max((north - south) * 0.15, 0.002);
+    viewer.camera.flyTo({
+      destination: C.Rectangle.fromDegrees(
+        west - dx,
+        south - dy,
+        east + dx,
+        north + dy,
+      ),
+      duration: 1,
+    });
     viewer.scene.requestRender();
   }
   const layer = {
     id: 'reachability',
+    showRequest(request) {
+      if (!active || !applyRequest)
+        throw Error('Räckviddspanelen är inte aktiv.');
+      return applyRequest(request);
+    },
     name: 'Räckvidd',
     source: 'Lokal Valhalla / OpenStreetMap',
     category: 'tools',
@@ -158,7 +250,7 @@ export function createReachabilityLayer() {
     enable() {
       if (active) return;
       active = true;
-      data.entities.removeAll();
+      clearResult();
       data.show = true;
       const token = ++epoch;
       panel = element('aside');
@@ -191,6 +283,10 @@ export function createReachabilityLayer() {
       status.setAttribute('aria-live', 'polite');
       status.style.whiteSpace = 'pre-line';
       body.append(status);
+      legend = element('div');
+      legend.setAttribute('aria-label', 'Färgförklaring för räckvidd');
+      legend.hidden = true;
+      body.append(legend);
       inputs = {};
       const modeLabel = element('label', 'Färdsätt');
       modeLabel.className = 'local-ai-field';
@@ -221,7 +317,7 @@ export function createReachabilityLayer() {
               : 'none';
         }
         controller?.abort();
-        data.entities.removeAll();
+        clearResult();
         viewer.scene.requestRender();
       };
       modeLabel.append(mode);
@@ -273,7 +369,7 @@ export function createReachabilityLayer() {
         }
         input.oninput = () => {
           controller?.abort();
-          data.entities.removeAll();
+          clearResult();
           viewer.scene.requestRender();
         };
         inputs[key] = input;
@@ -305,7 +401,7 @@ export function createReachabilityLayer() {
               controller?.abort();
               inputs.lat.value = row.lat;
               inputs.lon.value = row.lon;
-              data.entities.removeAll();
+              clearResult();
               choices.replaceChildren();
               status.textContent = 'Vald start: ' + row.name;
               viewer.scene.requestRender();
@@ -350,7 +446,7 @@ export function createReachabilityLayer() {
               controller?.abort();
               inputs.lat.value = row.lat;
               inputs.lon.value = row.lon;
-              data.entities.removeAll();
+              clearResult();
               viewer.scene.requestRender();
               choices.replaceChildren();
               status.textContent = 'Start från sparad POI: ' + row.name;
@@ -382,7 +478,7 @@ export function createReachabilityLayer() {
       calculate.onclick = async () => {
         controller?.abort();
         const request = (controller = new AbortController());
-        data.entities.removeAll();
+        clearResult();
         viewer.scene.requestRender();
         status.textContent = 'Beräknar räckvidd…';
         try {
@@ -427,6 +523,7 @@ export function createReachabilityLayer() {
               'Kartunderlaget ändrades under beräkningen. Beräkna jämförelsen på nytt.',
             );
           for (let i = 0; i < results.length; i++) draw(results[i], i > 0);
+          return { ok: true };
         } catch (e) {
           if (
             active &&
@@ -435,7 +532,35 @@ export function createReachabilityLayer() {
             e.name !== 'AbortError'
           )
             status.textContent = e.message;
+          return { error: e.message };
         }
+      };
+      applyRequest = (request) => {
+        if (
+          !['walk', 'bicycle', 'car', 'scooter'].includes(request.mode) ||
+          ![request.lat, request.lon, request.speed].every(Number.isFinite) ||
+          !Array.isArray(request.minutes) ||
+          request.minutes.length < 1 ||
+          request.minutes.length > 3 ||
+          new Set(request.minutes).size !== request.minutes.length ||
+          request.minutes.some((n) => !Number.isInteger(n) || n < 1 || n > 30)
+        )
+          throw Error('Ogiltig räckviddsförfrågan.');
+        body.hidden = false;
+        mode.value = request.mode;
+        mode.onchange();
+        inputs.lat.value = request.lat;
+        inputs.lon.value = request.lon;
+        inputs.minutes.value = request.minutes.join(',');
+        inputs[
+          {
+            walk: 'speed',
+            bicycle: 'bikeSpeed',
+            car: 'carSpeed',
+            scooter: 'scooterSpeed',
+          }[request.mode]
+        ].value = request.speed;
+        return calculate.onclick();
       };
       const details = element('details');
       details.append(element('summary', 'Antaganden och källor'));
@@ -501,7 +626,7 @@ export function createReachabilityLayer() {
         controller?.abort();
         inputs.lat.value = C.Math.toDegrees(c.latitude).toFixed(6);
         inputs.lon.value = C.Math.toDegrees(c.longitude).toFixed(6);
-        data.entities.removeAll();
+        clearResult();
         selecting = false;
         viewer.scene.requestRender();
         status.textContent = terrain
@@ -518,8 +643,10 @@ export function createReachabilityLayer() {
       handler = undefined;
       panel?.remove();
       panel = undefined;
+      applyRequest = undefined;
       coverageStatus = undefined;
       detailsText = undefined;
+      legend = undefined;
       if (data) data.show = false;
       viewer?.scene.requestRender();
     },

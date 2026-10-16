@@ -788,3 +788,130 @@ test('road events select their own validated tool rather than public-transport d
   assert.equal(selected, 'road_events');
   assert.deepEqual(r.toolsUsed, ['road_events']);
 });
+
+test('range question uses one origin and minutes without the journey planner', async () => {
+  const seen = [];
+  const service = createLocalAiService({
+    planner: async () => {
+      throw Error('Must not plan a journey');
+    },
+    findPlaces: async (q) => {
+      seen.push(q);
+      return {
+        rows: [{ id: 'a', name: q, lat: 58.4, lon: 13.85, exact: true }],
+      };
+    },
+  });
+  for (const suffix of ['', ' i Skövde']) {
+    const result = await service.ask({
+      message:
+        'Hur långt kommer jag till fots på 10 minuter från Henriksbergsgatan 3B' +
+        suffix +
+        '?',
+      area,
+    });
+    assert.deepEqual(result.reachabilityRequest, {
+      lat: 58.4,
+      lon: 13.85,
+      mode: 'walk',
+      minutes: [10],
+      speed: 6,
+    });
+    assert.equal(result.tripChoices, undefined);
+  }
+  assert.deepEqual(seen, [
+    'Henriksbergsgatan 3B',
+    'Henriksbergsgatan 3B i Skövde',
+  ]);
+});
+test('range ambiguity preserves duration and validates the selected origin', async () => {
+  const rows = [
+    { id: 'a', name: 'A', lat: 58.4, lon: 13.85 },
+    { id: 'b', name: 'B', lat: 59, lon: 14 },
+  ];
+  const service = createLocalAiService({ findPlaces: async () => ({ rows }) });
+  const first = await service.ask({
+    message: 'Hur långt kommer jag med bil på 15 minuter från Storgatan?',
+    area,
+  });
+  assert.equal(first.placeChoices.length, 2);
+  await assert.rejects(
+    service.ask({
+      message: 'val',
+      conversationId: first.conversationId,
+      choice: { place: 'unknown' },
+    }),
+  );
+  const selected = await service.ask({
+    message: 'val',
+    conversationId: first.conversationId,
+    choice: { place: 'b' },
+  });
+  assert.deepEqual(selected.reachabilityRequest, {
+    lat: 59,
+    lon: 14,
+    mode: 'car',
+    minutes: [15],
+    speed: 120,
+  });
+});
+test('range rejects missing or invalid duration without asking for destination', async () => {
+  const service = createLocalAiService({
+    planner: async () => {
+      throw Error('No planner');
+    },
+    findPlaces: async () => {
+      throw Error('No lookup');
+    },
+  });
+  for (const time of ['0', '31', '1,5']) {
+    const result = await service.ask({
+      message: `Hur långt kommer jag till fots på ${time} minuter från Skövde?`,
+    });
+    assert.equal(result.needsClarification, true);
+    assert.equal(result.reachabilityRequest, undefined);
+  }
+});
+
+test('range list preserves address, all budgets and uses a separate bounded session quota', async () => {
+  const queries = [];
+  const service = createLocalAiService({
+    now,
+    planner: async () => ({ question: 'intent', actions: [] }),
+    findPlaces: async (q) => {
+      queries.push(q);
+      return {
+        rows: [{ id: 'a', name: q, lat: 58.4, lon: 13.85, exact: true }],
+      };
+    },
+  });
+  let conversationId;
+  for (let i = 0; i < 7; i++) {
+    const r = await service.ask({
+      message:
+        'Hur långt kommer jag till fots från Lillegårdsvägen 11A i Skövde till fots på 5, 10, 15 minuter?',
+      conversationId,
+    });
+    conversationId = r.conversationId;
+    assert.deepEqual(r.reachabilityRequest.minutes, [5, 10, 15]);
+  }
+  assert.ok(queries.every((q) => q === 'Lillegårdsvägen 11A i Skövde'));
+  for (let i = 0; i < 6; i++)
+    await service.ask({ message: 'Hej', conversationId });
+  await assert.rejects(
+    service.ask({ message: 'Hej', conversationId }),
+    (e) => e.status === 429,
+  );
+  for (let i = 0; i < 7; i++)
+    await service.ask({
+      message: 'Hur långt kommer jag till fots på 10 minuter från Skövde?',
+      conversationId,
+    });
+  await assert.rejects(
+    service.ask({
+      message: 'Hur långt kommer jag till fots på 10 minuter från Skövde?',
+      conversationId,
+    }),
+    (e) => e.status === 429,
+  );
+});

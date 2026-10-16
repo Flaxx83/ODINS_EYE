@@ -288,6 +288,79 @@ function town(place) {
   return matches.length === 1 ? matches[0] : null;
 }
 
+// Range questions have one origin and a duration, never a destination.
+export function parseRangeRequest(message) {
+  if (
+    !/(?:hur långt (?:kommer|kan)|räckvidd|område.*(?:nå|komma))/i.test(message)
+  )
+    return null;
+  const time = message.match(
+    /(?:på|inom)\s+([\d\s,.;och]+?)\s*(?:minuter?|min)\b/i,
+  );
+  const origin = message
+    .match(/\bfrån\s+(.+?)[?.!]*$/i)?.[1]
+    ?.replace(/\s+(?:på|inom)\s+[\d\s,.;och]+?\s*(?:minuter?|min)\b.*$/i, '')
+    ?.replace(
+      /\s+(?:till fots|på cykel|med cykel|med bil|på elsparkcykel|med elsparkcykel)\s*$/i,
+      '',
+    )
+    ?.trim();
+  const mode = /elsparkcykel/i.test(message)
+    ? 'scooter'
+    : /(?:med bil|köra bil|bilprofil)/i.test(message)
+      ? 'car'
+      : /(?:cykel|cykla)/i.test(message)
+        ? 'bicycle'
+        : /(?:till fots|promen|gå(?:r)?\b)/i.test(message)
+          ? 'walk'
+          : null;
+  if (!time || !origin || !mode)
+    return {
+      error:
+        'Ange startplats, färdsätt och antal minuter, exempelvis: Hur långt kommer jag till fots på 10 minuter från Storgatan 1 i Skövde?',
+    };
+  // Comma-separated lists require whitespace, keeping decimal 1,5 invalid.
+  const minutes = time[1]
+    .trim()
+    .split(/\s*(?:,\s+|;|\boch\b)\s*/i)
+    .map(Number);
+  if (
+    minutes.length < 1 ||
+    minutes.length > 3 ||
+    minutes.some((n) => !Number.isInteger(n) || n < 1 || n > 30) ||
+    new Set(minutes).size !== minutes.length
+  )
+    return {
+      error:
+        'Ange 1–3 olika hela minuter mellan 1 och 30, exempelvis 5, 10, 15 minuter.',
+    };
+
+  return {
+    origin,
+    mode,
+    minutes: minutes.sort((a, b) => a - b),
+    speed: { walk: 6, bicycle: 18, car: 120, scooter: 20 }[mode],
+  };
+}
+function rangeResult(request, place) {
+  return {
+    answer:
+      'Beräkna räckvidd från ' +
+      place.name +
+      ' inom ' +
+      request.minutes.join(' / ') +
+      ' minuter. Hastighetsantagandet kan ändras i räckviddspanelen.',
+    reachabilityRequest: {
+      lat: place.lat,
+      lon: place.lon,
+      mode: request.mode,
+      minutes: request.minutes,
+      speed: request.speed,
+    },
+    toolsUsed: ['reachability'],
+  };
+}
+
 /** Server-owned, expiring context. No prior source facts are fed back as live data. */
 export function createLocalAiService({
   planner = selectTools,
@@ -339,6 +412,7 @@ export function createLocalAiService({
         messages: [],
         memory: null,
         calls: [],
+        rangeCalls: [],
         busy: false,
         pending: null,
         network,
@@ -347,11 +421,16 @@ export function createLocalAiService({
     }
     calls = calls.filter((t) => stamp - t < 60000);
     session.calls = session.calls.filter((t) => stamp - t < 60000);
+    session.rangeCalls = session.rangeCalls.filter((t) => stamp - t < 60000);
+    const isRange = Boolean(
+      parseRangeRequest(message) || (choice && session.pendingPlace?.range),
+    );
+    const budget = isRange ? session.rangeCalls : session.calls;
     if (
       session.busy ||
       active >= 3 ||
       calls.length >= 20 ||
-      session.calls.length >= 6
+      budget.length >= (isRange ? 20 : 6)
     )
       throw new AiInputError(
         'AI-anropen är tillfälligt begränsade. Vänta en minut och försök igen.',
@@ -370,7 +449,7 @@ export function createLocalAiService({
     session.busy = true;
     active++;
     calls.push(stamp);
-    session.calls.push(stamp);
+    budget.push(stamp);
     session.at = stamp;
     const finish = (result) => ({ ...result, conversationId: session.id });
     try {
@@ -381,6 +460,11 @@ export function createLocalAiService({
           );
           if (!exactKeys(choice, ['place']) || !place)
             throw new AiInputError('Välj en plats från senaste träfflistan.');
+          const range = session.pendingPlace.range;
+          if (range) {
+            session.pendingPlace = null;
+            return finish(rangeResult(range, place));
+          }
           const time = session.pendingPlace.fetchedAt;
           session.pendingPlace = null;
           return finish({
@@ -418,6 +502,27 @@ export function createLocalAiService({
       }
       session.pending = null;
       session.pendingPlace = null;
+      const range = parseRangeRequest(message);
+      if (range) {
+        if (range.error)
+          return finish({ answer: range.error, needsClarification: true });
+        const found = await findPlaces(range.origin, { area });
+        if (!found.rows.length)
+          return finish({
+            answer:
+              'Ingen startplats hittades. Lägg till ort eller förtydliga adressen.',
+            needsClarification: true,
+          });
+        if (found.rows.length === 1 && found.rows[0].exact && !found.partial)
+          return finish(rangeResult(range, found.rows[0]));
+        session.pendingPlace = { ...found, range };
+        return finish({
+          answer: 'Välj startplats för räckviddsberäkningen.',
+          placeChoices: found.rows,
+          needsClarification: true,
+          toolsUsed: ['reachability'],
+        });
+      }
       if (/från.+till/i.test(message))
         parseTravelTime(message, new Date(stamp));
       const messages = [...session.messages, message].slice(-6);

@@ -9,7 +9,8 @@ const PLACE_KIND_LABELS = {
   place: 'plats',
 };
 export function createLocalAiLayer() {
-  let map,
+  let dataManager,
+    map,
     viewer,
     panel,
     dockButton,
@@ -32,6 +33,7 @@ export function createLocalAiLayer() {
     name: 'Lokal AI · Bionic',
     category: 'tools',
     attachDataManager(manager) {
+      dataManager = manager;
       dockButton = document.createElement('button');
       dockButton.type = 'button';
       dockButton.className = 'local-ai-dock-button';
@@ -233,6 +235,38 @@ export function createLocalAiLayer() {
               ),
             );
             output.append(p);
+          }
+          if (d.reachabilityRequest) {
+            const button = document.createElement('button');
+            button.textContent = 'Visa räckvidd på kartan';
+            button.onclick = async () => {
+              button.disabled = true;
+              button.textContent = 'Beräknar räckvidd…';
+              output.textContent =
+                'Beräknar området och flyttar kartan till resultatet…';
+              try {
+                await dataManager.setEnabled('reachability', true, {
+                  origin: 'user',
+                });
+                const result = await dataManager.layers
+                  .get('reachability')
+                  .module.showRequest(d.reachabilityRequest);
+                if (!result?.ok)
+                  throw Error(
+                    result?.error || 'Beräkningen avbröts. Försök igen.',
+                  );
+                output.textContent =
+                  'Området visas på kartan för ' +
+                  d.reachabilityRequest.minutes.join(' / ') +
+                  ' minuter. Inställningar och antaganden finns i räckviddspanelen.';
+              } catch (error) {
+                output.textContent = error.message;
+              } finally {
+                button.disabled = false;
+                button.textContent = 'Visa räckvidd på kartan';
+              }
+            };
+            choices.append(button);
           }
           if (d.mapTrips?.length) {
             const note = document.createElement('p');

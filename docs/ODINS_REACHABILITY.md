@@ -215,3 +215,47 @@ Källor:
 - https://www.transportstyrelsen.se/elsparkcykel
 
 Synlighet: mättade färger, 42 % opacitet och separata terrängföljande konturlinjer. Kortare tidsgränser har mörkare färgton.
+
+
+## 2026-10-16 – AI-frågor om räckvidd
+
+Frågor som ”Hur långt kommer jag till fots på 10 minuter från Henriksbergsgatan
+3B i Skövde?” behandlas nu som räckvidd med en startplats, inte en gångresa med
+start och mål. Gemensam adressökning ger valbara alternativ när träffen är oklar.
+Knappen **Visa räckvidd på kartan** öppnar verktyget och beräknar valt område.
+Gång/cykel/bil/elsparkcykel stöds med sina standardantaganden, hel minut 1–30.
+Frågan måste ange färdsätt, minuter och start efter ”från”; detta är en avgränsad
+serverstyrd tolkning, inte stöd för alla fria formuleringar eller följdfrågor.
+Inga koordinater hämtas från modellens fria svar. Validerade platsval är bundna
+till samtalet. Tidigare vanlig gångruttning är kvar.
+
+Verifierat: 192 integrationstester, bygge/modulgränser och verkligt browserflöde
+med adressval och en 10-minuterspolygon. Ingen merge utförd.
+
+
+### Återkoppling från AI-knappen
+
+AI-knappen väntar nu på beräkningen, visar pågående status och därefter resultat
+eller fel i AI-panelen. Kartkameran ramas in med konturernas koordinater i stället
+för att vänta på bounding spheres för terrängföljande linjer. Vid jämförelse
+omsluter ramen båda resultaten. Verkligt browserprov: Nyckelpigevägen 62 i Skövde,
+30 minuter cykel, adressval, en polygon och förflyttad kamera passerar.
+
+### Färgförklaring
+
+Panelen visar en färgruta och Inom N min för varje beräknad tidsgräns, grupperat
+per färdsätt vid jämförelse. Färgerna hämtas från kartans konturpalett. Vid flera
+tider förklaras att kortare tid är mörkare och att områdena är inneslutna.
+Förklaringen rensas när indata ändras eller en ny beräkning påbörjas.
+
+
+### Flera tidsgränser via AI
+
+Uttryckliga räckviddsfrågor accepterar 1–3 olika hela minuter mellan 1 och 30,
+exempelvis ”till fots från Lillegårdsvägen 11A i Skövde till fots på 5, 10, 15 minuter”.
+Separera med komma och mellanslag, semikolon eller ”och”. Upprepat färdsätt efter
+adressen tas bort före platsuppslag. Alla gränser överförs till panelen.
+
+Räckviddsfrågor och deras platsval använder en separat sessionsbudget på 20/minut;
+språkmodellflödet behåller 6/minut. Den globala gränsen på 20/minut och samtidighets-
+skyddet finns kvar. Beräkningsmotorns egna gränser är oförändrade.

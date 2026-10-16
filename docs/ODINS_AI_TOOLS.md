@@ -83,3 +83,19 @@ AI-knappen visas även när Lokal AI är avstängt. Klick aktiverar lagret och �
 Verktyget `walk_route` hanterar frågor som ”Kortaste vägen att gå från Storgatan i Skövde till Torget i Skövde?”. Servern bevarar uttryckliga start- och målnamn inklusive husnummer. Gemensam adressökning ger platsval om flera träffar finns; endast senaste svarets ID:n accepteras. Gångvägen kan visas på kartan med befintlig Valhalla/OSM-geometri. Avstånd mäts längs geometrin och gångtid uppskattas vid 6 km/h. Det är en beräknad gångväg utan garanti för absolut kortaste sträcka. Befintlig lokal gångruttning (cirka 5 km mellan ändpunkterna), cache och anropsbudget återanvänds. Om geometri saknas visas ett tydligt fel och ingen fågelväg. Ingen kollektivtrafikplanering behövs för detta verktyg.
 
 Validering: tre regressioner för platsval, bokstavlig adress och utebliven geometri; liveprov med lokal modell och Valhalla gav sammanhängande gånggeometri.
+
+
+## 2026-10-16 – AI-frågor om räckvidd
+
+Frågor som ”Hur långt kommer jag till fots på 10 minuter från Henriksbergsgatan
+3B i Skövde?” behandlas nu som räckvidd med en startplats, inte en gångresa med
+start och mål. Gemensam adressökning ger valbara alternativ när träffen är oklar.
+Knappen **Visa räckvidd på kartan** öppnar verktyget och beräknar valt område.
+Gång/cykel/bil/elsparkcykel stöds med sina standardantaganden, hel minut 1–30.
+Frågan måste ange färdsätt, minuter och start efter ”från”; detta är en avgränsad
+serverstyrd tolkning, inte stöd för alla fria formuleringar eller följdfrågor.
+Inga koordinater hämtas från modellens fria svar. Validerade platsval är bundna
+till samtalet. Tidigare vanlig gångruttning är kvar.
+
+Verifierat: 192 integrationstester, bygge/modulgränser och verkligt browserflöde
+med adressval och en 10-minuterspolygon. Ingen merge utförd.
