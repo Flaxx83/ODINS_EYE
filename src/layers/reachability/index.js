@@ -540,10 +540,10 @@ export function createReachabilityLayer() {
           !['walk', 'bicycle', 'car', 'scooter'].includes(request.mode) ||
           ![request.lat, request.lon, request.speed].every(Number.isFinite) ||
           !Array.isArray(request.minutes) ||
-          request.minutes.length !== 1 ||
-          !Number.isInteger(request.minutes[0]) ||
-          request.minutes[0] < 1 ||
-          request.minutes[0] > 30
+          request.minutes.length < 1 ||
+          request.minutes.length > 3 ||
+          new Set(request.minutes).size !== request.minutes.length ||
+          request.minutes.some((n) => !Number.isInteger(n) || n < 1 || n > 30)
         )
           throw Error('Ogiltig räckviddsförfrågan.');
         body.hidden = false;

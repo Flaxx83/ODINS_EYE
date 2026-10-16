@@ -295,11 +295,15 @@ export function parseRangeRequest(message) {
   )
     return null;
   const time = message.match(
-    /(?:på|inom)\s+(\d+(?:[.,]\d+)?)\s*(?:minuter?|min)\b/i,
+    /(?:på|inom)\s+([\d\s,.;och]+?)\s*(?:minuter?|min)\b/i,
   );
   const origin = message
     .match(/\bfrån\s+(.+?)[?.!]*$/i)?.[1]
-    ?.replace(/\s+(?:på|inom)\s+\d+(?:[.,]\d+)?\s*(?:minuter?|min)\b.*$/i, '')
+    ?.replace(/\s+(?:på|inom)\s+[\d\s,.;och]+?\s*(?:minuter?|min)\b.*$/i, '')
+    ?.replace(
+      /\s+(?:till fots|på cykel|med cykel|med bil|på elsparkcykel|med elsparkcykel)\s*$/i,
+      '',
+    )
     ?.trim();
   const mode = /elsparkcykel/i.test(message)
     ? 'scooter'
@@ -315,16 +319,26 @@ export function parseRangeRequest(message) {
       error:
         'Ange startplats, färdsätt och antal minuter, exempelvis: Hur långt kommer jag till fots på 10 minuter från Storgatan 1 i Skövde?',
     };
-  const minutes = Number(time[1].replace(',', '.'));
-  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 30)
+  // Comma-separated lists require whitespace, keeping decimal 1,5 invalid.
+  const minutes = time[1]
+    .trim()
+    .split(/\s*(?:,\s+|;|\boch\b)\s*/i)
+    .map(Number);
+  if (
+    minutes.length < 1 ||
+    minutes.length > 3 ||
+    minutes.some((n) => !Number.isInteger(n) || n < 1 || n > 30) ||
+    new Set(minutes).size !== minutes.length
+  )
     return {
       error:
-        'Räckvidd stöder hela minuter mellan 1 och 30. Ange en tid inom intervallet.',
+        'Ange 1–3 olika hela minuter mellan 1 och 30, exempelvis 5, 10, 15 minuter.',
     };
+
   return {
     origin,
     mode,
-    minutes: [minutes],
+    minutes: minutes.sort((a, b) => a - b),
     speed: { walk: 6, bicycle: 18, car: 120, scooter: 20 }[mode],
   };
 }
@@ -334,7 +348,7 @@ function rangeResult(request, place) {
       'Beräkna räckvidd från ' +
       place.name +
       ' inom ' +
-      request.minutes[0] +
+      request.minutes.join(' / ') +
       ' minuter. Hastighetsantagandet kan ändras i räckviddspanelen.',
     reachabilityRequest: {
       lat: place.lat,
@@ -398,6 +412,7 @@ export function createLocalAiService({
         messages: [],
         memory: null,
         calls: [],
+        rangeCalls: [],
         busy: false,
         pending: null,
         network,
@@ -406,11 +421,16 @@ export function createLocalAiService({
     }
     calls = calls.filter((t) => stamp - t < 60000);
     session.calls = session.calls.filter((t) => stamp - t < 60000);
+    session.rangeCalls = session.rangeCalls.filter((t) => stamp - t < 60000);
+    const isRange = Boolean(
+      parseRangeRequest(message) || (choice && session.pendingPlace?.range),
+    );
+    const budget = isRange ? session.rangeCalls : session.calls;
     if (
       session.busy ||
       active >= 3 ||
       calls.length >= 20 ||
-      session.calls.length >= 6
+      budget.length >= (isRange ? 20 : 6)
     )
       throw new AiInputError(
         'AI-anropen är tillfälligt begränsade. Vänta en minut och försök igen.',
@@ -429,7 +449,7 @@ export function createLocalAiService({
     session.busy = true;
     active++;
     calls.push(stamp);
-    session.calls.push(stamp);
+    budget.push(stamp);
     session.at = stamp;
     const finish = (result) => ({ ...result, conversationId: session.id });
     try {

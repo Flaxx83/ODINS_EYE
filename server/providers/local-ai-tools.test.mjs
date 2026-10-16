@@ -872,3 +872,46 @@ test('range rejects missing or invalid duration without asking for destination',
     assert.equal(result.reachabilityRequest, undefined);
   }
 });
+
+test('range list preserves address, all budgets and uses a separate bounded session quota', async () => {
+  const queries = [];
+  const service = createLocalAiService({
+    now,
+    planner: async () => ({ question: 'intent', actions: [] }),
+    findPlaces: async (q) => {
+      queries.push(q);
+      return {
+        rows: [{ id: 'a', name: q, lat: 58.4, lon: 13.85, exact: true }],
+      };
+    },
+  });
+  let conversationId;
+  for (let i = 0; i < 7; i++) {
+    const r = await service.ask({
+      message:
+        'Hur långt kommer jag till fots från Lillegårdsvägen 11A i Skövde till fots på 5, 10, 15 minuter?',
+      conversationId,
+    });
+    conversationId = r.conversationId;
+    assert.deepEqual(r.reachabilityRequest.minutes, [5, 10, 15]);
+  }
+  assert.ok(queries.every((q) => q === 'Lillegårdsvägen 11A i Skövde'));
+  for (let i = 0; i < 6; i++)
+    await service.ask({ message: 'Hej', conversationId });
+  await assert.rejects(
+    service.ask({ message: 'Hej', conversationId }),
+    (e) => e.status === 429,
+  );
+  for (let i = 0; i < 7; i++)
+    await service.ask({
+      message: 'Hur långt kommer jag till fots på 10 minuter från Skövde?',
+      conversationId,
+    });
+  await assert.rejects(
+    service.ask({
+      message: 'Hur långt kommer jag till fots på 10 minuter från Skövde?',
+      conversationId,
+    }),
+    (e) => e.status === 429,
+  );
+});

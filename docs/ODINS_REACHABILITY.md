@@ -247,3 +247,15 @@ Panelen visar en färgruta och Inom N min för varje beräknad tidsgräns, grupp
 per färdsätt vid jämförelse. Färgerna hämtas från kartans konturpalett. Vid flera
 tider förklaras att kortare tid är mörkare och att områdena är inneslutna.
 Förklaringen rensas när indata ändras eller en ny beräkning påbörjas.
+
+
+### Flera tidsgränser via AI
+
+Uttryckliga räckviddsfrågor accepterar 1–3 olika hela minuter mellan 1 och 30,
+exempelvis ”till fots från Lillegårdsvägen 11A i Skövde till fots på 5, 10, 15 minuter”.
+Separera med komma och mellanslag, semikolon eller ”och”. Upprepat färdsätt efter
+adressen tas bort före platsuppslag. Alla gränser överförs till panelen.
+
+Räckviddsfrågor och deras platsval använder en separat sessionsbudget på 20/minut;
+språkmodellflödet behåller 6/minut. Den globala gränsen på 20/minut och samtidighets-
+skyddet finns kvar. Beräkningsmotorns egna gränser är oförändrade.
