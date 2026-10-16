@@ -1,11 +1,11 @@
-# Räckvidd till fots och på cykel – #9
+# Räckvidd – fyra färdsätt – #9
 
 ## Användning
 
-Aktivera **Räckvidd · Gång & cykel** under kartverktygen. Välj start genom kartklick,
+Aktivera **Räckvidd** under kartverktygen. Välj start genom kartklick,
 koordinater, sparad POI eller adressökning med valbara träffar. Ange en till tre tidsgränser
-(1–30 minuter) och gånghastighet (0,5–8 km/h, standard 6). Klicka **Beräkna gångytor**.
-Största ytan är cyan, följande gul och orange. Byte av indata rensar tidigare ytor;
+(1–30 minuter) och gånghastighet (0,5–8 km/h, standard 6). Klicka **Beräkna räckvidd**.
+Gång visas i cerise, cykel i blått, bil i orange och elsparkcykel i lila. Byte av indata rensar tidigare ytor;
 avaktivering döljer panel och geometri. Beräkning startar bara på uttryckligt knapptryck.
 
 Aktivt underlag omfattar hela Sverige genom hela Geofabriks Sverige-PBF,
@@ -193,3 +193,25 @@ Jämförelse avvisas om underlagsversionen byts mellan de två anropen. Resultat
 kompakta sammanfattning visar färdsätt/tider/hastighet/färg. Full proveniens och
 modellbegränsningar finns under **Antaganden och källor**. Hastighetsfält för det
 färdsätt som inte används döljs.
+
+## Bil och elsparkcykel (2026-10-16)
+
+Bil använder Valhalla auto med statiska väghastigheter, tillträde, enkelriktning och
+svängrestriktioner. Hastighetstaket kan ställas till 10–120 km/h (standard 120).
+Köer, aktuella avstängningar, parkering och tidsberoende regler ingår inte.
+
+Elsparkcykel är en uppskattning på cykelnätet med stadscykelmodell och
+avoid_bad_surfaces=1. Plan hastighet 5–20 km/h, standard 20. Cykelklassat fordon
+avses (högst 20 km/h och 250 W). Specifika elsparkcykelförbud, batteri, höjd,
+väder och pauser ingår inte. Profilen är inte motorns mopedprofil.
+
+Samma Sverigeunderlag används för alla fyra färdsätten. Nätanslutning krävs inom
+100 m; tiden dit ingår inte. Jämförelsen finns fortsatt för gång och cykel.
+Native QA kontrollerar bilförbud, cykelvägar, enkelriktning, cykelundantag samt
+konturer för alla fyra profiler. API-tester kontrollerar gränser och separat cache.
+
+Källor:
+- https://github.com/valhalla/valhalla/blob/3.9.1/docs/docs/api/route/api-reference.md
+- https://www.transportstyrelsen.se/elsparkcykel
+
+Synlighet: mättade färger, 42 % opacitet och separata terrängföljande konturlinjer. Kortare tidsgränser har mörkare färgton.

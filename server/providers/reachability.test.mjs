@@ -75,6 +75,17 @@ test('cache separates modes even with the same speed and forwards the selected p
   assert.equal((await service.calculate({...query,mode:'bicycle'})).mode,'bicycle');
   await service.calculate({...query,mode:'walk'});
   await service.calculate({...query,mode:'bicycle'});
-  assert.deepEqual(modes,['walk','bicycle']);
+  for(const mode of ['car','scooter']) {
+   await service.calculate({...query,mode,speed:20});
+   await service.calculate({...query,mode,speed:20});
+  }
+  assert.deepEqual(modes,['walk','bicycle','car','scooter']);
  } finally { await rm(directory,{recursive:true,force:true}); }
+});
+
+test('car cap and scooter approximation have separate numeric limits',()=>{
+ for(const [mode,min,max] of [['car',10,120],['scooter',5,20]]) {
+  for(const speed of [min,max]) assert.equal(validateReachability({...query,mode,speed}).speed,speed);
+  for(const speed of [min-1,max+1,null,'20',Infinity]) assert.throws(()=>validateReachability({...query,mode,speed}));
+ }
 });

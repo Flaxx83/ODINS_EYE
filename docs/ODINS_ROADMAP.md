@@ -1,5 +1,17 @@
 # Roadmap
 
+## 2026-10-16 – #9 bil och elsparkcykel
+
+Räckvidd har nu bilprofil med vägnätets hastigheter och valbart hastighetstak,
+samt en märkt elsparkcykeluppskattning på cykelnätet (5–20 km/h). Samma lokala
+Sverigeunderlag används. Köer, batteri och specifika elsparkcykelförbud ingår inte.
+Jämförelse finns för gång/cykel. 189 integrationstester, nativeprov för tillträde,
+enkelriktning, svängförbud och hastighetstak samt verkliga kartprov passerade.
+Bygge och modulgränser passerade. GitHub-granskning återstår.
+Se [användning och modell](ODINS_REACHABILITY.md). #9 hålls öppen för granskning
+samt utökad jämförelse/validering.
+
+
 Uppdaterad 2026-10-12 med Trafikverksplanen och senaste AI-tillägg. Ordningen nedan ersätter den tidigare sekvensen med tio arbetsuppgifter. Den visar rekommenderad prioritering; endast uttryckliga beroenden blockerar arbete. Implementerade PR:er granskas och sammanfogas före beroende arbete.
 
 Senaste tillägg till #1: fast AI-knapp i dockan ([PR #42](https://github.com/Flaxx83/ODINS_EYE/pull/42)) och fristående gångvägar med platsval ([PR #43](https://github.com/Flaxx83/ODINS_EYE/pull/43)). Båda inväntar granskning. PR #43 bygger på #42, som bygger på vägväder i #41; detta är PR-beroenden, inte färdig leverans på main. Gångvägar återanvänder befintlig lokal ruttning och är inte en fullständig kortaste-väg-funktion. Detaljer och verifiering finns i [statusöversikten](ODINS_STATUS.md).

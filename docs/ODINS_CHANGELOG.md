@@ -1,5 +1,17 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-16 – #9 bil och elsparkcykel
+
+Räckvidd har nu bilprofil med vägnätets hastigheter och valbart hastighetstak,
+samt en märkt elsparkcykeluppskattning på cykelnätet (5–20 km/h). Samma lokala
+Sverigeunderlag används. Köer, batteri och specifika elsparkcykelförbud ingår inte.
+Jämförelse finns för gång/cykel. 189 integrationstester, nativeprov för tillträde,
+enkelriktning, svängförbud och hastighetstak samt verkliga kartprov passerade.
+Bygge och modulgränser passerade. GitHub-granskning återstår.
+Se [användning och modell](ODINS_REACHABILITY.md). #9 hålls öppen för granskning
+samt utökad jämförelse/validering.
+
+
 ## 2026-10-11
 
 De senaste ändringarna finns i sex öppna pull requests. De körs i den lokala utvecklingsversionen men är ännu inte sammanfogade med `main`. Tabellen anger respektive avgränsning; verifiering gäller de angivna proverna.

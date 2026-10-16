@@ -23,12 +23,27 @@ export function createReachabilityLayer() {
     const previous = append ? status.textContent : '';
     const previousDetails = append ? detailsText?.textContent : '';
     if (!append) data.entities.removeAll();
-    const cycling = result.mode === 'bicycle';
-    const modeName = cycling ? 'Cykel' : 'Gång';
+    const modeName = {
+      walk: 'Gång',
+      bicycle: 'Cykel',
+      car: 'Bil',
+      scooter: 'Elsparkcykel',
+    }[result.mode];
+    const speedLabel = result.mode === 'car' ? 'hastighetstak ' : '';
+    const colorName = {
+      walk: 'cerise',
+      bicycle: 'blå',
+      car: 'orange',
+      scooter: 'lila',
+    }[result.mode];
     const times = [...result.minutes].sort((a, b) => b - a);
-    const colors = cycling
-      ? [C.Color.CYAN, C.Color.DEEPSKYBLUE, C.Color.BLUE]
-      : [C.Color.WHITE, C.Color.LIGHTGRAY, C.Color.GRAY];
+    // Outer contours are lighter; shorter time budgets are more saturated.
+    const colors = {
+      walk: ['#f04bba', '#d51b91', '#9e0067'],
+      bicycle: ['#168cff', '#0064db', '#003aa6'],
+      car: ['#ff9429', '#ed5900', '#b82c00'],
+      scooter: ['#b473ff', '#893de8', '#5d16b0'],
+    }[result.mode].map((hex) => C.Color.fromCssColorString(hex));
     for (const feature of result.geometry.features) {
       const polygons =
         feature.geometry.type === 'Polygon'
@@ -47,16 +62,30 @@ export function createReachabilityLayer() {
                 ),
             ),
         );
-      for (const rings of polygons)
+      for (const rings of polygons) {
         data.entities.add({
           name: modeName + ' · ' + feature.properties.contour + ' min',
           polygon: {
             hierarchy: hierarchy(rings),
-            material: color.withAlpha(0.18),
+            material: color.withAlpha(0.42),
+            zIndex: times.indexOf(feature.properties.contour),
             outline: true,
             outlineColor: color,
           },
         });
+        // Ground polygon outlines are not supported consistently by Cesium.
+        // Explicit ground polylines keep the boundary visible over imagery.
+        for (const ring of rings)
+          data.entities.add({
+            name: modeName + ' · gräns ' + feature.properties.contour + ' min',
+            polyline: {
+              positions: C.Cartesian3.fromDegreesArray(ring.flat()),
+              width: 3,
+              material: color,
+              clampToGround: true,
+            },
+          });
+      }
     }
     if (!append)
       data.entities.add({
@@ -78,6 +107,7 @@ export function createReachabilityLayer() {
       ' · ' +
       result.minutes.join(' / ') +
       ' minuter · ' +
+      speedLabel +
       result.speed +
       ' km/h. ' +
       result.model +
@@ -85,7 +115,7 @@ export function createReachabilityLayer() {
       result.dataTime +
       '. ' +
       result.attribution +
-      (cycling ? '. Cykel: blå/cyan.' : '. Gång: vit/grå.');
+      ('. Färg: ' + colorName + '.');
     if (result.networkOrigin)
       status.textContent +=
         ' Anslutning till nätet för färdsättet: ' +
@@ -101,9 +131,10 @@ export function createReachabilityLayer() {
       ' · ' +
       result.minutes.join(' / ') +
       ' min · ' +
+      speedLabel +
       result.speed +
       ' km/h · ' +
-      (cycling ? 'blå/cyan' : 'vit/grå');
+      colorName;
     if (coverageStatus)
       coverageStatus.textContent =
         result.coverageName +
@@ -115,7 +146,7 @@ export function createReachabilityLayer() {
   }
   const layer = {
     id: 'reachability',
-    name: 'Räckvidd · Gång & cykel',
+    name: 'Räckvidd',
     source: 'Lokal Valhalla / OpenStreetMap',
     category: 'tools',
     init(v) {
@@ -142,7 +173,7 @@ export function createReachabilityLayer() {
       });
       const header = element('header');
       header.className = 'local-ai-header';
-      header.append(element('h3', 'Räckvidd · Gång & cykel'));
+      header.append(element('h3', 'Räckvidd'));
       const body = element('div');
       body.className = 'local-ai-body';
       const minimize = element('button', '−');
@@ -155,7 +186,7 @@ export function createReachabilityLayer() {
       header.append(minimize);
       status = element(
         'p',
-        'Nätbaserad räckvidd i Sverige. Välj gång, cykel eller jämför båda. Högst 30 minuter.',
+        'Nätbaserad räckvidd i Sverige. Välj gång, cykel, bil eller elsparkcykel. Högst 30 minuter.',
       );
       status.setAttribute('aria-live', 'polite');
       status.style.whiteSpace = 'pre-line';
@@ -168,6 +199,8 @@ export function createReachabilityLayer() {
       for (const [value, name] of [
         ['walk', 'Till fots'],
         ['bicycle', 'På cykel'],
+        ['car', 'Med bil'],
+        ['scooter', 'Med elsparkcykel'],
         ['compare', 'Jämför gång och cykel'],
       ]) {
         const option = element('option', name);
@@ -175,10 +208,18 @@ export function createReachabilityLayer() {
         mode.append(option);
       }
       mode.onchange = () => {
-        inputs.speed.parentElement.style.display =
-          mode.value === 'bicycle' ? 'none' : '';
-        inputs.bikeSpeed.parentElement.style.display =
-          mode.value === 'walk' ? 'none' : '';
+        for (const [key, selected] of [
+          ['speed', 'walk'],
+          ['bikeSpeed', 'bicycle'],
+          ['carSpeed', 'car'],
+          ['scooterSpeed', 'scooter'],
+        ]) {
+          inputs[key].parentElement.style.display =
+            mode.value === selected ||
+            (mode.value === 'compare' && ['walk', 'bicycle'].includes(selected))
+              ? ''
+              : 'none';
+        }
         controller?.abort();
         data.entities.removeAll();
         viewer.scene.requestRender();
@@ -193,13 +234,24 @@ export function createReachabilityLayer() {
         ['minutes', 'Minuter (1–3 gränser, separera med komma)', '5,10,15'],
         ['speed', 'Gånghastighet (km/h)', '6'],
         ['bikeSpeed', 'Cykelhastighet på plant underlag (km/h)', '18'],
+        ['carSpeed', 'Bilens hastighetstak (km/h)', '120'],
+        ['scooterSpeed', 'Elsparkcykel på plant underlag (km/h)', '20'],
       ]) {
         const label = element('label', title);
         label.className = 'local-ai-field';
         const input = element('input');
         input.value = value;
         input.setAttribute('aria-label', title);
-        if (['lat', 'lon', 'speed', 'bikeSpeed'].includes(key)) {
+        if (
+          [
+            'lat',
+            'lon',
+            'speed',
+            'bikeSpeed',
+            'carSpeed',
+            'scooterSpeed',
+          ].includes(key)
+        ) {
           input.type = 'number';
           input.step = 'any';
         }
@@ -210,6 +262,14 @@ export function createReachabilityLayer() {
         if (key === 'bikeSpeed') {
           input.min = '5';
           input.max = '35';
+        }
+        if (key === 'carSpeed') {
+          input.min = '10';
+          input.max = '120';
+        }
+        if (key === 'scooterSpeed') {
+          input.min = '5';
+          input.max = '20';
         }
         input.oninput = () => {
           controller?.abort();
@@ -326,22 +386,21 @@ export function createReachabilityLayer() {
         viewer.scene.requestRender();
         status.textContent = 'Beräknar räckvidd…';
         try {
-          if (
-            !inputs.lat.value.trim() ||
-            !inputs.lon.value.trim() ||
-            !(
-              mode.value === 'bicycle'
-                ? inputs.bikeSpeed.value
-                : inputs.speed.value
-            ).trim()
-          )
+          if (!inputs.lat.value.trim() || !inputs.lon.value.trim())
             throw Error('Ange startpunkt och hastighet.');
           const modes =
             mode.value === 'compare' ? ['walk', 'bicycle'] : [mode.value];
           const results = [];
           for (const selectedMode of modes) {
             const speedInput =
-              selectedMode === 'bicycle' ? inputs.bikeSpeed : inputs.speed;
+              inputs[
+                {
+                  walk: 'speed',
+                  bicycle: 'bikeSpeed',
+                  car: 'carSpeed',
+                  scooter: 'scooterSpeed',
+                }[selectedMode]
+              ];
             if (!speedInput.value.trim())
               throw Error('Ange hastighet för valt färdsätt.');
             const r = await fetch('/api/reachability', {
