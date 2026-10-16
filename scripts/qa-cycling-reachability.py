@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import xml.etree.ElementTree as ET
 import osmium
 import valhalla
 
@@ -13,6 +14,8 @@ with tempfile.TemporaryDirectory(prefix='odins-cycle-') as directory:
         ('cycleway', {'highway':'cycleway'}),
         ('bicycle-no', {'highway':'residential','bicycle':'no'}),
         ('oneway', {'highway':'residential','oneway':'yes'}),
+        ('motor-no', {'highway':'residential','motor_vehicle':'no'}),
+        ('turn-no', {'highway':'residential'}),
         ('contraflow', {'highway':'residential','oneway':'yes','oneway:bicycle':'no'}),
     ]
     xml = ['<osm version="0.6" generator="ODINS synthetic bicycle QA">']
@@ -24,15 +27,26 @@ with tempfile.TemporaryDirectory(prefix='odins-cycle-') as directory:
         for offset, refs, tags in [(1,[1,3],{'highway':'residential'}),(2,[3,4],{'highway':'residential'}),
                                   (3,[4,2],{'highway':'residential'}),(4,[1,2],shortcut)]:
             xml.append(f'<way id="{base+offset}" version="1">'+''.join(f'<nd ref="{base+n}"/>' for n in refs)+''.join(f'<tag k="{k}" v="{v}"/>' for k,v in tags.items())+'</way>')
+    # Restrict the eastward turn from a southern approach onto the shortcut.
+    idx = next(i for i, case in enumerate(cases) if case[0] == 'turn-no')
+    base = idx*10
+    lon = 12+idx*.05
+    xml.append(f'<node id="{base+5}" version="1" lat="57.695" lon="{lon}"/>')
+    xml.append(f'<way id="{base+5}" version="1"><nd ref="{base+5}"/><nd ref="{base+1}"/><tag k="highway" v="residential"/></way>')
+    xml.append(f'<relation id="1" version="1"><member type="way" ref="{base+5}" role="from"/><member type="node" ref="{base+1}" role="via"/><member type="way" ref="{base+4}" role="to"/><tag k="type" v="restriction"/><tag k="restriction" v="no_right_turn"/></relation>')
     xml.append('</osm>')
-    (root/'test.osm').write_text(''.join(xml),encoding='utf8')
+    document=ET.fromstring(''.join(xml))
+    document[:]=sorted(document,key=lambda e: ({'node':0,'way':1,'relation':2}[e.tag],int(e.attrib['id'])))
+    ET.ElementTree(document).write(root/'test.osm',encoding='utf-8')
     with osmium.SimpleWriter(str(root/'test.osm.pbf')) as writer:
         for obj in osmium.FileProcessor(str(root/'test.osm')): writer.add(obj)
     script_root = Path(__file__).resolve().parent
     args = [sys.executable,str(script_root/'build-routing-region.py'),str(root/'test.osm.pbf'),str(root/'graph'),
             '--whole-source','--bbox','11.5,57,12.5,58.4','--coverage','11.7,57.2,12.3,58.2']
     with (root/'build.log').open('w') as log:
-        subprocess.run(args,stdout=log,stderr=log,check=True)
+        built=subprocess.run(args,stdout=log,stderr=log)
+    if built.returncode:
+        raise RuntimeError((root/'build.log').read_text(encoding='utf8'))
     config_path = root/'graph'/'valhalla.json'
     config = json.loads(config_path.read_text());config['logging']['type']=''
     actor=valhalla.Actor(config)
@@ -51,10 +65,28 @@ with tempfile.TemporaryDirectory(prefix='odins-cycle-') as directory:
             assert distance(True,'pedestrian')<1
         else:
             assert forward<1 and backward<1, (name,forward,backward)
+        car_forward, car_reverse = distance(costing='auto'), distance(True,'auto')
+        if name in ['cycleway','motor-no']:
+            assert car_forward>2 and car_reverse>2, (name,car_forward,car_reverse)
+        elif name in ['oneway','contraflow']:
+            assert car_forward<1 and car_reverse>2, (name,car_forward,car_reverse)
+        else:
+            assert car_forward<1 and car_reverse<1
         print(f'PASS {name}: bicycle forward={forward:.3f} reverse={backward:.3f} km',flush=True)
+    points = [{'lat':57.695,'lon':lon,'radius':10,'search_cutoff':30}, {'lat':57.7,'lon':lon+.01,'radius':10,'search_cutoff':30}]
+    # Reset longitude after the loop to the dedicated turn fixture.
+    lon = 12+idx*.05
+    points[0]['lon']=lon; points[1]['lon']=lon+.01
+    restricted = actor.route({'locations':points,'costing':'auto'})['trip']['summary']
+    unrestricted = actor.route({'locations':points,'costing':'auto','costing_options':{'auto':{'ignore_restrictions':True}}})['trip']['summary']
+    assert restricted['length']>unrestricted['length']+1, (restricted,unrestricted)
+    slow = actor.route({'locations':points,'costing':'auto','costing_options':{'auto':{'top_speed':10,'speed_types':[]}}})['trip']['summary']
+    assert slow['time']>restricted['time'], (slow,restricted)
+    print('PASS car turn restriction and speed cap',flush=True)
     worker=script_root.parent/'server/providers/reachability-query.py'
-    for mode,speed in [('walk',6),('bicycle',18)]:
+    for mode,speed in [('walk',6),('bicycle',18),('car',120),('scooter',20)]:
         response=subprocess.run([sys.executable,str(worker),str(config_path),json.dumps({'mode':mode,'lat':57.7,'lon':12,'speed':speed,'minutes':[5,10]})],capture_output=True,text=True,check=True)
         result=json.loads(response.stdout)
         assert len(result['features'])==2 and result['networkOrigin']['distanceMeters']<=100
         print('PASS isochrone worker '+mode,flush=True)
+

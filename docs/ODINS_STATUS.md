@@ -1,5 +1,17 @@
 # Status 2026-10-13
 
+## 2026-10-16 – #9 bil och elsparkcykel
+
+Räckvidd har nu bilprofil med vägnätets hastigheter och valbart hastighetstak,
+samt en märkt elsparkcykeluppskattning på cykelnätet (5–20 km/h). Samma lokala
+Sverigeunderlag används. Köer, batteri och specifika elsparkcykelförbud ingår inte.
+Jämförelse finns för gång/cykel. 189 integrationstester, nativeprov för tillträde,
+enkelriktning, svängförbud och hastighetstak samt verkliga kartprov passerade.
+Bygge och modulgränser passerade. GitHub-granskning återstår.
+Se [användning och modell](ODINS_REACHABILITY.md). #9 hålls öppen för granskning
+samt utökad jämförelse/validering.
+
+
 Samlad ändringslogg med issues, PR-länkar och verifiering: [ODINS_CHANGELOG.md](ODINS_CHANGELOG.md). De senaste ändringarna är implementerade på utvecklingsgrenarna och inväntar sammanfogning med main.
 
 - Vite-bygget har passerat efter de senaste tilläggen.

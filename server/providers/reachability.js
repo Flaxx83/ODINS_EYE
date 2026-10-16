@@ -19,18 +19,18 @@ export function validateReachability(value, coverage = CORE) {
   )
     throw failure('Ogiltig förfrågan.');
   const mode = value.mode === undefined ? 'walk' : value.mode;
-  if (!['walk', 'bicycle'].includes(mode))
-    throw failure('Välj gång eller cykel.');
+  if (!['walk', 'bicycle', 'car', 'scooter'].includes(mode))
+    throw failure('Välj gång, cykel, bil eller elsparkcykel.');
   if (
     ![value.lat, value.lon, value.speed].every(
       (v) => typeof v === 'number' && Number.isFinite(v),
     ) ||
-    value.speed < (mode === 'bicycle' ? 5 : 0.5) ||
-    value.speed > (mode === 'bicycle' ? 35 : 8) ||
+    value.speed < { walk: 0.5, bicycle: 5, car: 10, scooter: 5 }[mode] ||
+    value.speed > { walk: 8, bicycle: 35, car: 120, scooter: 20 }[mode] ||
     !inside(value.lon, value.lat, coverage)
   )
     throw failure(
-      'Kontrollera täckningsområdet och hastigheten: gång 0,5–8 km/h, cykel 5–35 km/h.',
+      'Kontrollera täckningsområdet och hastigheten: gång 0,5–8, cykel 5–35, bilens hastighetstak 10–120, elsparkcykel 5–20 km/h.',
     );
   if (
     !Array.isArray(value.minutes) ||
@@ -161,7 +161,7 @@ export function createReachabilityService({
     async status() {
       return {
         available: true,
-        modes: ['walk', 'bicycle'],
+        modes: ['walk', 'bicycle', 'car', 'scooter'],
         ...info(await configuration()),
       };
     },
@@ -209,9 +209,13 @@ export function createReachabilityService({
           ...info(config),
           mode: query.mode,
           model:
-            query.mode === 'bicycle'
-              ? 'Beräknad cykelyta, stadscykel. Hastigheten gäller jämnt plant underlag; vägtyp och underlag påverkar modellen. Höjddata, trafik, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
-              : info(config).model,
+            query.mode === 'car'
+              ? 'Beräknad bilyta för personbil med vägnätets hastigheter och valt hastighetstak. OSM-tillträde, enkelriktning och svängrestriktioner används. Köer, aktuella avstängningar, parkering och tidsberoende regler ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
+              : query.mode === 'scooter'
+                ? 'Uppskattning för elsparkcykel på cykelnätet, med stadscykelmodell och undvikande av dåliga underlag. Avser cykelklassad elsparkcykel, högst 20 km/h och 250 W. Lokala elsparkcykelförbud, batteri, höjd, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
+                : query.mode === 'bicycle'
+                  ? 'Beräknad cykelyta, stadscykel. Hastigheten gäller jämnt plant underlag; vägtyp och underlag påverkar modellen. Höjddata, trafik, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
+                  : info(config).model,
           origin: { lat: query.lat, lon: query.lon },
           networkOrigin: geometry.networkOrigin,
           speed: query.speed,

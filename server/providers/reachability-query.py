@@ -1,4 +1,4 @@
-"""One bounded local walking isochrone query. Configuration is server-owned."""
+"""One bounded local isochrone query. Configuration is server-owned."""
 import json
 import sys
 import math
@@ -9,10 +9,19 @@ config['logging']['type'] = ''
 query = json.loads(sys.argv[2])
 actor = valhalla.Actor(config)
 mode = query.get('mode', 'walk')
-if mode not in ['walk', 'bicycle']:
+if mode not in ['walk', 'bicycle', 'car', 'scooter']:
     raise ValueError('Unsupported mode')
-costing = 'bicycle' if mode == 'bicycle' else 'pedestrian'
-options = {'bicycle_type': 'city', 'cycling_speed': query['speed']} if mode == 'bicycle' else {'walking_speed': query['speed']}
+if mode == 'car':
+    costing = 'auto'
+    options = {'top_speed': query['speed'], 'speed_types': []}
+elif mode in ['bicycle', 'scooter']:
+    costing = 'bicycle'
+    options = {'bicycle_type': 'city', 'cycling_speed': query['speed']}
+    if mode == 'scooter':
+        options['avoid_bad_surfaces'] = 1
+else:
+    costing = 'pedestrian'
+    options = {'walking_speed': query['speed']}
 location = {'lat': query['lat'], 'lon': query['lon'], 'radius': 50, 'search_cutoff': 100}
 located = actor.locate({'locations': [location], 'costing': costing, 'costing_options': {costing: options}})
 edges = located[0].get('edges', [])
@@ -23,11 +32,11 @@ def distance(edge):
     a = math.sin(dlat/2)**2+math.cos(math.radians(lat))*math.cos(math.radians(query['lat']))*math.sin(dlon/2)**2
     return 6371000*2*math.atan2(math.sqrt(a),math.sqrt(1-a))
 if not edges:
-    raise ValueError('No pedestrian edge within search cutoff')
+    raise ValueError('No eligible edge within search cutoff')
 edge = min(edges, key=distance)
 meters = distance(edge)
 if meters > 100:
-    raise ValueError('Pedestrian edge beyond 100m')
+    raise ValueError('Eligible edge beyond 100m')
 result = actor.isochrone({
     'locations': [{'lat': edge['correlated_lat'], 'lon': edge['correlated_lon'], 'radius': 10, 'search_cutoff': 30}],
     'costing': costing,
