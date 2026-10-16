@@ -175,3 +175,7 @@ till samtalet. Tidigare vanlig gångruttning är kvar.
 
 Verifierat: 192 integrationstester, bygge/modulgränser och verkligt browserflöde
 med adressval och en 10-minuterspolygon. Ingen merge utförd.
+
+## Svensk användarmanual – 2026-10-16
+
+Samlad [användarmanual](ODINS_USER_MANUAL.md) med snabbstart, kartbakgrunder, adressval, AI, resor, räckvidd, POI/backup, datalager och felsökning. Två skärmbilder från den lokala appen och exempelfrågor ingår. README länkar till manualen. Guiden beskriver utvecklingsgrenen och anger kvarvarande begränsningar.
