@@ -215,3 +215,19 @@ Källor:
 - https://www.transportstyrelsen.se/elsparkcykel
 
 Synlighet: mättade färger, 42 % opacitet och separata terrängföljande konturlinjer. Kortare tidsgränser har mörkare färgton.
+
+
+## 2026-10-16 – AI-frågor om räckvidd
+
+Frågor som ”Hur långt kommer jag till fots på 10 minuter från Henriksbergsgatan
+3B i Skövde?” behandlas nu som räckvidd med en startplats, inte en gångresa med
+start och mål. Gemensam adressökning ger valbara alternativ när träffen är oklar.
+Knappen **Visa räckvidd på kartan** öppnar verktyget och beräknar valt område.
+Gång/cykel/bil/elsparkcykel stöds med sina standardantaganden, hel minut 1–30.
+Frågan måste ange färdsätt, minuter och start efter ”från”; detta är en avgränsad
+serverstyrd tolkning, inte stöd för alla fria formuleringar eller följdfrågor.
+Inga koordinater hämtas från modellens fria svar. Validerade platsval är bundna
+till samtalet. Tidigare vanlig gångruttning är kvar.
+
+Verifierat: 192 integrationstester, bygge/modulgränser och verkligt browserflöde
+med adressval och en 10-minuterspolygon. Ingen merge utförd.

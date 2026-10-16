@@ -9,7 +9,8 @@ const PLACE_KIND_LABELS = {
   place: 'plats',
 };
 export function createLocalAiLayer() {
-  let map,
+  let dataManager,
+    map,
     viewer,
     panel,
     dockButton,
@@ -32,6 +33,7 @@ export function createLocalAiLayer() {
     name: 'Lokal AI · Bionic',
     category: 'tools',
     attachDataManager(manager) {
+      dataManager = manager;
       dockButton = document.createElement('button');
       dockButton.type = 'button';
       dockButton.className = 'local-ai-dock-button';
@@ -233,6 +235,26 @@ export function createLocalAiLayer() {
               ),
             );
             output.append(p);
+          }
+          if (d.reachabilityRequest) {
+            const button = document.createElement('button');
+            button.textContent = 'Visa räckvidd på kartan';
+            button.onclick = async () => {
+              button.disabled = true;
+              try {
+                await dataManager.setEnabled('reachability', true, {
+                  origin: 'user',
+                });
+                dataManager.layers
+                  .get('reachability')
+                  .module.showRequest(d.reachabilityRequest);
+              } catch (error) {
+                output.textContent = error.message;
+              } finally {
+                button.disabled = false;
+              }
+            };
+            choices.append(button);
           }
           if (d.mapTrips?.length) {
             const note = document.createElement('p');

@@ -9,7 +9,8 @@ export function createReachabilityLayer() {
     inputs,
     choices,
     coverageStatus,
-    detailsText;
+    detailsText,
+    applyRequest;
   let active = false,
     selecting = false,
     epoch = 0,
@@ -146,6 +147,11 @@ export function createReachabilityLayer() {
   }
   const layer = {
     id: 'reachability',
+    showRequest(request) {
+      if (!active || !applyRequest)
+        throw Error('Räckviddspanelen är inte aktiv.');
+      applyRequest(request);
+    },
     name: 'Räckvidd',
     source: 'Lokal Valhalla / OpenStreetMap',
     category: 'tools',
@@ -437,6 +443,33 @@ export function createReachabilityLayer() {
             status.textContent = e.message;
         }
       };
+      applyRequest = (request) => {
+        if (
+          !['walk', 'bicycle', 'car', 'scooter'].includes(request.mode) ||
+          ![request.lat, request.lon, request.speed].every(Number.isFinite) ||
+          !Array.isArray(request.minutes) ||
+          request.minutes.length !== 1 ||
+          !Number.isInteger(request.minutes[0]) ||
+          request.minutes[0] < 1 ||
+          request.minutes[0] > 30
+        )
+          throw Error('Ogiltig räckviddsförfrågan.');
+        body.hidden = false;
+        mode.value = request.mode;
+        mode.onchange();
+        inputs.lat.value = request.lat;
+        inputs.lon.value = request.lon;
+        inputs.minutes.value = request.minutes.join(',');
+        inputs[
+          {
+            walk: 'speed',
+            bicycle: 'bikeSpeed',
+            car: 'carSpeed',
+            scooter: 'scooterSpeed',
+          }[request.mode]
+        ].value = request.speed;
+        void calculate.onclick();
+      };
       const details = element('details');
       details.append(element('summary', 'Antaganden och källor'));
       detailsText = element(
@@ -518,6 +551,7 @@ export function createReachabilityLayer() {
       handler = undefined;
       panel?.remove();
       panel = undefined;
+      applyRequest = undefined;
       coverageStatus = undefined;
       detailsText = undefined;
       if (data) data.show = false;

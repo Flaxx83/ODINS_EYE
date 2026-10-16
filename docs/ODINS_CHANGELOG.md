@@ -159,3 +159,19 @@ Hela Sverige-PBF:en används nu utan ytterligare regional klippning: cirka 2,31 
 ## #9 – cykel och jämförelse, 2026-10-16
 
 Cykelprofil (stadscykel, standard 18 km/h) och jämförelse med gång är implementerade på samma Sverigeunderlag. Färdsättsspecifik anslutning, validering och cache; gång vit/grå och cykel blå/cyan. Kontrollerade nativeprov för cykelväg, cykelförbud, enkelriktning och cykelundantag samt verkligt jämförelseprov i webbläsare passerar. Bil och separat elsparkcykelprofil återstår; #9 hålls öppen. [Detaljer](ODINS_REACHABILITY.md).
+
+
+## 2026-10-16 – AI-frågor om räckvidd
+
+Frågor som ”Hur långt kommer jag till fots på 10 minuter från Henriksbergsgatan
+3B i Skövde?” behandlas nu som räckvidd med en startplats, inte en gångresa med
+start och mål. Gemensam adressökning ger valbara alternativ när träffen är oklar.
+Knappen **Visa räckvidd på kartan** öppnar verktyget och beräknar valt område.
+Gång/cykel/bil/elsparkcykel stöds med sina standardantaganden, hel minut 1–30.
+Frågan måste ange färdsätt, minuter och start efter ”från”; detta är en avgränsad
+serverstyrd tolkning, inte stöd för alla fria formuleringar eller följdfrågor.
+Inga koordinater hämtas från modellens fria svar. Validerade platsval är bundna
+till samtalet. Tidigare vanlig gångruttning är kvar.
+
+Verifierat: 192 integrationstester, bygge/modulgränser och verkligt browserflöde
+med adressval och en 10-minuterspolygon. Ingen merge utförd.

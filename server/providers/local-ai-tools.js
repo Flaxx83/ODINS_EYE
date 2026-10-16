@@ -288,6 +288,65 @@ function town(place) {
   return matches.length === 1 ? matches[0] : null;
 }
 
+// Range questions have one origin and a duration, never a destination.
+export function parseRangeRequest(message) {
+  if (
+    !/(?:hur långt (?:kommer|kan)|räckvidd|område.*(?:nå|komma))/i.test(message)
+  )
+    return null;
+  const time = message.match(
+    /(?:på|inom)\s+(\d+(?:[.,]\d+)?)\s*(?:minuter?|min)\b/i,
+  );
+  const origin = message
+    .match(/\bfrån\s+(.+?)[?.!]*$/i)?.[1]
+    ?.replace(/\s+(?:på|inom)\s+\d+(?:[.,]\d+)?\s*(?:minuter?|min)\b.*$/i, '')
+    ?.trim();
+  const mode = /elsparkcykel/i.test(message)
+    ? 'scooter'
+    : /(?:med bil|köra bil|bilprofil)/i.test(message)
+      ? 'car'
+      : /(?:cykel|cykla)/i.test(message)
+        ? 'bicycle'
+        : /(?:till fots|promen|gå(?:r)?\b)/i.test(message)
+          ? 'walk'
+          : null;
+  if (!time || !origin || !mode)
+    return {
+      error:
+        'Ange startplats, färdsätt och antal minuter, exempelvis: Hur långt kommer jag till fots på 10 minuter från Storgatan 1 i Skövde?',
+    };
+  const minutes = Number(time[1].replace(',', '.'));
+  if (!Number.isInteger(minutes) || minutes < 1 || minutes > 30)
+    return {
+      error:
+        'Räckvidd stöder hela minuter mellan 1 och 30. Ange en tid inom intervallet.',
+    };
+  return {
+    origin,
+    mode,
+    minutes: [minutes],
+    speed: { walk: 6, bicycle: 18, car: 120, scooter: 20 }[mode],
+  };
+}
+function rangeResult(request, place) {
+  return {
+    answer:
+      'Beräkna räckvidd från ' +
+      place.name +
+      ' inom ' +
+      request.minutes[0] +
+      ' minuter. Hastighetsantagandet kan ändras i räckviddspanelen.',
+    reachabilityRequest: {
+      lat: place.lat,
+      lon: place.lon,
+      mode: request.mode,
+      minutes: request.minutes,
+      speed: request.speed,
+    },
+    toolsUsed: ['reachability'],
+  };
+}
+
 /** Server-owned, expiring context. No prior source facts are fed back as live data. */
 export function createLocalAiService({
   planner = selectTools,
@@ -381,6 +440,11 @@ export function createLocalAiService({
           );
           if (!exactKeys(choice, ['place']) || !place)
             throw new AiInputError('Välj en plats från senaste träfflistan.');
+          const range = session.pendingPlace.range;
+          if (range) {
+            session.pendingPlace = null;
+            return finish(rangeResult(range, place));
+          }
           const time = session.pendingPlace.fetchedAt;
           session.pendingPlace = null;
           return finish({
@@ -418,6 +482,27 @@ export function createLocalAiService({
       }
       session.pending = null;
       session.pendingPlace = null;
+      const range = parseRangeRequest(message);
+      if (range) {
+        if (range.error)
+          return finish({ answer: range.error, needsClarification: true });
+        const found = await findPlaces(range.origin, { area });
+        if (!found.rows.length)
+          return finish({
+            answer:
+              'Ingen startplats hittades. Lägg till ort eller förtydliga adressen.',
+            needsClarification: true,
+          });
+        if (found.rows.length === 1 && found.rows[0].exact && !found.partial)
+          return finish(rangeResult(range, found.rows[0]));
+        session.pendingPlace = { ...found, range };
+        return finish({
+          answer: 'Välj startplats för räckviddsberäkningen.',
+          placeChoices: found.rows,
+          needsClarification: true,
+          toolsUsed: ['reachability'],
+        });
+      }
       if (/från.+till/i.test(message))
         parseTravelTime(message, new Date(stamp));
       const messages = [...session.messages, message].slice(-6);
