@@ -1,8 +1,8 @@
-# Räckvidd till fots – första etappen i #9
+# Räckvidd till fots och på cykel – #9
 
 ## Användning
 
-Aktivera **Räckvidd · Till fots** under kartverktygen. Välj start genom kartklick,
+Aktivera **Räckvidd · Gång & cykel** under kartverktygen. Välj start genom kartklick,
 koordinater, sparad POI eller adressökning med valbara träffar. Ange en till tre tidsgränser
 (1–30 minuter) och gånghastighet (0,5–8 km/h, standard 6). Klicka **Beräkna gångytor**.
 Största ytan är cyan, följande gul och orange. Byte av indata rensar tidigare ytor;
@@ -150,3 +150,46 @@ gångytor, Hela Sverige-status, gränsnotis och mobilbredd passerade.
 186 integrationstester och 14 riktade katalog-/server-/etikettprov passerade.
 Native bygge/återupptagning, hela PBF-innehållet och avvisning av saknad nod
 verifierades separat. Produktionsbygge och paketgränser passerade.
+
+## Cykel och jämförelse – 2026-10-16
+
+Välj **Till fots**, **På cykel** eller **Jämför gång och cykel**. Stadscykel har
+18 km/h som justerbar grundhastighet (5–35 km/h i appen). Gång har fortsatt
+6 km/h som standard (0,5–8). Samma nationella nät och tidsgränser 1–30 minuter
+används; ingen ny kartimport behövs. Gång visas vit/grå, cykel blå/cyan.
+Jämförelsen använder samma valda start och tidsgränser men varje färdsätt får
+en egen tillåten nätanslutning inom 100 m. Båda beräkningarna måste lyckas
+innan jämförelsen ritas. Ändrade indata eller färdsätt rensar tidigare ytor.
+
+API:t accepterar `mode: "walk"` eller `mode: "bicycle"`. Utelämnat mode behåller
+gång för äldre klienter. Cacheposter skiljer på färdsätt även vid identisk hastighet.
+Pythonjobbet använder `bicycle`, `bicycle_type: city` och `cycling_speed`; även
+kontrollen av startens nätanslutning använder den valda profilen.
+Jämförelsen gör två seriella lokala anrop och omfattas av samma beräkningsbudget.
+
+Hastigheten avser jämnt plant underlag, inte garanterad medelhastighet över hela
+området. Cykelmodellens vägtyp, underlag och preferenser påverkar räckvidden.
+Sverigeunderlaget saknar separat höjddata; väder, trafik och pauser ingår inte.
+Modellen kan innefatta att bära/leda cykeln, exempelvis i trappor, med motorns
+kostnader. OSM-åtkomst och konturernas interpolation har samma begränsningar som
+för gång. Bil och elsparkcykel samt AI/röstadapter återstår.
+
+Nativeprov kan köras med:
+
+```powershell
+.venv/Scripts/python.exe scripts/qa-cycling-reachability.py
+```
+
+Kontrollerade nät verifierar cykelväg i båda riktningar, omväg vid `bicycle=no`,
+enkelriktning för cykel med fortsatt gång i motsatt riktning samt undantaget
+`oneway:bicycle=no`. Genvägen blev 0,595 km och omvägen 2,821 km. Pythonjobbet
+returnerade gång- och cykelkonturer separat. Riktiga Sverigeprov i Skövde gav
+5/10/15-minutersytor för båda profilerna. Webbläsarprovet verifierade jämförelse,
+rensning vid färdsättsbyte, mobilbredd och avaktivering.
+
+Modellreferens: [Valhallas cykelprofil](https://valhalla.github.io/valhalla/api/route/api-reference/#bicycle-costing-options).
+
+Jämförelse avvisas om underlagsversionen byts mellan de två anropen. Resultatets
+kompakta sammanfattning visar färdsätt/tider/hastighet/färg. Full proveniens och
+modellbegränsningar finns under **Antaganden och källor**. Hastighetsfält för det
+färdsätt som inte används döljs.

@@ -6,6 +6,12 @@ import { join } from 'node:path';
 import { createReachabilityService, validateContours, validateReachability, reachabilityPlugin, CORE } from './reachability.js';
 
 const query = {lat:58.3897,lon:13.8457,speed:6,minutes:[5,10]};
+test('bicycle profile has independent bounds and cannot be confused with walking',()=>{
+ assert.equal(validateReachability({...query,mode:'bicycle',speed:18}).mode,'bicycle');
+ assert.equal(validateReachability(query).mode,'walk');
+ for(const change of [{mode:'walk',speed:18},{mode:'bicycle',speed:4},{mode:'bicycle',speed:36},{mode:null},{mode:'motor_scooter'}])
+   assert.throws(()=>validateReachability({...query,...change}));
+});
 test('Vite installation returns no post-hook and unrelated routes pass through', async()=>{
  let handler;
  assert.equal(reachabilityPlugin().configureServer({middlewares:{use(fn){handler=fn;return ()=>{throw Error('Not a post-hook');};}}}),undefined);
@@ -56,4 +62,19 @@ test('local service limits concurrency, caches only successful results and keeps
   await writeFile(join(directory,'active.json'),JSON.stringify({version:'../../outside'}));
   await assert.rejects(service.status(),e=>e.status===503);
  }finally{await rm(directory,{recursive:true,force:true});}
+});
+test('cache separates modes even with the same speed and forwards the selected profile',async()=>{
+ const directory=await mkdtemp(join(tmpdir(),'odins-cycle-cache-'));
+ try {
+  await mkdir(join(directory,'v1'));
+  await writeFile(join(directory,'active.json'),JSON.stringify({version:'v1'}));
+  await writeFile(join(directory,'v1/manifest.json'),JSON.stringify({bbox:CORE,engineVersion:'test',dataTime:'2026-10-12T20:21:35Z'}));
+  const modes=[];
+  const service=createReachabilityService({directory,run:async(args)=>{modes.push(JSON.parse(args[2]).mode);return {stdout:JSON.stringify(geometry())};}});
+  assert.equal((await service.calculate(query)).mode,'walk');
+  assert.equal((await service.calculate({...query,mode:'bicycle'})).mode,'bicycle');
+  await service.calculate({...query,mode:'walk'});
+  await service.calculate({...query,mode:'bicycle'});
+  assert.deepEqual(modes,['walk','bicycle']);
+ } finally { await rm(directory,{recursive:true,force:true}); }
 });

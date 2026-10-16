@@ -372,7 +372,7 @@ const layers = [
 export const VOICE_OFF_LAYERS = Object.freeze({
   'own-pois': 'Private POI are managed in the map UI; no voice adapter.',
   reachability:
-    'Walking reachability is managed in the map UI; no voice adapter.',
+    'Walking and cycling reachability is managed in the map UI; no voice adapter.',
   'road-weather':
     'Weather is provided by map and local AI; voice adapter not implemented.',
   'road-events':

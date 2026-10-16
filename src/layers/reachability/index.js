@@ -1,7 +1,15 @@
 import * as C from 'cesium';
 
 export function createReachabilityLayer() {
-  let viewer, data, panel, handler, status, inputs, choices, coverageStatus;
+  let viewer,
+    data,
+    panel,
+    handler,
+    status,
+    inputs,
+    choices,
+    coverageStatus,
+    detailsText;
   let active = false,
     selecting = false,
     epoch = 0,
@@ -11,10 +19,16 @@ export function createReachabilityLayer() {
     if (text) e.textContent = text;
     return e;
   };
-  function draw(result) {
-    data.entities.removeAll();
+  function draw(result, append = false) {
+    const previous = append ? status.textContent : '';
+    const previousDetails = append ? detailsText?.textContent : '';
+    if (!append) data.entities.removeAll();
+    const cycling = result.mode === 'bicycle';
+    const modeName = cycling ? 'Cykel' : 'Gång';
     const times = [...result.minutes].sort((a, b) => b - a);
-    const colors = [C.Color.CYAN, C.Color.YELLOW, C.Color.ORANGE];
+    const colors = cycling
+      ? [C.Color.CYAN, C.Color.DEEPSKYBLUE, C.Color.BLUE]
+      : [C.Color.WHITE, C.Color.LIGHTGRAY, C.Color.GRAY];
     for (const feature of result.geometry.features) {
       const polygons =
         feature.geometry.type === 'Polygon'
@@ -35,7 +49,7 @@ export function createReachabilityLayer() {
         );
       for (const rings of polygons)
         data.entities.add({
-          name: feature.properties.contour + ' min till fots',
+          name: modeName + ' · ' + feature.properties.contour + ' min',
           polygon: {
             hierarchy: hierarchy(rings),
             material: color.withAlpha(0.18),
@@ -44,18 +58,24 @@ export function createReachabilityLayer() {
           },
         });
     }
-    data.entities.add({
-      name: 'Start · gång',
-      position: C.Cartesian3.fromDegrees(result.origin.lon, result.origin.lat),
-      point: {
-        pixelSize: 10,
-        color: C.Color.WHITE,
-        outlineColor: C.Color.CYAN,
-        outlineWidth: 2,
-        heightReference: C.HeightReference.CLAMP_TO_GROUND,
-      },
-    });
+    if (!append)
+      data.entities.add({
+        name: 'Start',
+        position: C.Cartesian3.fromDegrees(
+          result.origin.lon,
+          result.origin.lat,
+        ),
+        point: {
+          pixelSize: 10,
+          color: C.Color.WHITE,
+          outlineColor: C.Color.CYAN,
+          outlineWidth: 2,
+          heightReference: C.HeightReference.CLAMP_TO_GROUND,
+        },
+      });
     status.textContent =
+      modeName +
+      ' · ' +
       result.minutes.join(' / ') +
       ' minuter · ' +
       result.speed +
@@ -65,13 +85,25 @@ export function createReachabilityLayer() {
       result.dataTime +
       '. ' +
       result.attribution +
-      '. Största ytan cyan, därefter gul och orange.';
+      (cycling ? '. Cykel: blå/cyan.' : '. Gång: vit/grå.');
     if (result.networkOrigin)
       status.textContent +=
-        ' Anslutning till gånglänk: ' +
+        ' Anslutning till nätet för färdsättet: ' +
         result.networkOrigin.distanceMeters +
-        ' m. Tiderna räknas från gånglänken; vägen dit ingår inte och tillträde måste kontrolleras.';
+        ' m. Tiderna räknas från nätanslutningen; vägen dit ingår inte och tillträde måste kontrolleras.';
     if (result.boundaryNote) status.textContent += ' ' + result.boundaryNote;
+    if (detailsText)
+      detailsText.textContent =
+        (previousDetails ? previousDetails + '\n\n' : '') + status.textContent;
+    status.textContent =
+      (previous ? previous + '\n' : '') +
+      modeName +
+      ' · ' +
+      result.minutes.join(' / ') +
+      ' min · ' +
+      result.speed +
+      ' km/h · ' +
+      (cycling ? 'blå/cyan' : 'vit/grå');
     if (coverageStatus)
       coverageStatus.textContent =
         result.coverageName +
@@ -83,7 +115,7 @@ export function createReachabilityLayer() {
   }
   const layer = {
     id: 'reachability',
-    name: 'Räckvidd · Till fots',
+    name: 'Räckvidd · Gång & cykel',
     source: 'Lokal Valhalla / OpenStreetMap',
     category: 'tools',
     init(v) {
@@ -100,7 +132,7 @@ export function createReachabilityLayer() {
       const token = ++epoch;
       panel = element('aside');
       panel.className = 'local-ai-panel own-poi-panel';
-      panel.setAttribute('aria-label', 'Räckvidd till fots');
+      panel.setAttribute('aria-label', 'Räckvidd');
       Object.assign(panel.style, {
         top: '90px',
         bottom: 'auto',
@@ -110,7 +142,7 @@ export function createReachabilityLayer() {
       });
       const header = element('header');
       header.className = 'local-ai-header';
-      header.append(element('h3', 'Räckvidd · Till fots'));
+      header.append(element('h3', 'Räckvidd · Gång & cykel'));
       const body = element('div');
       body.className = 'local-ai-body';
       const minimize = element('button', '−');
@@ -123,30 +155,61 @@ export function createReachabilityLayer() {
       header.append(minimize);
       status = element(
         'p',
-        'Gångytor längs vägnätet. Första versionen täcker Skövdeområdet, högst 30 minuter.',
+        'Nätbaserad räckvidd i Sverige. Välj gång, cykel eller jämför båda. Högst 30 minuter.',
       );
       status.setAttribute('aria-live', 'polite');
+      status.style.whiteSpace = 'pre-line';
       body.append(status);
       inputs = {};
+      const modeLabel = element('label', 'Färdsätt');
+      modeLabel.className = 'local-ai-field';
+      const mode = element('select');
+      mode.setAttribute('aria-label', 'Färdsätt');
+      for (const [value, name] of [
+        ['walk', 'Till fots'],
+        ['bicycle', 'På cykel'],
+        ['compare', 'Jämför gång och cykel'],
+      ]) {
+        const option = element('option', name);
+        option.value = value;
+        mode.append(option);
+      }
+      mode.onchange = () => {
+        inputs.speed.parentElement.style.display =
+          mode.value === 'bicycle' ? 'none' : '';
+        inputs.bikeSpeed.parentElement.style.display =
+          mode.value === 'walk' ? 'none' : '';
+        controller?.abort();
+        data.entities.removeAll();
+        viewer.scene.requestRender();
+      };
+      modeLabel.append(mode);
+      body.append(modeLabel);
+
       for (const [key, title, value] of [
         ['search', 'Sök adress eller plats', ''],
         ['lat', 'Latitud', '58.3897'],
         ['lon', 'Longitud', '13.8457'],
         ['minutes', 'Minuter (1–3 gränser, separera med komma)', '5,10,15'],
         ['speed', 'Gånghastighet (km/h)', '6'],
+        ['bikeSpeed', 'Cykelhastighet på plant underlag (km/h)', '18'],
       ]) {
         const label = element('label', title);
         label.className = 'local-ai-field';
         const input = element('input');
         input.value = value;
         input.setAttribute('aria-label', title);
-        if (['lat', 'lon', 'speed'].includes(key)) {
+        if (['lat', 'lon', 'speed', 'bikeSpeed'].includes(key)) {
           input.type = 'number';
           input.step = 'any';
         }
         if (key === 'speed') {
           input.min = '0.5';
           input.max = '8';
+        }
+        if (key === 'bikeSpeed') {
+          input.min = '5';
+          input.max = '35';
         }
         input.oninput = () => {
           controller?.abort();
@@ -157,6 +220,7 @@ export function createReachabilityLayer() {
         label.append(input);
         body.append(label);
       }
+      mode.onchange();
       choices = element('div');
       choices.className = 'local-ai-choices';
       const search = element('button', 'Sök platser');
@@ -253,38 +317,57 @@ export function createReachabilityLayer() {
           ? 'Klicka på kartan för att välja start.'
           : 'Kartval avbrutet.';
       };
-      const calculate = element('button', 'Beräkna gångytor');
+      const calculate = element('button', 'Beräkna räckvidd');
       calculate.type = 'button';
       calculate.onclick = async () => {
         controller?.abort();
         const request = (controller = new AbortController());
         data.entities.removeAll();
         viewer.scene.requestRender();
-        status.textContent = 'Beräknar gångytor…';
+        status.textContent = 'Beräknar räckvidd…';
         try {
           if (
             !inputs.lat.value.trim() ||
             !inputs.lon.value.trim() ||
-            !inputs.speed.value.trim()
+            !(
+              mode.value === 'bicycle'
+                ? inputs.bikeSpeed.value
+                : inputs.speed.value
+            ).trim()
           )
             throw Error('Ange startpunkt och hastighet.');
-          const r = await fetch('/api/reachability', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            signal: request.signal,
-            body: JSON.stringify({
-              lat: Number(inputs.lat.value),
-              lon: Number(inputs.lon.value),
-              speed: Number(inputs.speed.value),
-              minutes: inputs.minutes.value
-                .split(',')
-                .map((s) => Number(s.trim())),
-            }),
-          });
-          const result = await r.json();
-          if (!active || token !== epoch || controller !== request) return;
-          if (!r.ok) throw Error(result.error || 'Beräkningen misslyckades.');
-          draw(result);
+          const modes =
+            mode.value === 'compare' ? ['walk', 'bicycle'] : [mode.value];
+          const results = [];
+          for (const selectedMode of modes) {
+            const speedInput =
+              selectedMode === 'bicycle' ? inputs.bikeSpeed : inputs.speed;
+            if (!speedInput.value.trim())
+              throw Error('Ange hastighet för valt färdsätt.');
+            const r = await fetch('/api/reachability', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              signal: request.signal,
+              body: JSON.stringify({
+                mode: selectedMode,
+                lat: Number(inputs.lat.value),
+                lon: Number(inputs.lon.value),
+                speed: Number(speedInput.value),
+                minutes: inputs.minutes.value
+                  .split(',')
+                  .map((s) => Number(s.trim())),
+              }),
+            });
+            const result = await r.json();
+            if (!active || token !== epoch || controller !== request) return;
+            if (!r.ok) throw Error(result.error || 'Beräkningen misslyckades.');
+            results.push(result);
+          }
+          if (results.some((result) => result.version !== results[0].version))
+            throw Error(
+              'Kartunderlaget ändrades under beräkningen. Beräkna jämförelsen på nytt.',
+            );
+          for (let i = 0; i < results.length; i++) draw(results[i], i > 0);
         } catch (e) {
           if (
             active &&
@@ -295,12 +378,21 @@ export function createReachabilityLayer() {
             status.textContent = e.message;
         }
       };
+      const details = element('details');
+      details.append(element('summary', 'Antaganden och källor'));
+      detailsText = element(
+        'p',
+        'Beräknade nätbaserade ytor. Välj färdsätt och beräkna för modellens antaganden och anslutningsavstånd.',
+      );
+      detailsText.style.whiteSpace = 'pre-line';
+      details.append(detailsText);
       body.append(
         search,
         map,
         poi,
         choices,
         calculate,
+        details,
         element(
           'p',
           'Ytor interpoleras från vägnätet och kan täcka vatten/hinder mellan vägar. OSM kan sakna gångvägar. Startpunkten är den vita markören.',
@@ -368,6 +460,7 @@ export function createReachabilityLayer() {
       panel?.remove();
       panel = undefined;
       coverageStatus = undefined;
+      detailsText = undefined;
       if (data) data.show = false;
       viewer?.scene.requestRender();
     },
