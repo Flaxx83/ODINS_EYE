@@ -23,7 +23,6 @@ export function createReachabilityLayer() {
     const previous = append ? status.textContent : '';
     const previousDetails = append ? detailsText?.textContent : '';
     if (!append) data.entities.removeAll();
-    const cycling = result.mode === 'bicycle';
     const modeName = {
       walk: 'Gång',
       bicycle: 'Cykel',
@@ -32,20 +31,19 @@ export function createReachabilityLayer() {
     }[result.mode];
     const speedLabel = result.mode === 'car' ? 'hastighetstak ' : '';
     const colorName = {
-      walk: 'vit/grå',
-      bicycle: 'blå/cyan',
+      walk: 'cerise',
+      bicycle: 'blå',
       car: 'orange',
       scooter: 'lila',
     }[result.mode];
     const times = [...result.minutes].sort((a, b) => b - a);
-    const colors =
-      result.mode === 'car'
-        ? [C.Color.ORANGE, C.Color.DARKORANGE, C.Color.CORAL]
-        : result.mode === 'scooter'
-          ? [C.Color.VIOLET, C.Color.ORCHID, C.Color.PURPLE]
-          : cycling
-            ? [C.Color.CYAN, C.Color.DEEPSKYBLUE, C.Color.BLUE]
-            : [C.Color.WHITE, C.Color.LIGHTGRAY, C.Color.GRAY];
+    // Outer contours are lighter; shorter time budgets are more saturated.
+    const colors = {
+      walk: ['#f04bba', '#d51b91', '#9e0067'],
+      bicycle: ['#168cff', '#0064db', '#003aa6'],
+      car: ['#ff9429', '#ed5900', '#b82c00'],
+      scooter: ['#b473ff', '#893de8', '#5d16b0'],
+    }[result.mode].map((hex) => C.Color.fromCssColorString(hex));
     for (const feature of result.geometry.features) {
       const polygons =
         feature.geometry.type === 'Polygon'
@@ -64,16 +62,30 @@ export function createReachabilityLayer() {
                 ),
             ),
         );
-      for (const rings of polygons)
+      for (const rings of polygons) {
         data.entities.add({
           name: modeName + ' · ' + feature.properties.contour + ' min',
           polygon: {
             hierarchy: hierarchy(rings),
-            material: color.withAlpha(0.18),
+            material: color.withAlpha(0.42),
+            zIndex: times.indexOf(feature.properties.contour),
             outline: true,
             outlineColor: color,
           },
         });
+        // Ground polygon outlines are not supported consistently by Cesium.
+        // Explicit ground polylines keep the boundary visible over imagery.
+        for (const ring of rings)
+          data.entities.add({
+            name: modeName + ' · gräns ' + feature.properties.contour + ' min',
+            polyline: {
+              positions: C.Cartesian3.fromDegreesArray(ring.flat()),
+              width: 3,
+              material: color,
+              clampToGround: true,
+            },
+          });
+      }
     }
     if (!append)
       data.entities.add({

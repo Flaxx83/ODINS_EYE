@@ -5,7 +5,7 @@
 Aktivera **Räckvidd** under kartverktygen. Välj start genom kartklick,
 koordinater, sparad POI eller adressökning med valbara träffar. Ange en till tre tidsgränser
 (1–30 minuter) och gånghastighet (0,5–8 km/h, standard 6). Klicka **Beräkna räckvidd**.
-Gång visas i vitt/grått, cykel i blått/cyan, bil i orange och elsparkcykel i lila. Byte av indata rensar tidigare ytor;
+Gång visas i cerise, cykel i blått, bil i orange och elsparkcykel i lila. Byte av indata rensar tidigare ytor;
 avaktivering döljer panel och geometri. Beräkning startar bara på uttryckligt knapptryck.
 
 Aktivt underlag omfattar hela Sverige genom hela Geofabriks Sverige-PBF,
@@ -213,3 +213,5 @@ konturer för alla fyra profiler. API-tester kontrollerar gränser och separat c
 Källor:
 - https://github.com/valhalla/valhalla/blob/3.9.1/docs/docs/api/route/api-reference.md
 - https://www.transportstyrelsen.se/elsparkcykel
+
+Synlighet: mättade färger, 42 % opacitet och separata terrängföljande konturlinjer. Kortare tidsgränser har mörkare färgton.
