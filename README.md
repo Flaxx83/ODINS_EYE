@@ -4,6 +4,10 @@ En lokal kart- och lägesbildsapp för Sverige och Europa, med trafik, miljödat
 
 Projektet bygger på [Gods Eye View](https://github.com/bilawalsidhu/gods-eye-view) av Bilawal Sidhu. Originalets MIT-licens och attribution finns kvar. Den ursprungliga dokumentationen finns i [docs/UPSTREAM_README.md](docs/UPSTREAM_README.md). ODINS_EYE är vår anpassning, inte ett påstående om att originalidén är vår.
 
+## Användarmanual
+
+Läs [den svenska användarmanualen](docs/ODINS_USER_MANUAL.md) för kartan, AI, reseplanering, räckvidd, egna POI och vanliga problem.
+
 ## Kom igång
 
 Installera Node.js 24 och kör:
