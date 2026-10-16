@@ -8,8 +8,13 @@ config = json.loads(open(sys.argv[1], encoding='utf8').read())
 config['logging']['type'] = ''
 query = json.loads(sys.argv[2])
 actor = valhalla.Actor(config)
+mode = query.get('mode', 'walk')
+if mode not in ['walk', 'bicycle']:
+    raise ValueError('Unsupported mode')
+costing = 'bicycle' if mode == 'bicycle' else 'pedestrian'
+options = {'bicycle_type': 'city', 'cycling_speed': query['speed']} if mode == 'bicycle' else {'walking_speed': query['speed']}
 location = {'lat': query['lat'], 'lon': query['lon'], 'radius': 50, 'search_cutoff': 100}
-located = actor.locate({'locations': [location], 'costing': 'pedestrian'})
+located = actor.locate({'locations': [location], 'costing': costing, 'costing_options': {costing: options}})
 edges = located[0].get('edges', [])
 def distance(edge):
     lat, lon = edge['correlated_lat'], edge['correlated_lon']
@@ -25,8 +30,8 @@ if meters > 100:
     raise ValueError('Pedestrian edge beyond 100m')
 result = actor.isochrone({
     'locations': [{'lat': edge['correlated_lat'], 'lon': edge['correlated_lon'], 'radius': 10, 'search_cutoff': 30}],
-    'costing': 'pedestrian',
-    'costing_options': {'pedestrian': {'walking_speed': query['speed']}},
+    'costing': costing,
+    'costing_options': {costing: options},
     'contours': [{'time': minutes} for minutes in query['minutes']],
     'polygons': True,
     'denoise': 0,

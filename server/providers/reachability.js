@@ -14,20 +14,23 @@ export function validateReachability(value, coverage = CORE) {
     Array.isArray(value) ||
     typeof value !== 'object' ||
     Object.keys(value).some(
-      (k) => !['lat', 'lon', 'minutes', 'speed'].includes(k),
+      (k) => !['lat', 'lon', 'minutes', 'speed', 'mode'].includes(k),
     )
   )
     throw failure('Ogiltig förfrågan.');
+  const mode = value.mode === undefined ? 'walk' : value.mode;
+  if (!['walk', 'bicycle'].includes(mode))
+    throw failure('Välj gång eller cykel.');
   if (
     ![value.lat, value.lon, value.speed].every(
       (v) => typeof v === 'number' && Number.isFinite(v),
     ) ||
-    value.speed < 0.5 ||
-    value.speed > 8 ||
+    value.speed < (mode === 'bicycle' ? 5 : 0.5) ||
+    value.speed > (mode === 'bicycle' ? 35 : 8) ||
     !inside(value.lon, value.lat, coverage)
   )
     throw failure(
-      'Startpunkten ligger utanför aktuellt täckningsområde eller gånghastigheten är utanför 0,5–8 km/h.',
+      'Kontrollera täckningsområdet och hastigheten: gång 0,5–8 km/h, cykel 5–35 km/h.',
     );
   if (
     !Array.isArray(value.minutes) ||
@@ -38,6 +41,7 @@ export function validateReachability(value, coverage = CORE) {
   )
     throw failure('Ange 1–3 olika tidsgränser mellan 1 och 30 minuter.');
   return {
+    mode,
     lat: value.lat,
     lon: value.lon,
     speed: value.speed,
@@ -50,7 +54,7 @@ export function validateContours(data, minutes, bbox) {
     !Array.isArray(data.features) ||
     data.features.length !== minutes.length
   )
-    throw failure('Motorn gav inga fullständiga gångytor.', 502);
+    throw failure('Motorn gav inga fullständiga räckviddsytor.', 502);
   const seen = new Set();
   let count = 0;
   for (const feature of data.features) {
@@ -66,7 +70,7 @@ export function validateContours(data, minutes, bbox) {
           ? g.coordinates
           : null;
     if (!Array.isArray(polygons) || !polygons.length)
-      throw failure('Ogiltig gånggeometri.', 502);
+      throw failure('Ogiltig räckviddsgeometri.', 502);
     for (const polygon of polygons) {
       if (!Array.isArray(polygon) || !polygon.length)
         throw failure('Ogiltig polygon.', 502);
@@ -82,7 +86,7 @@ export function validateContours(data, minutes, bbox) {
             !inside(p[0], p[1], bbox)
           )
             throw failure(
-              'Gångytan når underlagets gräns eller har ogiltig geometri. Välj kortare tid.',
+              'Räckviddsytan når underlagets gräns eller har ogiltig geometri. Välj kortare tid.',
               422,
             );
         }
@@ -155,7 +159,11 @@ export function createReachabilityService({
   });
   return {
     async status() {
-      return { available: true, ...info(await configuration()) };
+      return {
+        available: true,
+        modes: ['walk', 'bicycle'],
+        ...info(await configuration()),
+      };
     },
     async calculate(value) {
       const config = await configuration();
@@ -186,7 +194,7 @@ export function createReachabilityService({
           ));
         } catch {
           throw failure(
-            'Gångytan kunde inte beräknas. Välj start nära en gångbar väg (högst 100 m), eller kontrollera routingunderlaget och requirements-routing.txt.',
+            'Räckvidden kunde inte beräknas. Välj start nära en tillåten väg för färdsättet (högst 100 m), eller kontrollera routingunderlaget och requirements-routing.txt.',
             502,
           );
         }
@@ -199,6 +207,11 @@ export function createReachabilityService({
         validateContours(geometry, query.minutes, config.manifest.bbox);
         const value = {
           ...info(config),
+          mode: query.mode,
+          model:
+            query.mode === 'bicycle'
+              ? 'Beräknad cykelyta, stadscykel. Hastigheten gäller jämnt plant underlag; vägtyp och underlag påverkar modellen. Höjddata, trafik, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
+              : info(config).model,
           origin: { lat: query.lat, lon: query.lon },
           networkOrigin: geometry.networkOrigin,
           speed: query.speed,

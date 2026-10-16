@@ -123,3 +123,7 @@ Gångytorna använder nu Västra Götaland med omnejd (rektangulär täckning) o
 ## #9 – gångunderlag för hela Sverige
 
 Hela Sverige-PBF:en används nu utan ytterligare regional klippning: cirka 2,31 miljoner highway/ferry-väglänkar och 5 739 restriktionsrelationer. Täckning visas dynamiskt och gränsöverskridande begränsningar framgår i panelen. Gånghastighet, tidsgränser, anslutningskontroll och POI-start behålls. Övriga färdsätt återstår. [Installation och nationella provpunkter](ODINS_REACHABILITY.md).
+
+## #9 – cykel och jämförelse, 2026-10-16
+
+Cykelprofil (stadscykel, standard 18 km/h) och jämförelse med gång är implementerade på samma Sverigeunderlag. Färdsättsspecifik anslutning, validering och cache; gång vit/grå och cykel blå/cyan. Kontrollerade nativeprov för cykelväg, cykelförbud, enkelriktning och cykelundantag samt verkligt jämförelseprov i webbläsare passerar. Bil och separat elsparkcykelprofil återstår; #9 hålls öppen. [Detaljer](ODINS_REACHABILITY.md).
