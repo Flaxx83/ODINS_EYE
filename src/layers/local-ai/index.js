@@ -241,17 +241,29 @@ export function createLocalAiLayer() {
             button.textContent = 'Visa räckvidd på kartan';
             button.onclick = async () => {
               button.disabled = true;
+              button.textContent = 'Beräknar räckvidd…';
+              output.textContent =
+                'Beräknar området och flyttar kartan till resultatet…';
               try {
                 await dataManager.setEnabled('reachability', true, {
                   origin: 'user',
                 });
-                dataManager.layers
+                const result = await dataManager.layers
                   .get('reachability')
                   .module.showRequest(d.reachabilityRequest);
+                if (!result?.ok)
+                  throw Error(
+                    result?.error || 'Beräkningen avbröts. Försök igen.',
+                  );
+                output.textContent =
+                  'Området visas på kartan för ' +
+                  d.reachabilityRequest.minutes.join(' / ') +
+                  ' minuter. Inställningar och antaganden finns i räckviddspanelen.';
               } catch (error) {
                 output.textContent = error.message;
               } finally {
                 button.disabled = false;
+                button.textContent = 'Visa räckvidd på kartan';
               }
             };
             choices.append(button);
