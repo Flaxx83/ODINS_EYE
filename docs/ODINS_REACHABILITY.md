@@ -240,3 +240,10 @@ eller fel i AI-panelen. Kartkameran ramas in med konturernas koordinater i stäl
 för att vänta på bounding spheres för terrängföljande linjer. Vid jämförelse
 omsluter ramen båda resultaten. Verkligt browserprov: Nyckelpigevägen 62 i Skövde,
 30 minuter cykel, adressval, en polygon och förflyttad kamera passerar.
+
+### Färgförklaring
+
+Panelen visar en färgruta och Inom N min för varje beräknad tidsgräns, grupperat
+per färdsätt vid jämförelse. Färgerna hämtas från kartans konturpalett. Vid flera
+tider förklaras att kortare tid är mörkare och att områdena är inneslutna.
+Förklaringen rensas när indata ändras eller en ny beräkning påbörjas.
