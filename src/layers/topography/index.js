@@ -2,7 +2,11 @@ import * as C from 'cesium';
 export function createTopographyLayers() {
   return [
     ['administrativindelning', 'Gränser', C.Color.YELLOW],
-    ['kommunikation', 'Vägar och järnvägar', C.Color.ORANGE],
+    [
+      'kommunikation',
+      'Vägar och järnvägar',
+      C.Color.fromCssColorString('#c3c8cf'),
+    ],
     ['hydrografi', 'Vattendrag', C.Color.CYAN],
   ].map(([theme, name, color]) => {
     let viewer,
@@ -13,7 +17,8 @@ export function createTopographyLayers() {
       last = '',
       count = 0,
       error = null,
-      listener;
+      listener,
+      legend;
     const layer = {
       id: 'lm-' + theme,
       name: 'Lantmäteriet · ' + name,
@@ -27,6 +32,52 @@ export function createTopographyLayers() {
       enable() {
         enabled = true;
         data.show = true;
+        if (theme === 'kommunikation' && !legend) {
+          legend = document.createElement('aside');
+          legend.setAttribute(
+            'aria-label',
+            'Teckenförklaring vägar och järnvägar',
+          );
+          Object.assign(legend.style, {
+            position: 'fixed',
+            right: '20px',
+            bottom: '120px',
+            zIndex: '30',
+            background: 'rgba(10,18,21,.94)',
+            color: '#e7edf1',
+            padding: '12px',
+            border: '1px solid #34454b',
+            borderRadius: '12px',
+            fontSize: '12px',
+            maxWidth: 'calc(100vw - 40px)',
+            pointerEvents: 'none',
+          });
+          for (const [title, tone, dashed] of [
+            ['Väg', '#c3c8cf', false],
+            ['Järnväg / spår', '#bd77ff', true],
+            ['Färjeled', '#43bfd0', true],
+          ]) {
+            const row = document.createElement('div');
+            Object.assign(row.style, {
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+              margin: '4px 0',
+            });
+            const swatch = document.createElement('span');
+            swatch.setAttribute('aria-hidden', 'true');
+            Object.assign(swatch.style, {
+              width: '28px',
+              borderTop: '3px ' + (dashed ? 'dashed' : 'solid') + ' ' + tone,
+            });
+            row.append(swatch, document.createTextNode(title));
+            legend.append(row);
+          }
+          const note = document.createElement('div');
+          note.textContent = 'Lantmäteriets kartlager · ej vald resväg';
+          legend.append(note);
+          document.body.append(legend);
+        }
         listener = () => {
           clearTimeout(timer);
           timer = setTimeout(() => layer.update(), 500);
@@ -35,6 +86,8 @@ export function createTopographyLayers() {
       },
       disable() {
         enabled = false;
+        legend?.remove();
+        legend = undefined;
         request?.abort();
         clearTimeout(timer);
         viewer.camera.moveEnd.removeEventListener(listener);
@@ -78,6 +131,38 @@ export function createTopographyLayers() {
             clampToGround: true,
           });
           if (current.signal.aborted || !enabled) return;
+          if (theme === 'kommunikation') {
+            for (const entity of staged.entities.values) {
+              if (!entity.polyline) continue;
+              const kind = entity.properties?.typ?.getValue();
+              if (kind === 'ralstrafik') {
+                entity.polyline.width = 3;
+                entity.polyline.zIndex = 2;
+                entity.polyline.material = new C.PolylineDashMaterialProperty({
+                  color: C.Color.fromCssColorString('#bd77ff'),
+                  gapColor: C.Color.fromCssColorString('#49236b'),
+                  dashLength: 16,
+                  dashPattern: 255,
+                });
+                entity.name = 'Järnväg / spår · Lantmäteriet';
+              } else if (kind === 'farjeled') {
+                entity.polyline.width = 2;
+                entity.polyline.material = new C.PolylineDashMaterialProperty({
+                  color: C.Color.fromCssColorString('#43bfd0'),
+                  dashLength: 20,
+                });
+                entity.name = 'Färjeled · Lantmäteriet';
+              } else {
+                entity.polyline.width = kind === 'ovrig_vag' ? 1 : 1.5;
+                entity.polyline.material = new C.ColorMaterialProperty(
+                  C.Color.fromCssColorString('#c3c8cf'),
+                );
+                entity.name = ['vaglinje', 'ovrig_vag'].includes(kind)
+                  ? 'Väg · Lantmäteriet'
+                  : 'Kommunikation · Lantmäteriet';
+              }
+            }
+          }
           viewer.dataSources.remove(data, true);
           data = staged;
           viewer.dataSources.add(data);

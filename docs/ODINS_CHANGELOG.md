@@ -179,3 +179,13 @@ med adressval och en 10-minuterspolygon. Ingen merge utförd.
 ## Svensk användarmanual – 2026-10-16
 
 Samlad [användarmanual](ODINS_USER_MANUAL.md) med snabbstart, kartbakgrunder, adressval, AI, resor, räckvidd, POI/backup, datalager och felsökning. Två skärmbilder från den lokala appen och exempelfrågor ingår. README länkar till manualen. Guiden beskriver utvecklingsgrenen och anger kvarvarande begränsningar.
+
+## Järnvägsstil – #28, 2026-10-17
+
+Lantmäteriets kommunikationslager använder objekttypen för stilsättning:
+ralstrafik får lila/mörklila streckad linje (3 px), vaglinje/ovrig_vag får grå
+linje (1,5/1 px), farjeled får cyan streckad linje (2 px). Teckenförklaring visas
+endast när lagret är aktivt. Geometri, routing och källdata är oförändrade.
+Lila grundspår har streckat mönster för att skiljas från heldragen resegeometri.
+Rasterbakgrundernas egna stilar ändras inte. Produktionsbygget passerar;
+visuell kontroll genomförs i Skövde på Esri Satellite och OSM.

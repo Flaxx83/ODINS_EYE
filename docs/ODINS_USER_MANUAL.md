@@ -229,6 +229,14 @@ Platserna lagras lokalt i en databas, normalt under
 till GitHub och följer inte med en kartlänk. Adressökning använder externa
 platstjänster; anteckningarna skickas inte med i adressuppslaget.
 
+## Vägar och järnvägar
+
+Aktivera **Lantmäteriet · Vägar och järnvägar** i **Data Layers**.
+Vägar visas grått, järnväg/spår lila och streckat, och färjeleder cyan och streckat.
+En teckenförklaring visas när lagret är aktivt. Stilen gäller det importerade
+vektorlagret ovanpå kartan; väg- och spårfärger inbakade i bakgrundskartan ändras inte.
+Spårlagret visar kartunderlag och är inte en markerad resa eller aktuell tågrörelse.
+
 ## Visa datalager
 
 Öppna **Data Layers** och slå på det lager du vill undersöka. Klicka på ett
