@@ -54,7 +54,7 @@ export function createTopographyLayers() {
           });
           for (const [title, tone, dashed] of [
             ['Väg', '#c3c8cf', false],
-            ['Järnväg / spår', '#bd77ff', true],
+            ['Järnväg / spår', '#bd77ff', false],
             ['Färjeled', '#43bfd0', true],
           ]) {
             const row = document.createElement('div');
@@ -138,12 +138,9 @@ export function createTopographyLayers() {
               if (kind === 'ralstrafik') {
                 entity.polyline.width = 3;
                 entity.polyline.zIndex = 2;
-                entity.polyline.material = new C.PolylineDashMaterialProperty({
-                  color: C.Color.fromCssColorString('#bd77ff'),
-                  gapColor: C.Color.fromCssColorString('#49236b'),
-                  dashLength: 16,
-                  dashPattern: 255,
-                });
+                entity.polyline.material = new C.ColorMaterialProperty(
+                  C.Color.fromCssColorString('#bd77ff'),
+                );
                 entity.name = 'Järnväg / spår · Lantmäteriet';
               } else if (kind === 'farjeled') {
                 entity.polyline.width = 2;

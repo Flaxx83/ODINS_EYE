@@ -189,3 +189,9 @@ endast när lagret är aktivt. Geometri, routing och källdata är oförändrade
 Lila grundspår har streckat mönster för att skiljas från heldragen resegeometri.
 Rasterbakgrundernas egna stilar ändras inte. Produktionsbygget passerar;
 visuell kontroll genomförs i Skövde på Esri Satellite och OSM.
+
+## Lugnare järnvägsvisning – #28, 2026-10-17
+
+Efter visuell återkoppling ersätts den lila/mörklila streckningen med en
+heldragen lila linje (#bd77ff). Bredden är fortsatt 3 px. Teckenförklaringen
+och användarmanualen följer den nya stilen. Färjeleder är fortsatt streckade.

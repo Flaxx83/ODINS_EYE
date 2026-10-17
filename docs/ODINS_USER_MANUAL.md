@@ -232,7 +232,7 @@ platstjänster; anteckningarna skickas inte med i adressuppslaget.
 ## Vägar och järnvägar
 
 Aktivera **Lantmäteriet · Vägar och järnvägar** i **Data Layers**.
-Vägar visas grått, järnväg/spår lila och streckat, och färjeleder cyan och streckat.
+Vägar visas grått, järnväg/spår med heldragen lila linje, och färjeleder cyan och streckat.
 En teckenförklaring visas när lagret är aktivt. Stilen gäller det importerade
 vektorlagret ovanpå kartan; väg- och spårfärger inbakade i bakgrundskartan ändras inte.
 Spårlagret visar kartunderlag och är inte en markerad resa eller aktuell tågrörelse.
