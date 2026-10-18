@@ -276,3 +276,10 @@ profilernas begränsningar är oförändrade. AI väljer fortfarande ett färds�
 Browserprov: `node scripts/qa-reachability-comparison.mjs` med lokal server
 på port 4173 och installerat svenskt routingunderlag. Provet omfattar fyra
 riktiga profiler, synlighet, versionsbyte, fel, minsta urval och mobilvy.
+
+## Göteborgsvalidering – 2026-10-18
+
+[Provrapport](qa/GOTHENBURG_REACHABILITY.md): 12 konturuppsättningar, 24 riktade
+rutter och 36 punktkontroller. Broar/färjelänkar återfinns i grafen. Färjor
+och hissar kan ingå utan aktuell tidtabell eller driftstatus; resultaten
+är inte verifierad framkomlighet. Särskilda järnvägsövergångar återstår.

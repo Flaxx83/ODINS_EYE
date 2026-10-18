@@ -202,3 +202,11 @@ Räckvidd kan jämföra valfria två till fyra färdsätt från samma start och 
 samma tidsgränser. Gång, cykel, bil och elsparkcykel har egna hastighetsfält.
 Varje resultat kan visas/döljas via färgförklaringen utan omberäkning.
 En jämförelse visas först när alla svar har lyckats på samma underlagsversion.
+
+## Göteborgsprov av räckvidd – #9, 2026-10-18
+
+Prov vid Hisingsbron, Älvsborgsbron och Lindholmen–Stenpiren: 12 konturuppsättningar,
+24 riktade rutter och 36 målpunkt/tidskontroller passerar mot lokalt underlag.
+Webbläsarprov med alla fyra profiler passerar. Rapport och reproducerbart
+Pythonprov sparade. Färje- och hissbegränsningar förtydligade i manualen.
+Ingen ändring av beräkningsmodellen.

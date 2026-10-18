@@ -1,0 +1,1961 @@
+{
+  "version": "sweden-20261012-v1",
+  "cases": [
+    {
+      "case": "Hisingsbron banks",
+      "mode": "walk",
+      "origin": [
+        57.712,
+        11.968
+      ],
+      "target": [
+        57.72,
+        11.96
+      ],
+      "snapMeters": 5.3,
+      "targetInsideContours": [
+        15.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 1344446612,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.019
+            },
+            {
+              "wayId": 1344446610,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.002
+            },
+            {
+              "wayId": 1313061395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            }
+          ],
+          "reverse": false,
+          "km": 1.197,
+          "minutes": 12.01,
+          "streets": [
+            "Lilla Bommen",
+            "Hamntorgsgatan"
+          ],
+          "instructions": [
+            "Walk east on Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Turn right to stay on Lilla Bommen.",
+            "Turn left onto Hamntorgsgatan.",
+            "Turn left to stay on Hamntorgsgatan.",
+            "Turn right to stay on Hamntorgsgatan.",
+            "Keep left at the fork.",
+            "Take the elevator to Level 2.",
+            "Bear left.",
+            "Turn left.",
+            "Turn right.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 1313061395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1344446610,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.002
+            },
+            {
+              "wayId": 1344446612,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.019
+            }
+          ],
+          "reverse": true,
+          "km": 1.197,
+          "minutes": 12.01,
+          "streets": [
+            "Hamntorgsgatan",
+            "Lilla Bommen"
+          ],
+          "instructions": [
+            "Walk east.",
+            "Turn left.",
+            "Turn right.",
+            "Take the elevator.",
+            "Turn right onto Hamntorgsgatan.",
+            "Turn left to stay on Hamntorgsgatan.",
+            "Turn right to stay on Hamntorgsgatan.",
+            "Turn right onto Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Turn right to stay on Lilla Bommen.",
+            "Your destination is on the right."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Hisingsbron banks",
+      "mode": "bicycle",
+      "origin": [
+        57.712,
+        11.968
+      ],
+      "target": [
+        57.72,
+        11.96
+      ],
+      "snapMeters": 5.3,
+      "targetInsideContours": [
+        15.0,
+        10.0,
+        5.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.093
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            }
+          ],
+          "reverse": false,
+          "km": 1.387,
+          "minutes": 4.85,
+          "streets": [
+            "Lilla Bommen",
+            "Norra Sjöfarten"
+          ],
+          "instructions": [
+            "Bike east on Lilla Bommen.",
+            "Turn right to stay on Lilla Bommen.",
+            "Turn right onto Norra Sjöfarten.",
+            "Turn left.",
+            "Turn right.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.093
+            }
+          ],
+          "reverse": true,
+          "km": 1.469,
+          "minutes": 5.07,
+          "streets": [
+            "Norra Sjöfarten",
+            "Lilla Bommen"
+          ],
+          "instructions": [
+            "Bike east.",
+            "Turn left.",
+            "Turn right onto Norra Sjöfarten.",
+            "Turn left onto Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Your destination is on the left."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Hisingsbron banks",
+      "mode": "car",
+      "origin": [
+        57.712,
+        11.968
+      ],
+      "target": [
+        57.72,
+        11.96
+      ],
+      "snapMeters": 5.3,
+      "targetInsideContours": [
+        15.0,
+        10.0,
+        5.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 480082404,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.142
+            },
+            {
+              "wayId": 1363879304,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.295
+            },
+            {
+              "wayId": 4770991,
+              "names": [
+                "Frihamnsmotet"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.091
+            }
+          ],
+          "reverse": false,
+          "km": 2.04,
+          "minutes": 3.09,
+          "streets": [
+            "Lilla Bommen",
+            "Hamntorgsgatan",
+            "Gullbergs Strandgata",
+            "Vikingsgatan",
+            "Norra Sjöfarten",
+            "Hisingsbron",
+            "Frihamnsmotet",
+            "Lundby Hamngata"
+          ],
+          "instructions": [
+            "Drive east on Lilla Bommen.",
+            "Turn right to stay on Lilla Bommen.",
+            "Turn left onto Hamntorgsgatan.",
+            "Turn right onto Gullbergs Strandgata.",
+            "Turn right onto Vikingsgatan.",
+            "Turn right onto Norra Sjöfarten.",
+            "Bear right onto Hisingsbron.",
+            "Turn right onto Frihamnsmotet.",
+            "Enter the roundabout and take the 2nd exit onto Lundby Hamngata.",
+            "Exit the roundabout onto Lundby Hamngata.",
+            "Bear right.",
+            "Turn right to take the ramp.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 480082401,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.183
+            },
+            {
+              "wayId": 1363879305,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.255
+            }
+          ],
+          "reverse": true,
+          "km": 2.237,
+          "minutes": 3.52,
+          "streets": [
+            "Hjalmar Brantingsgatan",
+            "Södra Sjöfarten",
+            "Kämpegatan",
+            "Norra Sjöfarten",
+            "Vikingsgatan",
+            "Gullbergs Strandgata",
+            "Hamntorgsgatan",
+            "Lilla Bommen"
+          ],
+          "instructions": [
+            "Drive northeast on Hjalmar Brantingsgatan.",
+            "Turn left onto Södra Sjöfarten.",
+            "Turn left onto Kämpegatan.",
+            "Bear left onto Norra Sjöfarten.",
+            "Turn right onto Vikingsgatan.",
+            "Turn left onto Gullbergs Strandgata.",
+            "Turn left onto Hamntorgsgatan.",
+            "Turn right onto Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Your destination is on the left."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Hisingsbron banks",
+      "mode": "scooter",
+      "origin": [
+        57.712,
+        11.968
+      ],
+      "target": [
+        57.72,
+        11.96
+      ],
+      "snapMeters": 5.3,
+      "targetInsideContours": [
+        15.0,
+        10.0,
+        5.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.093
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            }
+          ],
+          "reverse": false,
+          "km": 1.387,
+          "minutes": 4.38,
+          "streets": [
+            "Lilla Bommen",
+            "Norra Sjöfarten"
+          ],
+          "instructions": [
+            "Bike east on Lilla Bommen.",
+            "Turn right to stay on Lilla Bommen.",
+            "Turn right onto Norra Sjöfarten.",
+            "Turn left.",
+            "Turn right.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.095
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.004
+            },
+            {
+              "wayId": 1363879309,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.11
+            },
+            {
+              "wayId": 1363879308,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.064
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.072
+            },
+            {
+              "wayId": 480082395,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.093
+            }
+          ],
+          "reverse": true,
+          "km": 1.469,
+          "minutes": 4.58,
+          "streets": [
+            "Norra Sjöfarten",
+            "Lilla Bommen"
+          ],
+          "instructions": [
+            "Bike east.",
+            "Turn left.",
+            "Turn right onto Norra Sjöfarten.",
+            "Turn left onto Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Turn left to stay on Lilla Bommen.",
+            "Your destination is on the left."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Alvsborgsbron banks",
+      "mode": "walk",
+      "origin": [
+        57.685,
+        11.904
+      ],
+      "target": [
+        57.697,
+        11.9
+      ],
+      "snapMeters": 4.1,
+      "targetInsideContours": [],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.028
+            },
+            {
+              "wayId": 4773068,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.059
+            },
+            {
+              "wayId": 4303437,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.872
+            },
+            {
+              "wayId": 165768718,
+              "names": [
+                "E 6.20",
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.074
+            },
+            {
+              "wayId": 43048101,
+              "names": [
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.082
+            },
+            {
+              "wayId": 1199650124,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.036
+            }
+          ],
+          "reverse": false,
+          "km": 2.557,
+          "minutes": 25.67,
+          "streets": [
+            "E 6.20",
+            "Hisingsleden",
+            "Pölsebogatan",
+            "Karl IX:s Väg"
+          ],
+          "instructions": [
+            "Walk north on E 6.20/Västerleden. Continue on E 6.20.",
+            "Take the exit.",
+            "Keep left to take Hisingsleden.",
+            "Turn right onto the walkway.",
+            "Turn left.",
+            "Turn left.",
+            "Turn right.",
+            "Turn left onto the walkway.",
+            "Turn right onto Pölsebogatan.",
+            "Turn left onto Karl IX:s Väg.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 1199650124,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.036
+            },
+            {
+              "wayId": 43048101,
+              "names": [
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.082
+            },
+            {
+              "wayId": 165768718,
+              "names": [
+                "E 6.20",
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.074
+            },
+            {
+              "wayId": 4303437,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.872
+            },
+            {
+              "wayId": 4773068,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.059
+            },
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.028
+            }
+          ],
+          "reverse": true,
+          "km": 2.557,
+          "minutes": 25.67,
+          "streets": [
+            "Karl IX:s Väg",
+            "Pölsebogatan",
+            "Hisingsleden",
+            "E 6.20"
+          ],
+          "instructions": [
+            "Walk northwest on Karl IX:s Väg.",
+            "Turn right onto Pölsebogatan.",
+            "Turn left onto the walkway.",
+            "Turn right.",
+            "Turn left.",
+            "Turn right.",
+            "Turn right onto the walkway.",
+            "Turn left to take the ramp.",
+            "Bear right onto E 6.20/Hisingsleden. Continue on E 6.20.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Alvsborgsbron banks",
+      "mode": "bicycle",
+      "origin": [
+        57.685,
+        11.904
+      ],
+      "target": [
+        57.697,
+        11.9
+      ],
+      "snapMeters": 4.1,
+      "targetInsideContours": [
+        15.0,
+        10.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.009
+            },
+            {
+              "wayId": 103704869,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.096
+            },
+            {
+              "wayId": 1022939969,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.002
+            },
+            {
+              "wayId": 1022939968,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.024
+            },
+            {
+              "wayId": 1537428051,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.037
+            },
+            {
+              "wayId": 28490353,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.042
+            },
+            {
+              "wayId": 222535986,
+              "names": [
+                "Kungsstensmotet"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.015
+            },
+            {
+              "wayId": 116632693,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.048
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.082
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.772
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.08
+            }
+          ],
+          "reverse": false,
+          "km": 2.818,
+          "minutes": 9.68,
+          "streets": [
+            "E 6.20",
+            "Västerleden",
+            "Kungsstensmotet",
+            "Långedragsvägen",
+            "Älvsborgsbron",
+            "Flemingsgatan",
+            "Karl IX:s Väg"
+          ],
+          "instructions": [
+            "Bike south on E 6.20/Västerleden.",
+            "Take the Kungsstensmotet exit on the right toward Kungssten/Högsbohöjd.",
+            "Turn right onto Kungsstensmotet.",
+            "Enter the roundabout and take the 2nd exit onto Långedragsvägen.",
+            "Exit the roundabout onto Långedragsvägen.",
+            "Turn right.",
+            "Turn right.",
+            "Turn left.",
+            "Turn left onto Älvsborgsbron.",
+            "Bear left onto Flemingsgatan.",
+            "Turn left to stay on Flemingsgatan.",
+            "Bear right to stay on Flemingsgatan.",
+            "Turn right onto Karl IX:s Väg.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.08
+            },
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.769
+            },
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.059
+            },
+            {
+              "wayId": 28816907,
+              "names": [
+                "Otterklintsvägen"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.048
+            }
+          ],
+          "reverse": true,
+          "km": 4.112,
+          "minutes": 14.38,
+          "streets": [
+            "Karl IX:s Väg",
+            "Flemingsgatan",
+            "Älvsborgsbron",
+            "Otterklintsvägen",
+            "Majnabbegatan",
+            "E 45.01",
+            "Oscarsleden"
+          ],
+          "instructions": [
+            "Bike northwest on Karl IX:s Väg.",
+            "Turn left onto Flemingsgatan.",
+            "Turn right to stay on Flemingsgatan.",
+            "Bear left onto Älvsborgsbron.",
+            "Turn right to stay on Älvsborgsbron.",
+            "Turn right onto Otterklintsvägen.",
+            "Turn left.",
+            "Continue on the cycleway.",
+            "Continue.",
+            "Bear right onto the cycleway.",
+            "Turn left onto Majnabbegatan.",
+            "Take the E 45.01 exit.",
+            "Take the Rödastensmotet exit on the right toward Oslo/Hisingen/Hamnar.",
+            "Keep left toward Oslo/Hisingen/Hamnar.",
+            "Your destination is on the right."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Alvsborgsbron banks",
+      "mode": "car",
+      "origin": [
+        57.685,
+        11.904
+      ],
+      "target": [
+        57.697,
+        11.9
+      ],
+      "snapMeters": 4.1,
+      "targetInsideContours": [
+        15.0,
+        10.0,
+        5.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.009
+            },
+            {
+              "wayId": 103704869,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.096
+            },
+            {
+              "wayId": 1022939969,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.002
+            },
+            {
+              "wayId": 1022939968,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.024
+            },
+            {
+              "wayId": 1537428051,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.037
+            },
+            {
+              "wayId": 28490353,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.042
+            },
+            {
+              "wayId": 222535986,
+              "names": [
+                "Kungsstensmotet"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.015
+            },
+            {
+              "wayId": 103704862,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.081
+            },
+            {
+              "wayId": 4330874,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.105
+            },
+            {
+              "wayId": 43048095,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.102
+            },
+            {
+              "wayId": 4303422,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.83
+            },
+            {
+              "wayId": 155516496,
+              "names": [
+                "E 6.20",
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.117
+            },
+            {
+              "wayId": 27115318,
+              "names": [
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.036
+            },
+            {
+              "wayId": 55409975,
+              "names": [
+                "Västra Eriksbergsgatan"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.035
+            }
+          ],
+          "reverse": false,
+          "km": 3.643,
+          "minutes": 3.74,
+          "streets": [
+            "E 6.20",
+            "Västerleden",
+            "Kungsstensmotet",
+            "Långedragsvägen",
+            "Fridhemsgatan",
+            "Hisingsleden",
+            "Västra Eriksbergsgatan",
+            "Karl IX:s Väg"
+          ],
+          "instructions": [
+            "Drive south on E 6.20/Västerleden.",
+            "Take the Kungsstensmotet exit on the right toward Kungssten/Högsbohöjd.",
+            "Turn right onto Kungsstensmotet.",
+            "Enter the roundabout and take the 2nd exit toward Kungssten/Centrum.",
+            "Exit the roundabout toward Kungssten/Centrum.",
+            "Enter Fridhemsgatan and take the 2nd exit.",
+            "Exit the roundabout.",
+            "Keep left to take E 6.20 toward Oslo/Hisingen/Hamnar.",
+            "Take the Ivarsbergsmotet exit on the right toward Eriksberg/Ytterhamnar.",
+            "Bear left onto Västra Eriksbergsgatan.",
+            "Turn right onto Karl IX:s Väg.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 1199650125,
+              "names": [
+                "Västra Eriksbergsgatan"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.036
+            },
+            {
+              "wayId": 43048101,
+              "names": [
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.082
+            },
+            {
+              "wayId": 165768718,
+              "names": [
+                "E 6.20",
+                "Hisingsleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.074
+            },
+            {
+              "wayId": 4303437,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.872
+            },
+            {
+              "wayId": 4773068,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.059
+            },
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.028
+            }
+          ],
+          "reverse": true,
+          "km": 2.634,
+          "minutes": 2.69,
+          "streets": [
+            "Karl IX:s Väg",
+            "Oljevägen",
+            "E 6.20"
+          ],
+          "instructions": [
+            "Drive northwest on Karl IX:s Väg.",
+            "Turn left onto Oljevägen.",
+            "Take the E 6.20 exit on the right.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Alvsborgsbron banks",
+      "mode": "scooter",
+      "origin": [
+        57.685,
+        11.904
+      ],
+      "target": [
+        57.697,
+        11.9
+      ],
+      "snapMeters": 4.1,
+      "targetInsideContours": [
+        15.0,
+        10.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 25039557,
+              "names": [
+                "E 6.20",
+                "Västerleden"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.009
+            },
+            {
+              "wayId": 103704869,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.096
+            },
+            {
+              "wayId": 1022939969,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.002
+            },
+            {
+              "wayId": 1022939968,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.024
+            },
+            {
+              "wayId": 1537428051,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.037
+            },
+            {
+              "wayId": 28490353,
+              "names": [],
+              "bridge": true,
+              "use": "ramp",
+              "km": 0.042
+            },
+            {
+              "wayId": 222535986,
+              "names": [
+                "Kungsstensmotet"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.015
+            },
+            {
+              "wayId": 116632693,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.048
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.082
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.772
+            },
+            {
+              "wayId": 27141545,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.08
+            }
+          ],
+          "reverse": false,
+          "km": 2.818,
+          "minutes": 8.74,
+          "streets": [
+            "E 6.20",
+            "Västerleden",
+            "Kungsstensmotet",
+            "Långedragsvägen",
+            "Älvsborgsbron",
+            "Flemingsgatan",
+            "Karl IX:s Väg"
+          ],
+          "instructions": [
+            "Bike south on E 6.20/Västerleden.",
+            "Take the Kungsstensmotet exit on the right toward Kungssten/Högsbohöjd.",
+            "Turn right onto Kungsstensmotet.",
+            "Enter the roundabout and take the 2nd exit onto Långedragsvägen.",
+            "Exit the roundabout onto Långedragsvägen.",
+            "Turn right.",
+            "Turn right.",
+            "Turn left.",
+            "Turn left onto Älvsborgsbron.",
+            "Bear left onto Flemingsgatan.",
+            "Turn left to stay on Flemingsgatan.",
+            "Bear right to stay on Flemingsgatan.",
+            "Turn right onto Karl IX:s Väg.",
+            "Your destination is on the left."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.08
+            },
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.769
+            },
+            {
+              "wayId": 43048089,
+              "names": [
+                "Älvsborgsbron"
+              ],
+              "bridge": true,
+              "use": "path",
+              "km": 0.059
+            },
+            {
+              "wayId": 28816907,
+              "names": [
+                "Otterklintsvägen"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.048
+            }
+          ],
+          "reverse": true,
+          "km": 4.112,
+          "minutes": 13.0,
+          "streets": [
+            "Karl IX:s Väg",
+            "Flemingsgatan",
+            "Älvsborgsbron",
+            "Otterklintsvägen",
+            "Majnabbegatan",
+            "E 45.01",
+            "Oscarsleden"
+          ],
+          "instructions": [
+            "Bike northwest on Karl IX:s Väg.",
+            "Turn left onto Flemingsgatan.",
+            "Turn right to stay on Flemingsgatan.",
+            "Bear left onto Älvsborgsbron.",
+            "Turn right to stay on Älvsborgsbron.",
+            "Turn right onto Otterklintsvägen.",
+            "Turn left.",
+            "Continue on the cycleway.",
+            "Continue.",
+            "Bear right onto the cycleway.",
+            "Turn left onto Majnabbegatan.",
+            "Take the E 45.01 exit.",
+            "Take the Rödastensmotet exit on the right toward Oslo/Hisingen/Hamnar.",
+            "Keep left toward Oslo/Hisingen/Hamnar.",
+            "Your destination is on the right."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Lindholmen to Stenpiren",
+      "mode": "walk",
+      "origin": [
+        57.707,
+        11.937
+      ],
+      "target": [
+        57.705,
+        11.957
+      ],
+      "snapMeters": 3.2,
+      "targetInsideContours": [],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            },
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            }
+          ],
+          "reverse": false,
+          "km": 1.946,
+          "minutes": 19.67,
+          "streets": [
+            "Teknikgatan",
+            "Lindholmspiren",
+            "285"
+          ],
+          "instructions": [
+            "Walk southeast on Teknikgatan.",
+            "Bear left onto the walkway.",
+            "Turn right.",
+            "Turn left onto Teknikgatan.",
+            "Bear left onto Lindholmspiren.",
+            "Turn right to stay on Lindholmspiren.",
+            "Turn right to stay on Lindholmspiren.",
+            "Bear right.",
+            "Turn right.",
+            "Keep left to take 285.",
+            "Walk east.",
+            "Turn right.",
+            "Turn left onto the walkway.",
+            "Turn left.",
+            "Turn left.",
+            "You have arrived at your destination."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            },
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            }
+          ],
+          "reverse": true,
+          "km": 1.946,
+          "minutes": 19.67,
+          "streets": [
+            "285",
+            "Lindholmspiren",
+            "Teknikgatan"
+          ],
+          "instructions": [
+            "Walk southwest.",
+            "Turn right.",
+            "Turn right onto the walkway.",
+            "Turn right.",
+            "Turn left.",
+            "Keep right at the fork.",
+            "Take the 285 Ferry.",
+            "Walk east.",
+            "Turn left.",
+            "Bear left onto Lindholmspiren.",
+            "Turn left to stay on Lindholmspiren.",
+            "Turn left to stay on Lindholmspiren.",
+            "Keep right to take Teknikgatan.",
+            "Turn right.",
+            "Turn left onto the walkway.",
+            "Bear right onto Teknikgatan.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Lindholmen to Stenpiren",
+      "mode": "bicycle",
+      "origin": [
+        57.707,
+        11.937
+      ],
+      "target": [
+        57.705,
+        11.957
+      ],
+      "snapMeters": 3.2,
+      "targetInsideContours": [],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            },
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            }
+          ],
+          "reverse": false,
+          "km": 2.424,
+          "minutes": 17.16,
+          "streets": [
+            "Teknikgatan",
+            "Kunskapsgatan",
+            "Lindholmspiren",
+            "285",
+            "Verkstadsgatan"
+          ],
+          "instructions": [
+            "Bike northwest on Teknikgatan.",
+            "Turn right onto Kunskapsgatan.",
+            "Turn right.",
+            "Turn right onto Lindholmspiren.",
+            "Turn right to stay on Lindholmspiren.",
+            "Bear right.",
+            "Continue.",
+            "Turn right.",
+            "Keep left to take 285.",
+            "Bike east.",
+            "Turn right.",
+            "Turn left.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn right to stay on Verkstadsgatan.",
+            "Turn left.",
+            "You have arrived at your destination."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            },
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            }
+          ],
+          "reverse": true,
+          "km": 2.759,
+          "minutes": 18.39,
+          "streets": [
+            "Verkstadsgatan",
+            "Surbrunnsgatan",
+            "285",
+            "Lindholmspiren",
+            "Kunskapsgatan",
+            "Teknikgatan"
+          ],
+          "instructions": [
+            "Bike southwest.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn left to stay on Verkstadsgatan.",
+            "Turn right.",
+            "Turn left onto the cycleway.",
+            "Turn right onto Surbrunnsgatan.",
+            "Turn left onto the cycleway.",
+            "Make a sharp right onto the cycleway.",
+            "Continue.",
+            "Turn left.",
+            "Keep right at the fork.",
+            "Take the 285 Ferry.",
+            "Walk east.",
+            "Turn left.",
+            "Continue.",
+            "Bear left onto Lindholmspiren.",
+            "Turn left to stay on Lindholmspiren.",
+            "Turn left.",
+            "Turn left onto Kunskapsgatan.",
+            "Turn left onto Teknikgatan.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Lindholmen to Stenpiren",
+      "mode": "car",
+      "origin": [
+        57.707,
+        11.937
+      ],
+      "target": [
+        57.705,
+        11.957
+      ],
+      "snapMeters": 3.2,
+      "targetInsideContours": [
+        15.0,
+        10.0
+      ],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 480082401,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.183
+            },
+            {
+              "wayId": 1363879305,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.255
+            },
+            {
+              "wayId": 363570925,
+              "names": [
+                "Residensbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.025
+            },
+            {
+              "wayId": 363570932,
+              "names": [
+                "Residensbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.008
+            }
+          ],
+          "reverse": false,
+          "km": 5.013,
+          "minutes": 7.15,
+          "streets": [
+            "Teknikgatan",
+            "Kunskapsgatan",
+            "Lärdomsgatan",
+            "Plejadgatan",
+            "Lindholmsallén",
+            "Hjalmar Brantingsgatan",
+            "Hisingsbron",
+            "Norra Sjöfarten",
+            "Operagatan",
+            "Verkstadsgatan"
+          ],
+          "instructions": [
+            "Drive northwest on Teknikgatan.",
+            "Turn left onto Kunskapsgatan.",
+            "Turn right onto Lärdomsgatan.",
+            "Turn right onto Plejadgatan.",
+            "Bear right.",
+            "Bear right onto Lindholmsallén.",
+            "Turn left to take the ramp.",
+            "Bear right onto Hisingsbron.",
+            "Bear right onto Norra Sjöfarten.",
+            "Bear right onto Operagatan.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn right to stay on Verkstadsgatan.",
+            "Turn left.",
+            "You have arrived at your destination."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 61950438,
+              "names": [
+                "Residensbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.032
+            },
+            {
+              "wayId": 480082404,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.142
+            },
+            {
+              "wayId": 1363879304,
+              "names": [
+                "Hisingsbron"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.295
+            },
+            {
+              "wayId": 4770991,
+              "names": [
+                "Frihamnsmotet"
+              ],
+              "bridge": true,
+              "use": "road",
+              "km": 0.091
+            }
+          ],
+          "reverse": true,
+          "km": 5.949,
+          "minutes": 8.43,
+          "streets": [
+            "Verkstadsgatan",
+            "Skeppsbron",
+            "Surbrunnsgatan",
+            "Stora Badhusgatan",
+            "Södra Sjöfarten",
+            "Stadstjänaregatan",
+            "Frihamnsmotet",
+            "Lundby Hamngata",
+            "Lindholmsallén",
+            "Ceresgatan",
+            "Polstjärnegatan",
+            "Plejadgatan",
+            "Lärdomsgatan",
+            "Kunskapsgatan",
+            "Teknikgatan"
+          ],
+          "instructions": [
+            "Drive southwest.",
+            "Turn right.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn left onto Skeppsbron.",
+            "Turn left onto Surbrunnsgatan.",
+            "Bear left onto Stora Badhusgatan.",
+            "Enter the roundabout and take the 2nd exit onto Södra Sjöfarten.",
+            "Exit the roundabout onto Södra Sjöfarten.",
+            "Turn left onto Stadstjänaregatan.",
+            "Turn right onto Frihamnsmotet.",
+            "Enter the roundabout and take the 2nd exit onto Lundby Hamngata.",
+            "Exit the roundabout onto Lundby Hamngata.",
+            "Keep left to stay on Lundby Hamngata.",
+            "Bear right onto Lindholmsallén.",
+            "Bear right.",
+            "Turn left onto Lindholmsallén.",
+            "Enter the roundabout and take the 1st exit onto Lindholmsallén.",
+            "Exit the roundabout onto Lindholmsallén.",
+            "Enter Ceresgatan and take the 1st exit onto Polstjärnegatan.",
+            "Exit the roundabout onto Polstjärnegatan.",
+            "Make a sharp left to stay on Polstjärnegatan.",
+            "Turn right onto Plejadgatan.",
+            "Turn left onto Lärdomsgatan.",
+            "Turn left onto Kunskapsgatan.",
+            "Turn right onto Teknikgatan.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "Lindholmen to Stenpiren",
+      "mode": "scooter",
+      "origin": [
+        57.707,
+        11.937
+      ],
+      "target": [
+        57.705,
+        11.957
+      ],
+      "snapMeters": 3.2,
+      "targetInsideContours": [],
+      "routes": [
+        {
+          "crossings": [
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            },
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            }
+          ],
+          "reverse": false,
+          "km": 2.424,
+          "minutes": 16.76,
+          "streets": [
+            "Teknikgatan",
+            "Kunskapsgatan",
+            "Lindholmspiren",
+            "285",
+            "Verkstadsgatan"
+          ],
+          "instructions": [
+            "Bike northwest on Teknikgatan.",
+            "Turn right onto Kunskapsgatan.",
+            "Turn right.",
+            "Turn right onto Lindholmspiren.",
+            "Turn right to stay on Lindholmspiren.",
+            "Bear right.",
+            "Continue.",
+            "Turn right.",
+            "Keep left to take 285.",
+            "Bike east.",
+            "Turn right.",
+            "Turn left.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn right to stay on Verkstadsgatan.",
+            "Turn left.",
+            "You have arrived at your destination."
+          ]
+        },
+        {
+          "crossings": [
+            {
+              "wayId": 485197090,
+              "names": [],
+              "bridge": true,
+              "use": "path",
+              "km": 0.014
+            },
+            {
+              "wayId": 733390174,
+              "names": [
+                "285"
+              ],
+              "bridge": false,
+              "use": "ferry",
+              "km": 1.203
+            }
+          ],
+          "reverse": true,
+          "km": 2.759,
+          "minutes": 17.85,
+          "streets": [
+            "Verkstadsgatan",
+            "Surbrunnsgatan",
+            "285",
+            "Lindholmspiren",
+            "Kunskapsgatan",
+            "Teknikgatan"
+          ],
+          "instructions": [
+            "Bike southwest.",
+            "Turn right onto Verkstadsgatan.",
+            "Turn left to stay on Verkstadsgatan.",
+            "Turn right.",
+            "Turn left onto the cycleway.",
+            "Turn right onto Surbrunnsgatan.",
+            "Turn left onto the cycleway.",
+            "Make a sharp right onto the cycleway.",
+            "Continue.",
+            "Turn left.",
+            "Keep right at the fork.",
+            "Take the 285 Ferry.",
+            "Walk east.",
+            "Turn left.",
+            "Continue.",
+            "Bear left onto Lindholmspiren.",
+            "Turn left to stay on Lindholmspiren.",
+            "Turn left.",
+            "Turn left onto Kunskapsgatan.",
+            "Turn left onto Teknikgatan.",
+            "You have arrived at your destination."
+          ]
+        }
+      ]
+    }
+  ]
+}
