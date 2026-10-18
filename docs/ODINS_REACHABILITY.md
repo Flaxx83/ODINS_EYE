@@ -283,3 +283,10 @@ riktiga profiler, synlighet, versionsbyte, fel, minsta urval och mobilvy.
 rutter och 36 punktkontroller. Broar/färjelänkar återfinns i grafen. Färjor
 och hissar kan ingå utan aktuell tidtabell eller driftstatus; resultaten
 är inte verifierad framkomlighet. Särskilda järnvägsövergångar återstår.
+
+## Färjedata – förstudie 2026-10-18
+
+[Datagenomgång för #56](ODINS_FERRY_DATA_STUDY.md) verifierar åtkomst till
+avgångar, resor och störnings-API för Göteborgs färjor. Tidsberoende räckvidd
+är inte implementerad; förstudien beskriver en avgränsad gång/färjepilot
+och återstående krav på färjeuteslutning, kompletta avgångar och realtidskvalitet.
