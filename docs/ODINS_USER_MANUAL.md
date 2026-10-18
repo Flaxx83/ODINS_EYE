@@ -208,6 +208,9 @@ omfattar Sverige; fortsättning över landsgränsen kan vara ofullständig.
 Ändrade indata rensar gamla ytor och färgförklaringen. Beräkna igen för nytt resultat.
 Slå av Räckvidd för att dölja verktyget och områdena.
 
+Räckviddsmodellen kan använda färjelänkar och hissar. Aktuella färjeavgångar,
+väntetider, medtagande av fordon och hissarnas driftstatus är inte verifierade.
+
 ## Spara egna platser och anteckningar
 
 POI betyder en sparad intressant plats eller kartnål.
