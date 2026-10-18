@@ -24,6 +24,7 @@ export function createReachabilityLayer() {
   };
   function clearResult() {
     data.entities.removeAll();
+    viewBounds = undefined;
     legend?.replaceChildren();
     if (legend) legend.hidden = true;
   }
@@ -52,11 +53,29 @@ export function createReachabilityLayer() {
       car: ['#ff9429', '#ed5900', '#b82c00'],
       scooter: ['#b473ff', '#893de8', '#5d16b0'],
     }[result.mode].map((hex) => C.Color.fromCssColorString(hex));
+    const resultGroup = data.entities.add({ name: modeName + ' · resultat' });
     if (legend) {
       legend.hidden = false;
       const group = element('section');
       group.setAttribute('aria-label', modeName + ' – tidsområden');
-      group.append(element('strong', modeName));
+      const toggleLabel = element('label');
+      Object.assign(toggleLabel.style, {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        cursor: 'pointer',
+      });
+      const toggle = element('input');
+      toggle.type = 'checkbox';
+      toggle.checked = true;
+      toggle.setAttribute('aria-label', 'Visa ' + modeName.toLowerCase());
+      toggle.style.width = 'auto';
+      toggle.onchange = () => {
+        resultGroup.show = toggle.checked;
+        viewer.scene.requestRender();
+      };
+      toggleLabel.append(toggle, element('strong', modeName));
+      group.append(toggleLabel);
       const list = element('ul');
       Object.assign(list.style, {
         listStyle: 'none',
@@ -117,6 +136,7 @@ export function createReachabilityLayer() {
         );
       for (const rings of polygons) {
         data.entities.add({
+          parent: resultGroup,
           name: modeName + ' · ' + feature.properties.contour + ' min',
           polygon: {
             hierarchy: hierarchy(rings),
@@ -130,6 +150,7 @@ export function createReachabilityLayer() {
         // Explicit ground polylines keep the boundary visible over imagery.
         for (const ring of rings)
           data.entities.add({
+            parent: resultGroup,
             name: modeName + ' · gräns ' + feature.properties.contour + ' min',
             polyline: {
               positions: C.Cartesian3.fromDegreesArray(ring.flat()),
@@ -297,13 +318,47 @@ export function createReachabilityLayer() {
         ['bicycle', 'På cykel'],
         ['car', 'Med bil'],
         ['scooter', 'Med elsparkcykel'],
-        ['compare', 'Jämför gång och cykel'],
+        ['compare', 'Jämför färdsätt'],
       ]) {
         const option = element('option', name);
         option.value = value;
         mode.append(option);
       }
+      const comparison = element('fieldset');
+      comparison.append(element('legend', 'Färdsätt att jämföra'));
+      Object.assign(comparison.style, {
+        border: '1px solid rgba(0,229,255,.2)',
+        borderRadius: '8px',
+        padding: '10px',
+        margin: '0 0 12px',
+      });
+      const comparisonModes = new Map();
+      for (const [value, title] of [
+        ['walk', 'Gång'],
+        ['bicycle', 'Cykel'],
+        ['car', 'Bil'],
+        ['scooter', 'Elsparkcykel'],
+      ]) {
+        const label = element('label');
+        Object.assign(label.style, {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          margin: '6px 0',
+          cursor: 'pointer',
+        });
+        const check = element('input');
+        check.type = 'checkbox';
+        check.checked = ['walk', 'bicycle'].includes(value);
+        check.style.width = 'auto';
+        check.setAttribute('aria-label', 'Jämför ' + title.toLowerCase());
+        check.onchange = () => mode.onchange();
+        comparisonModes.set(value, check);
+        label.append(check, document.createTextNode(' ' + title));
+        comparison.append(label);
+      }
       mode.onchange = () => {
+        comparison.hidden = mode.value !== 'compare';
         for (const [key, selected] of [
           ['speed', 'walk'],
           ['bikeSpeed', 'bicycle'],
@@ -312,7 +367,7 @@ export function createReachabilityLayer() {
         ]) {
           inputs[key].parentElement.style.display =
             mode.value === selected ||
-            (mode.value === 'compare' && ['walk', 'bicycle'].includes(selected))
+            (mode.value === 'compare' && comparisonModes.get(selected).checked)
               ? ''
               : 'none';
         }
@@ -321,7 +376,7 @@ export function createReachabilityLayer() {
         viewer.scene.requestRender();
       };
       modeLabel.append(mode);
-      body.append(modeLabel);
+      body.append(modeLabel, comparison);
 
       for (const [key, title, value] of [
         ['search', 'Sök adress eller plats', ''],
@@ -485,7 +540,20 @@ export function createReachabilityLayer() {
           if (!inputs.lat.value.trim() || !inputs.lon.value.trim())
             throw Error('Ange startpunkt och hastighet.');
           const modes =
-            mode.value === 'compare' ? ['walk', 'bicycle'] : [mode.value];
+            mode.value === 'compare'
+              ? [...comparisonModes]
+                  .filter(([, check]) => check.checked)
+                  .map(([value]) => value)
+              : [mode.value];
+          if (mode.value === 'compare' && modes.length < 2)
+            throw Error('Välj minst två färdsätt att jämföra.');
+          const origin = {
+            lat: Number(inputs.lat.value),
+            lon: Number(inputs.lon.value),
+          };
+          const minutes = inputs.minutes.value
+            .split(',')
+            .map((s) => Number(s.trim()));
           const results = [];
           for (const selectedMode of modes) {
             const speedInput =
@@ -505,16 +573,14 @@ export function createReachabilityLayer() {
               signal: request.signal,
               body: JSON.stringify({
                 mode: selectedMode,
-                lat: Number(inputs.lat.value),
-                lon: Number(inputs.lon.value),
+                ...origin,
                 speed: Number(speedInput.value),
-                minutes: inputs.minutes.value
-                  .split(',')
-                  .map((s) => Number(s.trim())),
+                minutes,
               }),
             });
             const result = await r.json();
             if (!active || token !== epoch || controller !== request) return;
+            if (request.signal.aborted) return;
             if (!r.ok) throw Error(result.error || 'Beräkningen misslyckades.');
             results.push(result);
           }

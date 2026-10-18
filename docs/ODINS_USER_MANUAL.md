@@ -189,8 +189,10 @@ Med 5, 10 och 15 minuter får du tre överlappande områden:
 - Det största, ljusaste området: **inom 15 minuter**, inklusive de mindre områdena.
 
 Färgrutorna i panelen visar vilken ton som hör till varje tid. Vill du ha en enda
-yta anger du bara exempelvis `10`. Välj **Jämför gång och cykel** för att visa båda
-färdsätten från samma punkt. Jämförelse med bil/elsparkcykel är ännu inte valbar.
+yta anger du bara exempelvis `10`. Välj **Jämför färdsätt** och kryssa i minst två av gång, cykel, bil och
+elsparkcykel. De använder samma startpunkt och tidsgränser, med separata
+hastighetsinställningar. Kryssrutorna i färgförklaringen visar eller döljer
+varje beräknat resultat utan en ny beräkning.
 
 ![Gång och cykel med tidsgränser och färgförklaring](media/user-manual/rackvidd-jamforelse.png)
 

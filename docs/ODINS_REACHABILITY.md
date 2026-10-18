@@ -259,3 +259,20 @@ adressen tas bort före platsuppslag. Alla gränser överförs till panelen.
 Räckviddsfrågor och deras platsval använder en separat sessionsbudget på 20/minut;
 språkmodellflödet behåller 6/minut. Den globala gränsen på 20/minut och samtidighets-
 skyddet finns kvar. Beräkningsmotorns egna gränser är oförändrade.
+
+## Valbar jämförelse av fyra färdsätt – 2026-10-18
+
+**Jämför färdsätt** ersätter det fasta gång/cykelvalet. Välj minst två av gång,
+cykel, bil och elsparkcykel. Gång/cykel är förvalda. Start och 1–3 tidsgränser
+är gemensamma; hastigheten anges per valt färdsätt. Två till fyra seriella
+anrop använder den befintliga beräkningsbudgeten (10 nya beräkningar/minut).
+Alla svar måste lyckas och ha samma underlagsversion innan några ytor visas.
+
+Färgförklaringens kryssrutor döljer/visar både ytor och gränslinjer för varje
+färdsätt utan nya anrop. Startmarkören finns kvar. Ändrade beräkningsindata
+rensar resultatet; ändrade visningsval behåller det. Modeller, källdata och
+profilernas begränsningar är oförändrade. AI väljer fortfarande ett färdsätt.
+
+Browserprov: `node scripts/qa-reachability-comparison.mjs` med lokal server
+på port 4173 och installerat svenskt routingunderlag. Provet omfattar fyra
+riktiga profiler, synlighet, versionsbyte, fel, minsta urval och mobilvy.
