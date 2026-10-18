@@ -217,3 +217,10 @@ Verifierad Västtrafik-åtkomst för Lindholmspiren–Stenpiren med avgångar,
 ankomster, kajlägen och inställelseflaggor. Störningsanrop lyckas men gav
 inga poster. Dokumenterat att estimated-tider inte i sig bekräftar realtid.
 Förslag till gång + en färjeöverfart dokumenterat; ingen produktionslogik ändrad.
+
+## Strikt färjeuteslutning – #56, 2026-10-18
+
+Nytt reproducerbart native-prov för isolerade öar, färjestart och båda
+riktningarna Lindholmspiren–Stenpiren. Strikt exkludering passerar för gång,
+medan preferensen use_ferry=0 fortfarande tillåter färja utan landalternativ.
+Rapport/resultat sparade. Ingen ändring av produktionsprofil eller konfiguration.
