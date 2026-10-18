@@ -1,0 +1,70 @@
+{
+  "cases": [
+    {
+      "fixture": "islands",
+      "option": "default",
+      "route": "ferry",
+      "oppositeShoreIn30min": true
+    },
+    {
+      "fixture": "islands",
+      "option": "preference",
+      "route": "ferry",
+      "oppositeShoreIn30min": true
+    },
+    {
+      "fixture": "islands",
+      "option": "strict",
+      "route": "no_path",
+      "oppositeShoreIn30min": false
+    },
+    {
+      "fixture": "Gothenburg",
+      "reverse": false,
+      "option": "default",
+      "km": 1.325,
+      "minutes": 13.44,
+      "ferryWayIds": [
+        733390174
+      ],
+      "targetIn15min": true
+    },
+    {
+      "fixture": "Gothenburg",
+      "reverse": false,
+      "option": "strict",
+      "km": 4.263,
+      "minutes": 42.94,
+      "ferryWayIds": [],
+      "targetIn15min": false
+    },
+    {
+      "fixture": "Gothenburg",
+      "reverse": true,
+      "option": "default",
+      "km": 1.325,
+      "minutes": 13.44,
+      "ferryWayIds": [
+        733390174
+      ],
+      "targetIn15min": true
+    },
+    {
+      "fixture": "Gothenburg",
+      "reverse": true,
+      "option": "strict",
+      "km": 4.263,
+      "minutes": 42.92,
+      "ferryWayIds": [],
+      "targetIn15min": false
+    }
+  ],
+  "ferryMidpoint": {
+    "unfilteredEdges": 2,
+    "filteredEdges": 0
+  },
+  "disabledHardExclusions": {
+    "error": "No path could be found for input"
+  },
+  "graphVersion": "sweden-20261012-v1"
+}

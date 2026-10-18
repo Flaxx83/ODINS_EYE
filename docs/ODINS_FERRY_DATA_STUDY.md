@@ -122,3 +122,10 @@ den befintliga färjepolygonen skulle inte lösa problemet.
 
 Steg 1 i #56 har alltså ett verifierat dataunderlag men kvarvarande tekniska
 frågor. Datakällan är tillgänglig; färjeintegrationen är ännu inte implementerad.
+
+## Uppföljning: färjeuteslutning verifierad
+
+[Lokala prov](qa/FERRY_EXCLUSION.md) visar att strikt uteslutning fungerar
+för gång i rutt och isokron. Preferensen use_ferry=0 räcker inte. Startfilter
+behövs också. Produktionsarbetaren är ännu oförändrad; nästa steg är att
+koppla en uttrycklig landprofil till piloten och verifiera API-tidsfönstret.
