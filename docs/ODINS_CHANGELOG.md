@@ -195,3 +195,10 @@ visuell kontroll genomförs i Skövde på Esri Satellite och OSM.
 Efter visuell återkoppling ersätts den lila/mörklila streckningen med en
 heldragen lila linje (#bd77ff). Bredden är fortsatt 3 px. Teckenförklaringen
 och användarmanualen följer den nya stilen. Färjeleder är fortsatt streckade.
+
+## Jämför valbara färdsätt – #9, 2026-10-18
+
+Räckvidd kan jämföra valfria två till fyra färdsätt från samma start och med
+samma tidsgränser. Gång, cykel, bil och elsparkcykel har egna hastighetsfält.
+Varje resultat kan visas/döljas via färgförklaringen utan omberäkning.
+En jämförelse visas först när alla svar har lyckats på samma underlagsversion.
