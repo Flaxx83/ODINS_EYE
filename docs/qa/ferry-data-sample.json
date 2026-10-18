@@ -1,0 +1,76 @@
+{
+  "retrievedAt": "2026-10-18T14:01:07.781Z",
+  "stops": [
+    {
+      "gid": "9021014004493000",
+      "name": "Lindholmspiren, Göteborg",
+      "locationType": "stoparea",
+      "latitude": 57.705524,
+      "longitude": 11.939841,
+      "hasLocalService": false
+    },
+    {
+      "gid": "9021014006242000",
+      "name": "Stenpiren, Göteborg",
+      "locationType": "stoparea",
+      "latitude": 57.705947,
+      "longitude": 11.957514,
+      "hasLocalService": false
+    }
+  ],
+  "journeys": [
+    {
+      "line": "286",
+      "journeyGid": "9015014528600741",
+      "originStopPoint": "9022014004493011",
+      "destinationStopPoint": "9022014006242051",
+      "departure": "2026-10-18T16:03:00.0000000+02:00",
+      "arrival": "2026-10-18T16:09:00.0000000+02:00",
+      "estimatedDeparture": "2026-10-18T16:03:00.0000000+02:00",
+      "estimatedArrival": "2026-10-18T16:09:00.0000000+02:00",
+      "minutes": 6,
+      "isRealtimeJourney": false,
+      "isCancelled": false,
+      "isPartCancelled": false
+    },
+    {
+      "line": "286",
+      "journeyGid": "9015014528600743",
+      "originStopPoint": "9022014004493011",
+      "destinationStopPoint": "9022014006242051",
+      "departure": "2026-10-18T16:23:00.0000000+02:00",
+      "arrival": "2026-10-18T16:29:00.0000000+02:00",
+      "estimatedDeparture": "2026-10-18T16:23:00.0000000+02:00",
+      "estimatedArrival": "2026-10-18T16:29:00.0000000+02:00",
+      "minutes": 6,
+      "isRealtimeJourney": false,
+      "isCancelled": false,
+      "isPartCancelled": false
+    },
+    {
+      "line": "285",
+      "journeyGid": "9015014528500729",
+      "originStopPoint": "9022014004493012",
+      "destinationStopPoint": "9022014006242053",
+      "departure": "2026-10-18T16:25:00.0000000+02:00",
+      "arrival": "2026-10-18T16:31:00.0000000+02:00",
+      "estimatedDeparture": "2026-10-18T16:25:00.0000000+02:00",
+      "estimatedArrival": "2026-10-18T16:31:00.0000000+02:00",
+      "minutes": 6,
+      "isRealtimeJourney": false,
+      "isCancelled": false,
+      "isPartCancelled": false
+    }
+  ],
+  "disruptionProbe": {
+    "line285": {
+      "httpStatus": 200,
+      "rows": 0
+    },
+    "line286": {
+      "httpStatus": 200,
+      "rows": 0
+    },
+    "note": "Separate probe on 2026-10-18; empty list is not proof of uninterrupted operation."
+  }
+}

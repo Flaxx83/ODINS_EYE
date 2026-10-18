@@ -210,3 +210,10 @@ Prov vid Hisingsbron, Älvsborgsbron och Lindholmen–Stenpiren: 12 konturuppsä
 Webbläsarprov med alla fyra profiler passerar. Rapport och reproducerbart
 Pythonprov sparade. Färje- och hissbegränsningar förtydligade i manualen.
 Ingen ändring av beräkningsmodellen.
+
+## Färjeförstudie – #56, 2026-10-18
+
+Verifierad Västtrafik-åtkomst för Lindholmspiren–Stenpiren med avgångar,
+ankomster, kajlägen och inställelseflaggor. Störningsanrop lyckas men gav
+inga poster. Dokumenterat att estimated-tider inte i sig bekräftar realtid.
+Förslag till gång + en färjeöverfart dokumenterat; ingen produktionslogik ändrad.
