@@ -1,11 +1,31 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { showFlight, exactFlightMatch } from '../../src/layers/local-ai/flight-search.js';
 import {
   createLocalAiService,
   validateToolPlan,
   selectTools,
 } from './local-ai-tools.js';
 const now = () => Date.parse('2026-10-12T10:00:00Z');
+test('explicit flight search bypasses planner and never geocodes the identifier', async () => {
+  const service = createLocalAiService({ planner: async () => { throw Error('unexpected planner'); } });
+  const result = await service.ask({ message: 'Jag letar efter flight sk7714', network: 'Västtrafik' });
+  assert.equal(result.flightQuery, 'SK7714');
+  assert.deepEqual(result.toolsUsed, ['find_flight']);
+});
+test('flight lookup rejects partial matches and only tracks exact observed identities', async () => {
+  let tracked = 0;
+  const module = { findByQuery: () => ({ icao24: 'abc123', callsign: 'SAS77140' }), trackById: () => { tracked++; return true; } };
+  assert.equal(exactFlightMatch(module, 'SAS7714'), null);
+  const manager = { setEnabled: async () => {}, layers: new Map([['flights', { module }]]) };
+  assert.match(await showFlight(manager, 'SAS7714'), /Ingen exakt träff/);
+  assert.equal(tracked, 0);
+  module.findByQuery = () => ({ icao24: 'abc123', callsign: ' sas7714 ' });
+  assert.match(await showFlight(manager, 'SAS7714'), /Visar SAS7714/);
+  assert.equal(tracked, 1);
+  assert.equal(await showFlight(manager, 'SAS7714', () => false), null);
+  assert.equal(tracked, 1);
+});
 const area = { lat: 58.4, lon: 13.85 };
 const args = (a = {}) => ({
   origin: null,
