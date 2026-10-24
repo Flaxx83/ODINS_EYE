@@ -1,4 +1,22 @@
-# Status 2026-10-13
+# Status för ODINS EYE
+
+## Aktuellt läge 2026-10-24
+
+- `main` är synkad till `7bb9cdc5d278dd1c88bf1641f904c97e682c30bf`.
+  PR #11–#26 i den aktuella kedjan är merged; issue #2 och #6 är stängda.
+- [CI](https://github.com/Flaxx83/ODINS_EYE/actions/runs/40127621590) och
+  [installation](https://github.com/Flaxx83/ODINS_EYE/actions/runs/40127621605)
+  är gröna på denna main-commit.
+- Nyare arbete ligger fortsatt i öppna, staplade PR:er. Manualen finns i #52,
+  järnvägsstilen i #53, fyrprofiljämförelsen i #54, färjepiloten i #59 och
+  den exakta flygsökningen i #60. Det betyder inte att dessa finns på `main`.
+- [Swedavia-integrationen](ODINS_SWEDAVIA.md) är ett kodutkast under arbete.
+  Riktig API-åtkomst har verifierats men klientvisning och fixturetester återstår.
+- [Arbetsinstruktionen för andra datorn](ODINS_SECOND_PC.md) finns nu även
+  i repositoryt. Arbetet på den datorn är **inte påbörjat**.
+
+Äldre daterade avsnitt nedan är historiska lägesbilder. Aktuell PR-status
+och dess exakta commit ska kontrolleras före integration.
 
 ## 2026-10-16 – #9 bil och elsparkcykel
 

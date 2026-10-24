@@ -1,5 +1,14 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-24 – synkad main och överlämning
+
+PR-kedjan fram till #26 är införd på main (`7bb9cdc`), issue #2/#6 är stängda
+och båda Actions-körningarna på main passerar. Nyare PR:er är fortfarande öppna.
+[Instruktionen för andra datorn](ODINS_SECOND_PC.md) finns i repositoryt;
+arbetet där är ännu inte påbörjat. [Swedavia](ODINS_SWEDAVIA.md) dokumenterar
+verifierad API-åtkomst, kodutkast och återstående steg utan att beskriva
+AI-integrationen som färdig.
+
 ## 2026-10-24 – flygsökning i lokal AI
 
 Uttryckliga frågor som ”Jag letar efter flight SK7714” kopplas nu till

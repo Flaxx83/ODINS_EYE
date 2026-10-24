@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { lookupSwedaviaFlight } from './swedavia-flights.js';
 import { executeLocalQuery } from './local-ai-query.js';
 import {
   normalizeTravelMessage,
@@ -363,6 +364,7 @@ function rangeResult(request, place) {
 
 /** Server-owned, expiring context. No prior source facts are fed back as live data. */
 export function createLocalAiService({
+  lookupFlight = lookupSwedaviaFlight,
   planner = selectTools,
   execute = executeLocalQuery,
   now = Date.now,
@@ -512,7 +514,7 @@ export function createLocalAiService({
             'Söker efter ' +
             query +
             ' i flyglagrets tillgängliga observationer…',
-          flightQuery: query,
+          ...((await lookupFlight(query)) || { flightQuery: query }),
           toolsUsed: ['find_flight'],
         });
       }
