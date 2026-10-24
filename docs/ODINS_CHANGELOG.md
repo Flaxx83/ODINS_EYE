@@ -1,5 +1,17 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-24 – #56 gång och tidtabellsstyrd färjepilot
+
+Räckviddspanelen har separata gångval för statisk nätmodell, utan färjor och
+en pilot för linje 285/286 mellan Lindholmspiren och Stenpiren. Piloten hämtar
+aktuella avgångar och räknar gång, väntan, två minuters ombordstigningsmarginal
+och överfart innan fortsatt gång beräknas. Den stöder start nu och högst en
+överfart. Fel ger ingen statisk reserv. Hissars driftstatus, framtida starttid,
+andra färdsätt och AI-integrering återstår i #56.
+
+Se [manualen](ODINS_USER_MANUAL.md#färjor-vid-gång) och
+[modellbeskrivningen](ODINS_REACHABILITY.md#färjepilot--2026-10-24).
+
 ## 2026-10-16 – #9 bil och elsparkcykel
 
 Räckvidd har nu bilprofil med vägnätets hastigheter och valbart hastighetstak,
