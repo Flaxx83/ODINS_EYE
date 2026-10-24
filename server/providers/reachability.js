@@ -1,3 +1,4 @@
+import { loadFerryDepartures } from './reachability-ferries.js';
 import { readFile } from 'node:fs/promises';
 import { join, resolve, relative } from 'node:path';
 import { projectRoot, runPython } from './python-runtime.js';
@@ -14,7 +15,8 @@ export function validateReachability(value, coverage = CORE) {
     Array.isArray(value) ||
     typeof value !== 'object' ||
     Object.keys(value).some(
-      (k) => !['lat', 'lon', 'minutes', 'speed', 'mode'].includes(k),
+      (k) =>
+        !['lat', 'lon', 'minutes', 'speed', 'mode', 'ferryPolicy'].includes(k),
     )
   )
     throw failure('Ogiltig förfrågan.');
@@ -40,7 +42,19 @@ export function validateReachability(value, coverage = CORE) {
     new Set(value.minutes).size !== value.minutes.length
   )
     throw failure('Ange 1–3 olika tidsgränser mellan 1 och 30 minuter.');
+  const ferryPolicy = value.ferryPolicy ?? 'network';
+  if (
+    !['network', 'exclude', 'gothenburg'].includes(ferryPolicy) ||
+    (mode !== 'walk' && ferryPolicy !== 'network')
+  )
+    throw failure('Färjevalet stöds endast för gång.');
+  if (
+    ferryPolicy === 'gothenburg' &&
+    !inside(value.lon, value.lat, [11.9, 57.68, 12.0, 57.74])
+  )
+    throw failure('Färjepiloten gäller centrala Göteborg.');
   return {
+    ferryPolicy,
     mode,
     lat: value.lat,
     lon: value.lon,
@@ -100,6 +114,8 @@ export function validateContours(data, minutes, bbox) {
 export function createReachabilityService({
   run = runPython,
   directory = join(projectRoot, '.gev-cache/routing'),
+  ferries = loadFerryDepartures,
+  now = () => Date.now(),
 } = {}) {
   let busy = false;
   let attempts = [];
@@ -169,7 +185,7 @@ export function createReachabilityService({
       const config = await configuration();
       const query = validateReachability(value, config.coverage);
       const key = JSON.stringify([config.version, query]);
-      const old = cache.get(key);
+      const old = query.ferryPolicy === 'gothenburg' ? null : cache.get(key);
       if (old && Date.now() - old.at < 600000) return old.value;
       if (busy)
         throw failure('En beräkning pågår. Försök igen om en stund.', 429);
@@ -182,13 +198,20 @@ export function createReachabilityService({
       attempts.push(Date.now());
       busy = true;
       try {
+        let ferryData;
+        if (query.ferryPolicy === 'gothenburg')
+          ferryData = await ferries({
+            start: now(),
+            minutes: Math.max(...query.minutes),
+          });
+        const workerQuery = { ...query, ...(ferryData ? { ferryData } : {}) };
         let stdout;
         try {
           ({ stdout } = await run(
             [
               join(projectRoot, 'server/providers/reachability-query.py'),
               join(config.folder, 'valhalla.json'),
-              JSON.stringify(query),
+              JSON.stringify(workerQuery),
             ],
             { timeout: 30000, maxBuffer: 3000000 },
           ));
@@ -207,6 +230,9 @@ export function createReachabilityService({
         validateContours(geometry, query.minutes, config.manifest.bbox);
         const value = {
           ...info(config),
+          ferryPolicy: query.ferryPolicy,
+          ferryScenarios: geometry.ferryScenarios,
+          ferryStartTime: ferryData?.startTime,
           mode: query.mode,
           model:
             query.mode === 'car'
@@ -215,14 +241,20 @@ export function createReachabilityService({
                 ? 'Uppskattning för elsparkcykel på cykelnätet, med stadscykelmodell och undvikande av dåliga underlag. Avser cykelklassad elsparkcykel, högst 20 km/h och 250 W. Lokala elsparkcykelförbud, batteri, höjd, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
                 : query.mode === 'bicycle'
                   ? 'Beräknad cykelyta, stadscykel. Hastigheten gäller jämnt plant underlag; vägtyp och underlag påverkar modellen. Höjddata, trafik, väder och pauser ingår inte. Interpolerade ytor kan täcka vatten/hinder.'
-                  : info(config).model,
+                  : info(config).model +
+                    (query.ferryPolicy === 'exclude'
+                      ? ' Färjor är uteslutna; hissdrift är inte verifierad.'
+                      : query.ferryPolicy === 'gothenburg'
+                        ? ' Pilot: gång + högst en överfart på 285/286 Lindholmspiren–Stenpiren. Start nu; två minuters ombordstigningsmarginal. Tidtabell används där realtid inte är bekräftad. Ingen platsgaranti eller verifierad hissdrift. Källa: Västtrafik.'
+                        : ' Färjelänkar kan ingå med statiska tider, utan tidtabell.'),
           origin: { lat: query.lat, lon: query.lon },
           networkOrigin: geometry.networkOrigin,
           speed: query.speed,
           minutes: query.minutes,
           geometry,
         };
-        cache.set(key, { at: Date.now(), value });
+        if (query.ferryPolicy !== 'gothenburg')
+          cache.set(key, { at: Date.now(), value });
         if (cache.size > 32) cache.delete(cache.keys().next().value);
         return value;
       } finally {

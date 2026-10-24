@@ -211,6 +211,27 @@ Slå av Räckvidd för att dölja verktyget och områdena.
 Räckviddsmodellen kan använda färjelänkar och hissar. Aktuella färjeavgångar,
 väntetider, medtagande av fordon och hissarnas driftstatus är inte verifierade.
 
+### Färjor vid gång
+
+Välj **Till fots** i räckviddspanelen och sedan **Färjor för gång**:
+
+- **Statisk nätmodell** använder kartnätets färjelänkar utan aktuell tidtabell.
+- **Utan färjor** beräknar gång på land och utesluter färjelänkar.
+- **Göteborg: gång + färja, start nu (pilot)** använder avgångar på linje 285/286 mellan Lindholmspiren och Stenpiren, i båda riktningarna.
+
+Piloten räknar bort gång till kajen, väntan och överfart från tidsbudgeten.
+Du måste hinna till kajen minst två minuter före avgång. Korta anslutningar
+till gångnätet uppskattas. Återstående gångtid avrundas nedåt till hela minuter.
+Panelen visar vilka avgångar och tider som används. Uppskattade tider från
+leverantören innebär inte att realtid har verifierats.
+
+Varje beräkning börjar **nu** och tillåter högst en överfart. Om ingen avgång
+ger minst en minut fortsatt gång visas bara landområdet. Fel vid hämtning av
+färjedata visas som fel; ingen statisk färjereserv används.
+Piloten finns ännu inte via AI eller jämförelse av färdsätt och stöder inte
+framtida starttid. Cykelkapacitet, hissars driftstatus och faktiskt tillträde
+till kajanslutningar är inte verifierade.
+
 ## Spara egna platser och anteckningar
 
 POI betyder en sparad intressant plats eller kartnål.

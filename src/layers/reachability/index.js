@@ -32,12 +32,15 @@ export function createReachabilityLayer() {
     const previous = append ? status.textContent : '';
     const previousDetails = append ? detailsText?.textContent : '';
     if (!append) clearResult();
-    const modeName = {
-      walk: 'Gång',
-      bicycle: 'Cykel',
-      car: 'Bil',
-      scooter: 'Elsparkcykel',
-    }[result.mode];
+    const modeName =
+      result.ferryPolicy === 'gothenburg'
+        ? 'Gång + färja (pilot)'
+        : {
+            walk: 'Gång',
+            bicycle: 'Cykel',
+            car: 'Bil',
+            scooter: 'Elsparkcykel',
+          }[result.mode];
     const speedLabel = result.mode === 'car' ? 'hastighetstak ' : '';
     const colorName = {
       walk: 'cerise',
@@ -209,6 +212,48 @@ export function createReachabilityLayer() {
       result.speed +
       ' km/h · ' +
       colorName;
+    if (result.ferryPolicy === 'exclude')
+      status.textContent += ' · utan färjor';
+    if (result.ferryPolicy === 'gothenburg') {
+      const clock = (time) =>
+        new Date(time).toLocaleTimeString('sv-SE', {
+          timeZone: 'Europe/Stockholm',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      status.textContent +=
+        '\nStart ' +
+        clock(result.ferryStartTime) +
+        ' · en överfart, 2 min ombordstigningsmarginal.';
+      const scenarios = result.ferryScenarios || [];
+      if (!scenarios.length)
+        status.textContent +=
+          '\nIngen färja hann ge minst en minuts fortsatt gång inom tidsbudgeten. Endast landområdet visas.';
+      for (const s of scenarios) {
+        status.textContent +=
+          '\n' +
+          s.line +
+          ' ' +
+          s.from.name +
+          ' → ' +
+          s.to.name +
+          ' · ' +
+          clock(s.departure) +
+          '–' +
+          clock(s.arrival) +
+          ' · gång till kaj ' +
+          Math.ceil(s.walkingSeconds / 60) +
+          ' min, väntan ' +
+          Math.ceil(s.waitSeconds / 60) +
+          ' min (inklusive ombordstigningsmarginal), överfart ' +
+          Math.ceil(s.crossingSeconds / 60) +
+          ' min. ' +
+          s.timeQuality +
+          '.';
+      }
+      status.textContent +=
+        '\nKvarvarande gångtid avrundas nedåt till hela minuter. Korta anslutningar till gångnätet uppskattas; kontrollera tillträdet. Ingen platsgaranti; hissdrift okänd. Källa: Västtrafik.';
+    }
     if (coverageStatus)
       coverageStatus.textContent =
         result.coverageName +
@@ -357,7 +402,27 @@ export function createReachabilityLayer() {
         label.append(check, document.createTextNode(' ' + title));
         comparison.append(label);
       }
+      const ferryLabel = element('label', 'Färjor för gång');
+      ferryLabel.className = 'local-ai-field';
+      const ferry = element('select');
+      ferry.setAttribute('aria-label', 'Färjor för gång');
+      for (const [value, name] of [
+        ['network', 'Statisk nätmodell'],
+        ['exclude', 'Utan färjor'],
+        ['gothenburg', 'Göteborg: gång + färja, start nu (pilot)'],
+      ]) {
+        const option = element('option', name);
+        option.value = value;
+        ferry.append(option);
+      }
+      ferryLabel.append(ferry);
+      ferry.onchange = () => {
+        controller?.abort();
+        clearResult();
+        viewer.scene.requestRender();
+      };
       mode.onchange = () => {
+        ferryLabel.hidden = mode.value !== 'walk';
         comparison.hidden = mode.value !== 'compare';
         for (const [key, selected] of [
           ['speed', 'walk'],
@@ -376,7 +441,7 @@ export function createReachabilityLayer() {
         viewer.scene.requestRender();
       };
       modeLabel.append(mode);
-      body.append(modeLabel, comparison);
+      body.append(modeLabel, comparison, ferryLabel);
 
       for (const [key, title, value] of [
         ['search', 'Sök adress eller plats', ''],
@@ -573,6 +638,7 @@ export function createReachabilityLayer() {
               signal: request.signal,
               body: JSON.stringify({
                 mode: selectedMode,
+                ferryPolicy: mode.value === 'walk' ? ferry.value : 'network',
                 ...origin,
                 speed: Number(speedInput.value),
                 minutes,
@@ -614,6 +680,7 @@ export function createReachabilityLayer() {
           throw Error('Ogiltig räckviddsförfrågan.');
         body.hidden = false;
         mode.value = request.mode;
+        ferry.value = 'network';
         mode.onchange();
         inputs.lat.value = request.lat;
         inputs.lon.value = request.lon;

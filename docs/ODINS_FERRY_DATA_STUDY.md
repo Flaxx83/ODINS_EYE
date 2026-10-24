@@ -129,3 +129,10 @@ frågor. Datakällan är tillgänglig; färjeintegrationen är ännu inte implem
 för gång i rutt och isokron. Preferensen use_ferry=0 räcker inte. Startfilter
 behövs också. Produktionsarbetaren är ännu oförändrad; nästa steg är att
 koppla en uttrycklig landprofil till piloten och verifiera API-tidsfönstret.
+
+## Uppföljning 2026-10-24: första gångpiloten
+
+En separat landprofil och en pilot med start nu och högst en överfart är
+implementerade på arbetsgrenen. Se [modell och begränsningar](ODINS_REACHABILITY.md#färjepilot--2026-10-24).
+Förstudiens tidigare status beskriver läget vid respektive undersökning.
+Framtida starttid, hissars driftstatus och övriga färdsätt återstår.

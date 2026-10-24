@@ -89,3 +89,18 @@ test('car cap and scooter approximation have separate numeric limits',()=>{
   for(const speed of [min-1,max+1,null,'20',Infinity]) assert.throws(()=>validateReachability({...query,mode,speed}));
  }
 });
+
+test('cache separates land policy and pilot refreshes its departure time',async()=>{
+ const directory=await mkdtemp(join(tmpdir(),'odins-ferry-cache-'));
+ try {
+  await mkdir(join(directory,'v1'));await writeFile(join(directory,'active.json'),JSON.stringify({version:'v1'}));
+  await writeFile(join(directory,'v1/manifest.json'),JSON.stringify({bbox:[10,55,25,70],coverage:[10,55,25,70]}));
+  const queries=[];let feeds=0;let clock=1000;
+  const service=createReachabilityService({directory,now:()=>clock++,ferries:async({start})=>{feeds++;return {start,startTime:new Date(start).toISOString(),candidates:[],boardingSeconds:120};},run:async(args)=>{queries.push(JSON.parse(args[2]));return {stdout:JSON.stringify(geometry())};}});
+  await service.calculate(query);await service.calculate({...query,ferryPolicy:'exclude'});await service.calculate({...query,ferryPolicy:'exclude'});assert.equal(queries.length,2);assert.equal(queries[1].ferryPolicy,'exclude');
+  const pilot={...query,lat:57.7055,lon:11.94,ferryPolicy:'gothenburg'};
+  await service.calculate(pilot);await service.calculate(pilot);assert.equal(feeds,2);assert.notEqual(queries[2].ferryData.start,queries[3].ferryData.start);
+  const broken=createReachabilityService({directory,ferries:async()=>{throw Error('offline');},run:async()=>{throw Error('Worker must not run without timetable');}});
+  await assert.rejects(broken.calculate(pilot),/offline/);
+ } finally {await rm(directory,{recursive:true,force:true});}
+});

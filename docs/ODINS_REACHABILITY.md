@@ -288,5 +288,41 @@ och hissar kan ingå utan aktuell tidtabell eller driftstatus; resultaten
 
 [Datagenomgång för #56](ODINS_FERRY_DATA_STUDY.md) verifierar åtkomst till
 avgångar, resor och störnings-API för Göteborgs färjor. Tidsberoende räckvidd
-är inte implementerad; förstudien beskriver en avgränsad gång/färjepilot
+var inte implementerad vid förstudien; den beskriver en avgränsad gång/färjepilot
 och återstående krav på färjeuteslutning, kompletta avgångar och realtidskvalitet.
+
+## Färjepilot – 2026-10-24
+
+`POST /api/reachability` accepterar `ferryPolicy: network|exclude|gothenburg`.
+Standardvärdet `network` behåller den statiska modellen. De andra valen kräver
+gång; `gothenburg` kräver start inom pilotens Göteborgsområde. Servern äger
+starttiden och färjeunderlaget. Klienten kan inte skicka egna färjeavgångar.
+
+`exclude` och pilotens alla gångsträckor använder både `exclude_ferries`
+och `search_filter.exclude_ferry`. Piloten hämtar avgångar för två kajområden
+med linjefilter 5285/5286 och hela den begärda tidsbudgeten. Varje avgång
+matchas mot turens kajanrop. Inställda anrop utesluts; ett komplett par
+uppskattade tider används, annars planerade tider. Uppskattningar betecknas
+inte som verifierad realtid. Separata störningsmeddelanden ingår ännu inte.
+
+Gång till avgångskajen och två minuters marginal måste rymmas före avgång.
+Tidigaste nåbara ankomst per ankomstkaj används. Tid för korta uppskattade
+anslutningar till gångnätet räknas med; kajer måste ligga inom 30 meter från
+gångnätet. Återstående gångtid avrundas nedåt till hela minuter, minst en.
+Landkonturer och fortsatt gång efter högst en överfart läggs i en MultiPolygon.
+Överlapp förenas inte geometriskt och kan visas mörkare; det är inte sannolikhet.
+
+Policyn ingår i cachenyckeln. Piloten cachas inte och behåller tjänstens
+beräkningsbudget och samtidighetsgräns. Hämtningen avbryts vid trunkerade svar
+eller fler än 24 avgångar per kajområde. Ytterligare anrop stoppas efter
+30 sekunder; ett pågående HTTP-anrop har egen timeout på 12 sekunder.
+API-fel avbryter beräkningen utan statisk reserv. Ett lyckat tomt avgångsurval
+ger enbart gång på land. Kapacitet, tillträde och hissars drift är inte garanterade.
+
+Validering: `reachability-ferries.test.mjs` provar normalisering, inställda
+anrop, tidszoner/dygnsskifte och ofullständiga svar. `reachability.test.mjs`
+provar separata cacheposter och färsk starttid. Kör
+`.venv/Scripts/python.exe scripts/qa-ferry-pilot.py` för deterministiska prov
+mot installerad Sverigegraf: missad avgång, väntetid, överfart och försening.
+Liveprov och webbläsarprov genomfördes 22 oktober; dessa är stickprov och
+verifierar inte framtida avgångar.
