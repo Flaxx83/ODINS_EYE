@@ -505,10 +505,12 @@ export function createLocalAiService({
       session.pending = null;
       session.pendingPlace = null;
       const flight = message.match(
-        /^(?:(?:jag\s+)?(?:letar efter|söker|vill hitta)|hitta|visa|var är)\s+(?:flight|flyg|flyget|flygning)\s+([a-z0-9][a-z0-9 -]{1,11})[?.!]?$/i,
+        /\b(?:flight|flyg|flyget|flygning|flygnummer|anropssignal)\s+(?:nummer\s+)?([a-z]{2,3}\s*\d[a-z0-9]{0,5})\b/i,
       );
       if (flight) {
         const query = flight[1].replace(/\s+/g, '').toUpperCase();
+        session.memory = null;
+        session.messages = [message];
         return finish({
           answer:
             'Söker efter ' +

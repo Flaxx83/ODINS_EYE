@@ -1,5 +1,14 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-24 – flygfrågor och tidigare platskontext
+
+Frågor som ”Hittar du någon information för flight SAS96T?” väljer nu
+flygsökning direkt. Tidigare plats-/resekontext rensas för en uttrycklig
+flygidentifierare. Fyra formuleringar, inklusive SK 7714 med mellanslag,
+provas efter en tidigare fråga om Landvetter. 36 AI-tester passerar och den
+exakta användarfrågan ger HTTP 200 med `find_flight` via den lokala servern.
+Detta verifierar verktygsvalet, inte att SAS96T finns i observationsunderlaget.
+
 ## 2026-10-24 – synkad main och överlämning
 
 PR-kedjan fram till #26 är införd på main (`7bb9cdc`), issue #2/#6 är stängda

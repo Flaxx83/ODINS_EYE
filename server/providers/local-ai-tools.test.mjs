@@ -26,6 +26,34 @@ test('flight lookup rejects partial matches and only tracks exact observed ident
   assert.equal(await showFlight(manager, 'SAS7714', () => false), null);
   assert.equal(tracked, 1);
 });
+test('flight information question bypasses old Landvetter context and transit tools', async () => {
+  let planned = 0;
+  const lookedUp = [];
+  const service = createLocalAiService({
+    planner: async () => {
+      planned++;
+      if (planned > 1) throw Error('flight must not call the planner');
+      return { question: 'unsupported', actions: [] };
+    },
+    lookupFlight: async (query) => { lookedUp.push(query); return null; },
+    execute: async () => { throw Error('flight must not use transit'); },
+    findPlaces: async () => { throw Error('flight must not geocode'); },
+  });
+  const previous = await service.ask({ message: 'Väder i Landvetter inatt?', network: 'Västtrafik' });
+  for (const message of [
+    'Hittar du någon information för flight SAS96T?',
+    'Kan du hitta flyget SAS96T åt mig?',
+    'Vad vet du om flight SK 7714?',
+    'Visa anropssignal SAS96T',
+  ]) {
+    const result = await service.ask({ message, conversationId: previous.conversationId, network: 'Västtrafik' });
+    assert.ok(['SAS96T', 'SK7714'].includes(result.flightQuery));
+    assert.deepEqual(result.toolsUsed, ['find_flight']);
+    assert.doesNotMatch(result.answer, /hållplats|Landvetter/);
+  }
+  assert.deepEqual(lookedUp, ['SAS96T','SAS96T','SK7714','SAS96T']);
+  assert.equal(planned, 1);
+});
 const area = { lat: 58.4, lon: 13.85 };
 const args = (a = {}) => ({
   origin: null,
