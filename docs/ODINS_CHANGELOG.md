@@ -1,5 +1,14 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-24 – flygsökning i lokal AI
+
+Uttryckliga frågor som ”Jag letar efter flight SK7714” kopplas nu till
+flyglagrets inlästa observationer. Exakt identifierare krävs för att följa
+planet; delträffar väljs inte. Saknade träffar förklarar datatäckning och
+skillnaden mellan bokningsnummer och anropssignal. Ingen IATA-konvertering
+eller tidtabellsstatus ingår. 35 AI-tester passerar, inklusive exakt träff,
+avvisad delträff och avbruten kartåtgärd.
+
 ## 2026-10-24 – #56 gång och tidtabellsstyrd färjepilot
 
 Räckviddspanelen har separata gångval för statisk nätmodell, utan färjor och

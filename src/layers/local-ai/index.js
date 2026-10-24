@@ -1,4 +1,5 @@
 import { createTripMap } from './trip-map.js';
+import { showFlight } from './flight-search.js';
 import * as C from 'cesium';
 const PLACE_KIND_LABELS = {
   street: 'gata',
@@ -221,6 +222,16 @@ export function createLocalAiLayer() {
           conversationId = d.resetConversation ? undefined : d.conversationId;
           output.textContent = d.answer;
           lastAnswer = d.answer;
+          if (d.flightQuery) {
+            const signal = request.signal;
+            const answer = await showFlight(
+              dataManager,
+              d.flightQuery,
+              () => enabled && !signal.aborted,
+            );
+            if (!answer || !enabled || signal.aborted) return;
+            output.textContent = lastAnswer = answer;
+          }
           for (const source of d.sources || []) {
             const p = document.createElement('p'),
               a = document.createElement('a');

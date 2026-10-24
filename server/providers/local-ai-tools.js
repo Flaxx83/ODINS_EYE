@@ -502,6 +502,20 @@ export function createLocalAiService({
       }
       session.pending = null;
       session.pendingPlace = null;
+      const flight = message.match(
+        /^(?:(?:jag\s+)?(?:letar efter|söker|vill hitta)|hitta|visa|var är)\s+(?:flight|flyg|flyget|flygning)\s+([a-z0-9][a-z0-9 -]{1,11})[?.!]?$/i,
+      );
+      if (flight) {
+        const query = flight[1].replace(/\s+/g, '').toUpperCase();
+        return finish({
+          answer:
+            'Söker efter ' +
+            query +
+            ' i flyglagrets tillgängliga observationer…',
+          flightQuery: query,
+          toolsUsed: ['find_flight'],
+        });
+      }
       const range = parseRangeRequest(message);
       if (range) {
         if (range.error)

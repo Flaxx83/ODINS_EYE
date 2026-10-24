@@ -232,6 +232,17 @@ Piloten finns ännu inte via AI eller jämförelse av färdsätt och stöder int
 framtida starttid. Cykelkapacitet, hissars driftstatus och faktiskt tillträde
 till kajanslutningar är inte verifierade.
 
+### Hitta ett flyg via lokal AI
+
+Skriv exempelvis **Jag letar efter flight SK7714** eller **Visa flyg SAS7714**.
+Flyglagret aktiveras och söker bland sina inlästa observationer. Endast exakt
+anropssignal, ICAO24 eller registrering får starta följning på kartan; en
+delträff väljs inte automatiskt. Trafiknätsvalet påverkar inte flygsökningen.
+
+Bokningsnummer och anropssignal kan skilja sig åt. Ingen automatisk översättning
+mellan dessa identifierare görs. Utebliven träff betyder därför inte att
+flyget är inställt eller saknas, och verktyget ger inte tidtabellsstatus.
+
 ## Spara egna platser och anteckningar
 
 POI betyder en sparad intressant plats eller kartnål.
