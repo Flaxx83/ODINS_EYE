@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createSwedaviaFlights } from './swedavia-flights.js';
 import { showFlight, exactFlightMatch } from '../../src/layers/local-ai/flight-search.js';
 import {
   createLocalAiService,
@@ -7,6 +8,42 @@ import {
   selectTools,
 } from './local-ai-tools.js';
 const now = () => Date.parse('2026-10-12T10:00:00Z');
+test('arrival question requests reported arrival instead of tracking the aircraft', async () => {
+  const service = createLocalAiService({ lookupFlight: async (query, options) => {
+    assert.equal(query, 'SAS2844');
+    assert.deepEqual(options, { direction: 'arrival', airport: 'ARN' });
+    return { answer: 'Beräknad ankomst: 23:10', flightResults: [] };
+  }});
+  const result = await service.ask({ message: 'När är flight SAS2844 framme på Arlanda?', network: 'Västtrafik' });
+  assert.match(result.answer, /23:10/);
+  assert.equal(result.flightQuery, undefined);
+});
+test('Swedavia matches exact callsign and keeps Swedish date and arrival scope', async () => {
+  let calls = 0;
+  const arrival = { flightId: 'SK2844', arrivalTime: { scheduledUtc: '2026-10-24T20:30:00Z', estimatedUtc: '2026-10-24T20:40:00Z' }, flightLegIdentifier: { callsign: 'SAS2844', departureAirportIata: 'AGP', arrivalAirportIata: 'ARN' }, locationAndStatus: { flightLegStatusSwedish: 'Beräknad' } };
+  const lookup = createSwedaviaFlights({key: () => 'fixture', now: () => new Date('2026-10-24T12:00:00Z'), fetchImpl: async (url, options) => {
+    calls++;
+    assert.match(url.searchParams.get('filter'), /airport eq 'ARN'/);
+    assert.match(url.searchParams.get('filter'), /flightType eq 'A'/);
+    assert.doesNotMatch(url.searchParams.get('filter'), /flightId/);
+    assert.equal(options.headers.Accept, 'application/json');
+    return { ok: true, json: async () => ({ flights: [ {arrival}, {arrival: {...arrival,flightLegIdentifier: {...arrival.flightLegIdentifier,callsign:'SAS28440'}}}, {arrival: {...arrival,arrivalTime: {scheduledUtc:'2026-10-24T23:30:00Z'}}} ] }) };
+  }});
+  const result = await lookup('SAS2844', {direction:'arrival',airport:'ARN'});
+  assert.equal(result.flightResults.length,1);
+  assert.match(result.answer,/22:40/);
+  assert.match(result.answer,/Faktisk: Uppgift saknas/);
+  await lookup('SAS2844', {direction:'arrival',airport:'ARN'});
+  assert.equal(calls,1);
+});
+test('Swedavia empty results and source errors never invent an arrival', async () => {
+  for (const ok of [true,false]) {
+    const lookup = createSwedaviaFlights({key: () => 'fixture', fetchImpl: async () => ({ok,json:async()=>({flights:[]})})});
+    const result = await lookup('SAS2844', {direction:'arrival',airport:'ARN'});
+    assert.equal(result.flightResults.length,0);
+    assert.match(result.answer,ok ? /Ingen avgång eller ankomst/ : /kunde inte hämtas/);
+  }
+});
 test('explicit flight search bypasses planner and never geocodes the identifier', async () => {
   const service = createLocalAiService({ planner: async () => { throw Error('unexpected planner'); } });
   const result = await service.ask({ message: 'Jag letar efter flight sk7714', network: 'Västtrafik' });

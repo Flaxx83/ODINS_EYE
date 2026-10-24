@@ -234,13 +234,21 @@ till kajanslutningar är inte verifierade.
 
 ### Hitta ett flyg via lokal AI
 
+Med serverns Swedavia-nyckel konfigurerad kan du också fråga
+**När är flight SAS2844 framme på Arlanda?**. Sökningen gäller dagens svenska
+datum och Swedavias flygplatser. Planerad, beräknad och faktisk tid visas
+separat, liksom leverantörens status. Saknade tider visas som ”Uppgift saknas”.
+Arlanda och Landvetter kan uttryckligen avgränsa sökningen. Kartknappen söker
+sedan anropssignalen i flyglagrets observationer; tiderna finns kvar i svaret.
+
 Skriv exempelvis **Jag letar efter flight SK7714** eller **Visa flyg SAS7714**.
 Flyglagret aktiveras och söker bland sina inlästa observationer. Endast exakt
 anropssignal, ICAO24 eller registrering får starta följning på kartan; en
 delträff väljs inte automatiskt. Trafiknätsvalet påverkar inte flygsökningen.
 
-Bokningsnummer och anropssignal kan skilja sig åt. Ingen automatisk översättning
-mellan dessa identifierare görs. Utebliven träff betyder därför inte att
+Bokningsnummer och anropssignal kan skilja sig åt. Swedavias tillgängliga
+identifierare används när en post matchar; ingen gissad prefixöversättning görs.
+Utebliven träff betyder därför inte att
 flyget är inställt eller saknas, och verktyget ger inte tidtabellsstatus.
 
 ## Spara egna platser och anteckningar

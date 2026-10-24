@@ -222,6 +222,34 @@ export function createLocalAiLayer() {
           conversationId = d.resetConversation ? undefined : d.conversationId;
           output.textContent = d.answer;
           lastAnswer = d.answer;
+          for (const flight of d.flightResults || []) {
+            if (!flight.callsign) continue;
+            const button = document.createElement('button');
+            button.textContent = flight.label + ' · Sök planet på kartan';
+            const signal = request.signal;
+            button.onclick = async () => {
+              button.disabled = true;
+              try {
+                const result = await showFlight(
+                  dataManager,
+                  flight.callsign,
+                  () => enabled && !signal.aborted,
+                );
+                if (result && enabled && !signal.aborted) {
+                  const p = document.createElement('p');
+                  p.textContent = result;
+                  output.append(p);
+                }
+              } catch (error) {
+                const p = document.createElement('p');
+                p.textContent = error.message;
+                if (enabled && !signal.aborted) output.append(p);
+              } finally {
+                button.disabled = false;
+              }
+            };
+            choices.append(button);
+          }
           if (d.flightQuery) {
             const signal = request.signal;
             const answer = await showFlight(

@@ -11,7 +11,8 @@
   järnvägsstilen i #53, fyrprofiljämförelsen i #54, färjepiloten i #59 och
   den exakta flygsökningen i #60. Det betyder inte att dessa finns på `main`.
 - [Swedavia-integrationen](ODINS_SWEDAVIA.md) är ett kodutkast under arbete.
-  Riktig API-åtkomst har verifierats men klientvisning och fixturetester återstår.
+  API-åtkomst, klientvisning av rapporterade ankomsttider och grundläggande
+  fixturetester är verifierade. Datumval och bredare täckning återstår.
 - [Arbetsinstruktionen för andra datorn](ODINS_SECOND_PC.md) finns nu även
   i repositoryt. Arbetet på den datorn är **inte påbörjat**.
 

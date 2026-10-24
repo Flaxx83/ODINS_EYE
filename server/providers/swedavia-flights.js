@@ -14,10 +14,26 @@ export function createSwedaviaFlights({
   now = () => new Date(),
 } = {}) {
   const cache = new Map();
-  return async function lookup(query) {
-    if (!key() || !/^[A-Z0-9]{2}\d{1,4}[A-Z]?$/.test(query)) return null;
+  return async function lookup(
+    query,
+    { direction: requestedDirection, airport } = {},
+  ) {
+    if (!key() || !/^[A-Z]{2,3}\d[A-Z0-9]{0,5}$/.test(query)) return null;
+    if (
+      requestedDirection &&
+      !['arrival', 'departure'].includes(requestedDirection)
+    )
+      throw Error('Invalid flight direction');
+    if (airport && !['ARN', 'GOT'].includes(airport))
+      throw Error('Invalid airport');
+    const commercial = /^[A-Z]{2}\d{1,4}[A-Z]?$/.test(query);
     const today = day(now());
-    const cacheKey = today + query;
+    const cacheKey = JSON.stringify([
+      today,
+      query,
+      requestedDirection,
+      airport,
+    ]);
     const old = cache.get(cacheKey);
     if (old && Date.now() - old.at < 60000) return old.value;
     const previous = new Date(today + 'T12:00:00Z');
@@ -26,7 +42,12 @@ export function createSwedaviaFlights({
     const url = new URL('https://api.swedavia.se/flightinfo/v2/query');
     url.searchParams.set(
       'filter',
-      `(scheduled eq '${stamp(today)}' or scheduled eq '${stamp(previous.toISOString().slice(0, 10))}') and flightId eq '${query}'`,
+      `(scheduled eq '${stamp(today)}' or scheduled eq '${stamp(previous.toISOString().slice(0, 10))}')` +
+        (commercial ? ` and flightId eq '${query}'` : '') +
+        (requestedDirection
+          ? ` and flightType eq '${requestedDirection === 'arrival' ? 'A' : 'D'}'`
+          : '') +
+        (airport ? ` and airport eq '${airport}'` : ''),
     );
     url.searchParams.set('count', '1000');
     let payload;
@@ -53,7 +74,8 @@ export function createSwedaviaFlights({
     for (const entry of payload.flights)
       for (const direction of ['departure', 'arrival']) {
         const f = entry[direction];
-        if (!f) continue;
+        if (!f || (requestedDirection && direction !== requestedDirection))
+          continue;
         const times = f[direction + 'Time'];
         if (
           !times?.scheduledUtc ||
@@ -61,8 +83,22 @@ export function createSwedaviaFlights({
           day(new Date(times.scheduledUtc)) !== today
         )
           continue;
-        if (f.flightId !== query && !f.codeShareData?.includes(query)) continue;
         const id = f.flightLegIdentifier || {};
+        if (
+          f.flightId !== query &&
+          !f.codeShareData?.includes(query) &&
+          clean(id.callsign).replace(/\s+/g, '').toUpperCase() !== query
+        )
+          continue;
+        if (
+          airport &&
+          id[
+            direction === 'arrival'
+              ? 'arrivalAirportIata'
+              : 'departureAirportIata'
+          ] !== airport
+        )
+          continue;
         const route =
           clean(id.departureAirportIata) + ' → ' + clean(id.arrivalAirportIata);
         const status =
@@ -79,7 +115,8 @@ export function createSwedaviaFlights({
       }
     const value = {
       answer: rows.length
-        ? `Swedavia: ${query}, ${today}. Tider visas i svensk tid. Kartposition kräver en separat flygobservation.`
+        ? `Swedavia: ${query}, ${today}. Tider visas i svensk tid.\n\n` +
+          rows.map((r) => r.text).join('\n\n')
         : `Ingen avgång eller ankomst för ${query} hittades hos Swedavia ${today}. Sökningen gäller deras flygplatser och dagens datum, inte hela flygbolagets nät.`,
       flightResults: rows,
       sources: [

@@ -511,12 +511,29 @@ export function createLocalAiService({
         const query = flight[1].replace(/\s+/g, '').toUpperCase();
         session.memory = null;
         session.messages = [message];
+        const direction = /framme|landar|ankom/i.test(message)
+          ? 'arrival'
+          : /avgår|avgång/i.test(message)
+            ? 'departure'
+            : undefined;
+        const airport = /\bArlanda\b|\bARN\b/i.test(message)
+          ? 'ARN'
+          : /\bLandvetter\b|\bGOT\b/i.test(message)
+            ? 'GOT'
+            : undefined;
+        const flightInfo = await lookupFlight(query, { direction, airport });
         return finish({
           answer:
             'Söker efter ' +
             query +
             ' i flyglagrets tillgängliga observationer…',
-          ...((await lookupFlight(query)) || { flightQuery: query }),
+          ...(flightInfo ||
+            (direction
+              ? {
+                  answer:
+                    'Ankomst- och avgångstider är inte tillgängliga för denna sökning. En flygposition ger ingen verifierad ankomsttid.',
+                }
+              : { flightQuery: query })),
           toolsUsed: ['find_flight'],
         });
       }

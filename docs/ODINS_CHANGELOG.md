@@ -1,5 +1,14 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-24 – rapporterad ankomst i flygfrågor
+
+Ankomstfrågor besvaras med Swedavias planerade, beräknade och faktiska tider
+i stället för att enbart följa planet på kartan. Anropssignaler matchas exakt
+mot källans poster, och Arlanda/Landvetter kan avgränsa sökningen.
+Kartknappen är en separat åtgärd. Sökningen gäller dagens svenska datum.
+39 AI-tester och produktionsbygget passerar; SAS2844 till Arlanda verifierades
+med ett liveanrop. Integrationen är fortsatt draft för återstående täckning.
+
 ## 2026-10-24 – flygfrågor och tidigare platskontext
 
 Frågor som ”Hittar du någon information för flight SAS96T?” väljer nu
