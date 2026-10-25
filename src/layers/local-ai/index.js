@@ -166,6 +166,7 @@ export function createLocalAiLayer() {
       reset.type = 'button';
       reset.textContent = 'Nytt samtal';
       reset.onclick = () => {
+        request?.abort();
         conversationId = undefined;
         tripChoice = null;
         lastAnswer = '';
@@ -190,6 +191,7 @@ export function createLocalAiLayer() {
         lastAnswer = '',
         tripChoice = null;
       async function submit(message, choice) {
+        request?.abort();
         send.disabled = true;
         reset.disabled = true;
         choices.replaceChildren();
@@ -222,6 +224,47 @@ export function createLocalAiLayer() {
           conversationId = d.resetConversation ? undefined : d.conversationId;
           output.textContent = d.answer;
           lastAnswer = d.answer;
+          for (const flight of d.flightResults || []) {
+            let container = choices;
+            if (d.flightResults.length > 1) {
+              const details = document.createElement('details');
+              const summary = document.createElement('summary');
+              summary.textContent =
+                flight.label + (flight.cancelled ? ' · Inställt' : '');
+              const text = document.createElement('p');
+              text.style.whiteSpace = 'pre-line';
+              text.textContent = flight.text;
+              details.append(summary, text);
+              choices.append(details);
+              container = details;
+            }
+            if (!flight.callsign || !flight.mapEligible) continue;
+            const button = document.createElement('button');
+            button.textContent = flight.label + ' · Sök planet på kartan';
+            const signal = request.signal;
+            button.onclick = async () => {
+              button.disabled = true;
+              try {
+                const result = await showFlight(
+                  dataManager,
+                  flight.callsign,
+                  () => enabled && !signal.aborted,
+                );
+                if (result && enabled && !signal.aborted) {
+                  const p = document.createElement('p');
+                  p.textContent = result;
+                  output.append(p);
+                }
+              } catch (error) {
+                const p = document.createElement('p');
+                p.textContent = error.message;
+                if (enabled && !signal.aborted) output.append(p);
+              } finally {
+                button.disabled = false;
+              }
+            };
+            container.append(button);
+          }
           if (d.flightQuery) {
             const signal = request.signal;
             const answer = await showFlight(

@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { lookupSwedaviaFlight, parseFlightDate } from './swedavia-flights.js';
 import { executeLocalQuery } from './local-ai-query.js';
 import {
   normalizeTravelMessage,
@@ -363,6 +364,7 @@ function rangeResult(request, place) {
 
 /** Server-owned, expiring context. No prior source facts are fed back as live data. */
 export function createLocalAiService({
+  lookupFlight = lookupSwedaviaFlight,
   planner = selectTools,
   execute = executeLocalQuery,
   now = Date.now,
@@ -503,16 +505,47 @@ export function createLocalAiService({
       session.pending = null;
       session.pendingPlace = null;
       const flight = message.match(
-        /^(?:(?:jag\s+)?(?:letar efter|söker|vill hitta)|hitta|visa|var är)\s+(?:flight|flyg|flyget|flygning)\s+([a-z0-9][a-z0-9 -]{1,11})[?.!]?$/i,
+        /\b(?:flight|flyg|flyget|flygning|flygnummer|anropssignal)\s+(?:nummer\s+)?([a-z]{2,3}\s*\d[a-z0-9]{0,5})\b/i,
       );
       if (flight) {
         const query = flight[1].replace(/\s+/g, '').toUpperCase();
+        session.memory = null;
+        session.messages = [message];
+        const direction = /framme|landar|ankom/i.test(message)
+          ? 'arrival'
+          : /avgår|avgång/i.test(message)
+            ? 'departure'
+            : undefined;
+        const airport = /\bArlanda\b|\bARN\b/i.test(message)
+          ? 'ARN'
+          : /\bLandvetter\b|\bGOT\b/i.test(message)
+            ? 'GOT'
+            : undefined;
+        const requestedDate = parseFlightDate(message, new Date(stamp));
+        if (requestedDate.error)
+          return finish({
+            answer: requestedDate.error,
+            needsClarification: true,
+            toolsUsed: ['find_flight'],
+          });
+        const flightInfo = await lookupFlight(query, {
+          direction,
+          airport,
+          date: requestedDate.date,
+        });
         return finish({
           answer:
             'Söker efter ' +
             query +
             ' i flyglagrets tillgängliga observationer…',
-          flightQuery: query,
+          ...(flightInfo ||
+            (direction ||
+            requestedDate.date !== parseFlightDate('', new Date(stamp)).date
+              ? {
+                  answer:
+                    'Ankomst- och avgångstider är inte tillgängliga för denna sökning. En flygposition ger ingen verifierad ankomsttid.',
+                }
+              : { flightQuery: query })),
           toolsUsed: ['find_flight'],
         });
       }

@@ -1,5 +1,43 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-25 – Swedavia klar för granskning
+
+Flygfrågor stöder idag, imorgon och ett angivet datum i svensk kalender.
+Flera träffar kan öppnas separat; inställda flyg märks och får ingen aktuell
+ankomstuppskattning eller kartknapp. Framtida/historiska poster kopplas inte
+till dagens flygobservationer. Pagination är begränsad och ofullständiga svar
+blir fel. Flygnummer med inledande nollor stöds utan gissning av anropssignal.
+212 integrationstester, bygge, modulgränser och fixturebaserat webbläsarprov
+passerar; liveprov skiljer SK1439 idag från imorgon. PR #61 är klar för
+granskning. Äldre daterade anteckningar om utkast beskriver tidigare lägen.
+
+## 2026-10-24 – rapporterad ankomst i flygfrågor
+
+Ankomstfrågor besvaras med Swedavias planerade, beräknade och faktiska tider
+i stället för att enbart följa planet på kartan. Anropssignaler matchas exakt
+mot källans poster, och Arlanda/Landvetter kan avgränsa sökningen.
+Kartknappen är en separat åtgärd. Sökningen gäller dagens svenska datum.
+39 AI-tester och produktionsbygget passerar; SAS2844 till Arlanda verifierades
+med ett liveanrop. Integrationen är fortsatt draft för återstående täckning.
+
+## 2026-10-24 – flygfrågor och tidigare platskontext
+
+Frågor som ”Hittar du någon information för flight SAS96T?” väljer nu
+flygsökning direkt. Tidigare plats-/resekontext rensas för en uttrycklig
+flygidentifierare. Fyra formuleringar, inklusive SK 7714 med mellanslag,
+provas efter en tidigare fråga om Landvetter. 36 AI-tester passerar och den
+exakta användarfrågan ger HTTP 200 med `find_flight` via den lokala servern.
+Detta verifierar verktygsvalet, inte att SAS96T finns i observationsunderlaget.
+
+## 2026-10-24 – synkad main och överlämning
+
+PR-kedjan fram till #26 är införd på main (`7bb9cdc`), issue #2/#6 är stängda
+och båda Actions-körningarna på main passerar. Nyare PR:er är fortfarande öppna.
+[Instruktionen för andra datorn](ODINS_SECOND_PC.md) finns i repositoryt;
+arbetet där är ännu inte påbörjat. [Swedavia](ODINS_SWEDAVIA.md) dokumenterar
+verifierad API-åtkomst, kodutkast och återstående steg utan att beskriva
+AI-integrationen som färdig.
+
 ## 2026-10-24 – flygsökning i lokal AI
 
 Uttryckliga frågor som ”Jag letar efter flight SK7714” kopplas nu till

@@ -1,23 +1,136 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { showFlight, exactFlightMatch } from '../../src/layers/local-ai/flight-search.js';
+import { createSwedaviaFlights } from './swedavia-flights.js';
+import {
+  showFlight,
+  exactFlightMatch,
+} from '../../src/layers/local-ai/flight-search.js';
 import {
   createLocalAiService,
   validateToolPlan,
   selectTools,
 } from './local-ai-tools.js';
 const now = () => Date.parse('2026-10-12T10:00:00Z');
+test('arrival question requests reported arrival instead of tracking the aircraft', async () => {
+  const service = createLocalAiService({
+    lookupFlight: async (query, options) => {
+      assert.equal(query, 'SAS2844');
+      assert.equal(options.direction, 'arrival');
+      assert.equal(options.airport, 'ARN');
+      assert.match(options.date, /^\d{4}-\d{2}-\d{2}$/);
+      return { answer: 'Beräknad ankomst: 23:10', flightResults: [] };
+    },
+  });
+  const result = await service.ask({
+    message: 'När är flight SAS2844 framme på Arlanda?',
+    network: 'Västtrafik',
+  });
+  assert.match(result.answer, /23:10/);
+  assert.equal(result.flightQuery, undefined);
+});
+test('Swedavia matches exact callsign and keeps Swedish date and arrival scope', async () => {
+  let calls = 0;
+  const arrival = {
+    flightId: 'SK2844',
+    arrivalTime: {
+      scheduledUtc: '2026-10-24T20:30:00Z',
+      estimatedUtc: '2026-10-24T20:40:00Z',
+    },
+    flightLegIdentifier: {
+      callsign: 'SAS2844',
+      departureAirportIata: 'AGP',
+      arrivalAirportIata: 'ARN',
+    },
+    locationAndStatus: { flightLegStatusSwedish: 'Beräknad' },
+  };
+  const lookup = createSwedaviaFlights({
+    key: () => 'fixture',
+    now: () => new Date('2026-10-24T12:00:00Z'),
+    fetchImpl: async (url, options) => {
+      calls++;
+      assert.match(url.searchParams.get('filter'), /airport eq 'ARN'/);
+      assert.match(url.searchParams.get('filter'), /flightType eq 'A'/);
+      assert.doesNotMatch(url.searchParams.get('filter'), /flightId/);
+      assert.equal(options.headers.Accept, 'application/json');
+      return {
+        ok: true,
+        json: async () => ({
+          flights: [
+            { arrival },
+            {
+              arrival: {
+                ...arrival,
+                flightLegIdentifier: {
+                  ...arrival.flightLegIdentifier,
+                  callsign: 'SAS28440',
+                },
+              },
+            },
+            {
+              arrival: {
+                ...arrival,
+                arrivalTime: { scheduledUtc: '2026-10-24T23:30:00Z' },
+              },
+            },
+          ],
+        }),
+      };
+    },
+  });
+  const result = await lookup('SAS2844', {
+    direction: 'arrival',
+    airport: 'ARN',
+  });
+  assert.equal(result.flightResults.length, 1);
+  assert.match(result.answer, /22:40/);
+  assert.match(result.answer, /Faktisk: Uppgift saknas/);
+  await lookup('SAS2844', { direction: 'arrival', airport: 'ARN' });
+  assert.equal(calls, 1);
+});
+test('Swedavia empty results and source errors never invent an arrival', async () => {
+  for (const ok of [true, false]) {
+    const lookup = createSwedaviaFlights({
+      key: () => 'fixture',
+      fetchImpl: async () => ({ ok, json: async () => ({ flights: [] }) }),
+    });
+    const result = await lookup('SAS2844', {
+      direction: 'arrival',
+      airport: 'ARN',
+    });
+    assert.equal(result.flightResults.length, 0);
+    assert.match(
+      result.answer,
+      ok ? /Ingen avgång eller ankomst/ : /kunde inte hämtas/,
+    );
+  }
+});
 test('explicit flight search bypasses planner and never geocodes the identifier', async () => {
-  const service = createLocalAiService({ planner: async () => { throw Error('unexpected planner'); } });
-  const result = await service.ask({ message: 'Jag letar efter flight sk7714', network: 'Västtrafik' });
+  const service = createLocalAiService({
+    planner: async () => {
+      throw Error('unexpected planner');
+    },
+  });
+  const result = await service.ask({
+    message: 'Jag letar efter flight sk7714',
+    network: 'Västtrafik',
+  });
   assert.equal(result.flightQuery, 'SK7714');
   assert.deepEqual(result.toolsUsed, ['find_flight']);
 });
 test('flight lookup rejects partial matches and only tracks exact observed identities', async () => {
   let tracked = 0;
-  const module = { findByQuery: () => ({ icao24: 'abc123', callsign: 'SAS77140' }), trackById: () => { tracked++; return true; } };
+  const module = {
+    findByQuery: () => ({ icao24: 'abc123', callsign: 'SAS77140' }),
+    trackById: () => {
+      tracked++;
+      return true;
+    },
+  };
   assert.equal(exactFlightMatch(module, 'SAS7714'), null);
-  const manager = { setEnabled: async () => {}, layers: new Map([['flights', { module }]]) };
+  const manager = {
+    setEnabled: async () => {},
+    layers: new Map([['flights', { module }]]),
+  };
   assert.match(await showFlight(manager, 'SAS7714'), /Ingen exakt träff/);
   assert.equal(tracked, 0);
   module.findByQuery = () => ({ icao24: 'abc123', callsign: ' sas7714 ' });
@@ -25,6 +138,48 @@ test('flight lookup rejects partial matches and only tracks exact observed ident
   assert.equal(tracked, 1);
   assert.equal(await showFlight(manager, 'SAS7714', () => false), null);
   assert.equal(tracked, 1);
+});
+test('flight information question bypasses old Landvetter context and transit tools', async () => {
+  let planned = 0;
+  const lookedUp = [];
+  const service = createLocalAiService({
+    planner: async () => {
+      planned++;
+      if (planned > 1) throw Error('flight must not call the planner');
+      return { question: 'unsupported', actions: [] };
+    },
+    lookupFlight: async (query) => {
+      lookedUp.push(query);
+      return null;
+    },
+    execute: async () => {
+      throw Error('flight must not use transit');
+    },
+    findPlaces: async () => {
+      throw Error('flight must not geocode');
+    },
+  });
+  const previous = await service.ask({
+    message: 'Väder i Landvetter inatt?',
+    network: 'Västtrafik',
+  });
+  for (const message of [
+    'Hittar du någon information för flight SAS96T?',
+    'Kan du hitta flyget SAS96T åt mig?',
+    'Vad vet du om flight SK 7714?',
+    'Visa anropssignal SAS96T',
+  ]) {
+    const result = await service.ask({
+      message,
+      conversationId: previous.conversationId,
+      network: 'Västtrafik',
+    });
+    assert.ok(['SAS96T', 'SK7714'].includes(result.flightQuery));
+    assert.deepEqual(result.toolsUsed, ['find_flight']);
+    assert.doesNotMatch(result.answer, /hållplats|Landvetter/);
+  }
+  assert.deepEqual(lookedUp, ['SAS96T', 'SAS96T', 'SK7714', 'SAS96T']);
+  assert.equal(planned, 1);
 });
 const area = { lat: 58.4, lon: 13.85 };
 const args = (a = {}) => ({
