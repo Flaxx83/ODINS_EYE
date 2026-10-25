@@ -235,11 +235,17 @@ till kajanslutningar är inte verifierade.
 ### Hitta ett flyg via lokal AI
 
 Med serverns Swedavia-nyckel konfigurerad kan du också fråga
-**När är flight SAS2844 framme på Arlanda?**. Sökningen gäller dagens svenska
-datum och Swedavias flygplatser. Planerad, beräknad och faktisk tid visas
+**När är flight SAS2844 framme på Arlanda imorgon?** eller
+**När avgår flight SK1439 från Landvetter 2026-10-26?**. Utelämnat datum
+betyder idag. Även exempelvis **26 oktober** och **26/10/2026** fungerar.
+Sökningen gäller Swedavias flygplatser. Planerad, beräknad och faktisk tid visas
 separat, liksom leverantörens status. Saknade tider visas som ”Uppgift saknas”.
 Arlanda och Landvetter kan uttryckligen avgränsa sökningen. Kartknappen söker
 sedan anropssignalen i flyglagrets observationer; tiderna finns kvar i svaret.
+Vid flera träffar öppnar du rätt daterad post i listan. Inställda flyg märks
+tydligt och får ingen kartknapp. Kartknappar erbjuds bara för dagens poster.
+Datum kan sökas upp till 7 dagar tillbaka och 90 dagar framåt, men underlaget
+kan saknas för vissa datum. Ogiltiga eller motstridiga datum behöver förtydligas.
 
 Skriv exempelvis **Jag letar efter flight SK7714** eller **Visa flyg SAS7714**.
 Flyglagret aktiveras och söker bland sina inlästa observationer. Endast exakt

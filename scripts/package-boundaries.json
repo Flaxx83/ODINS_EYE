@@ -2236,7 +2236,8 @@
       "src/layers/road-weather/index.js",
       "src/layers/pois/index.js",
       "src/layers/reachability/index.js",
-      "src/layers/road-weather/card.js"
+      "src/layers/road-weather/card.js",
+      "src/layers/local-ai/flight-search.js"
     ],
     "external": [
       "hls.js",
@@ -2783,7 +2784,8 @@
       "src/layers/road-weather/index.js",
       "src/layers/pois/index.js",
       "src/layers/reachability/index.js",
-      "src/layers/road-weather/card.js"
+      "src/layers/road-weather/card.js",
+      "src/layers/local-ai/flight-search.js"
     ],
     "external": [
       "hls.js",

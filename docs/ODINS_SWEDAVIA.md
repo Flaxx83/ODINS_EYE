@@ -1,6 +1,7 @@
-# Swedavia – verifierat underlag och pågående integration
+# Swedavia FlightInfo i lokal AI
 
-Status 2026-10-24: **under arbete, inte färdig användarfunktion**.
+Status 2026-10-25: implementerad och lokalt verifierad, klar för granskning i
+PR #61. Ändringarna är ännu inte sammanfogade med `main`.
 
 ## Verifierat
 
@@ -20,32 +21,49 @@ Källor: [portal](https://apideveloper.swedavia.se/),
 [FlightInfo-modell](https://apideveloper.swedavia.se/content/Using_the_FlightInfo_API.pdf),
 [åtkomst och kvoter](https://apideveloper.swedavia.se/faq).
 
-## Kodutkast
+## Funktion och avgränsning
 
-`server/providers/swedavia-flights.js` innehåller ett första serverutkast
-med datumfilter, normalisering och kort minnescache. En koppling till den
-uttryckliga flygfrågan finns i `local-ai-tools.js`.
-Klienten visar nu rapporterade tider och en separat kartknapp. Frågan
-”När är flight SAS2844 framme på Arlanda?” söker ankomster för ARN och matchar
-anropssignalen exakt mot Swedavias svar, utan att anta att SAS2844 alltid
-motsvarar SK2844. Ett liveprov den 24 oktober gav SK2844 GZP–ARN med planerad
-och beräknad ankomst. Samma fråga verifierades i webbläsaren med rapporterade
-tider, källänk och separat kartknapp. Fixturetester täcker exakt matchning, fel, tomt resultat,
-svensk datumgräns och cache. 39 AI-tester och produktionsbygget passerar.
-Datumval, generell pagination och bredare datakvalitetsprov återstår; PR
-förblir draft. Sökningen gäller dagens svenska datum.
+`server/providers/swedavia-flights.js` hämtar serverägda frågor till FlightInfo.
+Frågan kan innehålla idag, imorgon, i övermorgon, igår, ISO-datum, dag/månad
+eller svenskt månadsnamn. Svensk kalenderdag används även vid UTC-dygnsskifte
+och sommar-/vintertidsbyte. Motstridiga, ogiltiga och oprecisa datum ger en
+förtydligandefråga före API-anrop. Sökområdet är -7 till +90 dagar från idag;
+leverantörens verkliga täckning kan vara kortare.
 
-## Återstående arbete i ordning
+Arlanda/ARN och Landvetter/GOT kan avgränsa frågan. Ankomst och avgång filtreras
+separat. Flygnummer med inledande nollor normaliseras, men ett IATA-prefix
+översätts inte på gissning till en anropssignal. Anropssignaler matchas exakt
+mot källans poster. Framtida anropssignaler kan saknas; använd gärna flygnumret.
 
-1. Verifiera querymodell, paginering, flygnummernormalisering och datumgränser
-   med kontrollerade fixtures och ett begränsat liveprov.
-2. Utöka fixturetester för inställt flyg,
-   flera träffar och saknad anropssignal. Klientens befintliga exakta matchning
-   ska bevaras; ett tidtabellsresultat får inte påstås vara en aktuell position.
-3. Granska resultatlistan vid flera träffar och med längre källtexter.
-4. Verifiera fel, avbrott och att inget gammalt kartresultat visas som nytt.
-5. Kör integrationstester, bygge och relevanta modulgränskontroller; gör
-   ett webbläsarprov. Uppdatera användarmanualen först när funktionen är verifierad.
+Klienten visar planerad, beräknad och faktisk tid i svensk tid med källänk
+och hämtningstid. CAN visas som **Inställt**, en gammal uppskattning visas
+då inte som aktuell och ingen kartknapp erbjuds. Vid flera träffar öppnar
+användaren respektive daterad post; inget plan väljs automatiskt. Kartknappen
+finns bara för dagens, ej inställda poster med anropssignal och söker separat
+i flyglagrets aktuella observationer. Den bekräftar inte flygstatus.
+
+Cache är per datum, identifierare, riktning och flygplats, högst 64 poster
+i 60 sekunder. Källfel cachas inte som tomma träffar. Fulla sidor om 1000 poster
+följs med URL-kodad continuationtoken, högst fem sidor och 30 sekunders total
+hämttid (högst 12 sekunder per anrop). Saknad/upprepad token eller överskriden
+gräns ger fel i stället för ett påstått komplett resultat. Slutposter dedupliceras.
+
+## Verifiering och begränsningar
+
+212 integrationstester, produktionsbygget och modulgränser passerar.
+Fixturetester i `swedavia-flights.test.mjs` täcker datum, DST/årsskifte,
+inställt flyg, flera träffar, cache, pagination och flygnummer. Befintliga
+AI-tester täcker källfel, tomma svar och exakt anropssignal. Webbläsarprovet
+`node scripts/qa-swedavia.mjs --url http://127.0.0.1:4173` verifierar flera
+val, inställt flyg, framtidsbegränsning, nytt resultat, källänk och mobilbredd.
+Det kräver en lokal Vite-server och ersätter FlightInfo-svaren med fixtures.
+
+Liveprov 25 oktober gav olika daterade poster för SK1439 idag och imorgon.
+Ett tillfälligt källfel vid ett av proven visades som fel; ett senare försök
+lyckades. Proven är stickprov, inte garanti för alla flyg eller datum.
+Swedavia täcker deras flygplatser, inte hela SAS-nätet. Saknade uppgifter
+är okända, inte en bekräftelse på inställelse eller frånvaro. Fria sökningar
+efter alla flygbolag, bokning och hela världens flygplatser ingår inte.
 
 Den privata datorn gör liveverifiering och lokal AI-koppling. Den andra datorn
 kan senare hjälpa med fixtures efter överenskommen uppdelning; arbetet där

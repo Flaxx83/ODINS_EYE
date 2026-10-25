@@ -11,7 +11,9 @@ const now = () => Date.parse('2026-10-12T10:00:00Z');
 test('arrival question requests reported arrival instead of tracking the aircraft', async () => {
   const service = createLocalAiService({ lookupFlight: async (query, options) => {
     assert.equal(query, 'SAS2844');
-    assert.deepEqual(options, { direction: 'arrival', airport: 'ARN' });
+    assert.equal(options.direction, 'arrival');
+    assert.equal(options.airport, 'ARN');
+    assert.match(options.date, /^\d{4}-\d{2}-\d{2}$/);
     return { answer: 'Beräknad ankomst: 23:10', flightResults: [] };
   }});
   const result = await service.ask({ message: 'När är flight SAS2844 framme på Arlanda?', network: 'Västtrafik' });
