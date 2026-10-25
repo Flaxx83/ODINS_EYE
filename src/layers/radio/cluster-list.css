@@ -1,0 +1,80 @@
+.radio-cluster-dialog {
+  width: min(460px, calc(100vw - 24px));
+  max-height: min(80dvh, 700px);
+  box-sizing: border-box;
+  padding: 20px;
+  color: var(--text-primary, #d5ddda);
+  background: var(--glass-bg, rgba(13, 21, 18, 0.96));
+  border: 1px solid var(--glass-border, #52645e);
+  border-radius: var(--panel-radius, 20px);
+  font: 13px/1.5 var(--font-sans, system-ui, sans-serif);
+  color-scheme: dark;
+}
+.radio-cluster-dialog::backdrop {
+  background: #0005;
+}
+[data-radio-favorites],
+[data-radio-save-favorite] {
+  border: 1px solid var(--glass-border, #52645e);
+  border-radius: 7px;
+  padding: 8px;
+  color: var(--text-primary, #d5ddda);
+  background: var(--glass-bg, #102522);
+  cursor: pointer;
+}
+[data-radio-save-favorite]:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+[data-radio-save-favorite][aria-pressed='true'] {
+  color: #00cbe6;
+}
+.radio-cluster-dialog header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+.radio-cluster-dialog h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.radio-cluster-dialog input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #52645e;
+  border-radius: 8px;
+  background: #0a1614;
+  color: inherit;
+}
+.radio-cluster-dialog button {
+  padding: 8px 12px;
+  min-height: 36px;
+  border: 1px solid #52645e;
+  border-radius: 7px;
+  background: #102522;
+  color: inherit;
+  cursor: pointer;
+}
+.radio-cluster-dialog :focus-visible {
+  outline: 2px solid #00cbe6;
+  outline-offset: 2px;
+}
+.radio-cluster-list {
+  max-height: 45dvh;
+  overflow: auto;
+}
+.radio-cluster-list section {
+  padding: 12px 0;
+  border-bottom: 1px solid #52645e;
+}
+.radio-cluster-list p {
+  margin: 4px 0 8px;
+  overflow-wrap: anywhere;
+}
+.radio-cluster-list section > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

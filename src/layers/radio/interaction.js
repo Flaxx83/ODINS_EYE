@@ -121,6 +121,33 @@ export function createInteraction({
       // A tool owns the pointer (src/data/inputOwnership.js): yield the click.
       if (!isPointerFree()) return;
       if (!radioPresentationAllowed()) return;
+      const hit = services.overlays.hitTestWorldOverlay?.(
+        click.position.x,
+        click.position.y,
+      );
+      if (
+        hit?.sourceId === RADIO_OVERLAY_SOURCE_ID &&
+        hit.entryId?.startsWith('cluster:')
+      ) {
+        const candidate = layerState._clusterOverlayIdentities.find(
+          (item) => `cluster:${item.id}` === hit.entryId,
+        );
+        if (candidate) parts.clusterList.open(candidate.stationIds);
+        return;
+      }
+      if (hit && hit.sourceId !== RADIO_OVERLAY_SOURCE_ID) return;
+      const picked = layerState._viewer.scene.pick(click.position);
+      const group = [picked?.id, picked?.primitive?.id].find(Array.isArray);
+      if (group) {
+        const ids = group
+          .map((item) => String(item?.id || ''))
+          .filter((id) => id.startsWith(RADIO_PREFIX))
+          .map((id) => id.slice(RADIO_PREFIX.length));
+        if (ids.length >= 3) {
+          parts.clusterList.open(ids);
+          return;
+        }
+      }
       const stationId = pickedRadioStationAt(click.position);
       if (!stationId) return;
       layerState._playFallbackId = null;
@@ -145,6 +172,7 @@ export function createInteraction({
   }
 
   function removeInteraction() {
+    parts.clusterList?.close();
     unregisterPickOwner('radio');
     layerState._clickHandler?.destroy();
     layerState._clickHandler = null;

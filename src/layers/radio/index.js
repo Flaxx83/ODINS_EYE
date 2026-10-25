@@ -1,4 +1,5 @@
 import { createCatalogModel } from './catalogModel.js';
+import { createClusterList } from './cluster-list.js';
 import { createLabels } from './labels.js';
 import { createClustering } from './clustering.js';
 import { createVolume } from './volume.js';
@@ -32,6 +33,7 @@ export function createRadioLayer({ services, source }) {
   parts.model = createModel(context);
   parts.queries = createQueries(context);
   parts.interaction = createInteraction(context);
+  parts.clusterList = createClusterList(context);
   parts.tuning = createTuning(context);
   parts.tuningNoise = createTuningNoise(context);
   parts.rendering = createRendering(context);
@@ -47,6 +49,9 @@ export function createRadioLayer({ services, source }) {
     parts.lifecycle.methods,
     parts.ingestion?.methods,
     {
+      showFavorites: () => parts.clusterList.openFavorites(),
+      isFavorite: (id) => parts.clusterList.isFavorite(id),
+      toggleSelectedFavorite: () => parts.clusterList.toggleSelectedFavorite(),
       radioGlobeLabel: parts.labels.radioGlobeLabel,
       createRadioSelectedOverlayEntry:
         parts.labels.createRadioSelectedOverlayEntry,

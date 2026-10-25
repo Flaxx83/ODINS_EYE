@@ -1,5 +1,30 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-25 – lokala radiofavoriter
+
+Stationer kan sparas/tas bort med stjärnan i den sökbara grupplistan eller
+via den valda kanalen i Contexts radiopanel. Favoritknappen öppnar alla
+sparade stationer. Namn och stations-ID lagras lokalt i webbläsaren utan
+ström-URL:er eller automatisk uppspelning. Favoriter överlever omladdning;
+saknade stationer behålls och markeras som inte inlästa. Lagringsfel visas.
+Lagring/borttagning och blockerad lagring har fixturetester; ett webbläsarprov
+verifierar stjärnan, favoritlistan och beständighet efter sidomladdning.
+
+## 2026-10-24 – klickbara radiogrupper
+
+Gruppetiketter som ”37 OTHER” och samlade radiomarkörer öppnar en sökbar
+lista över gruppens inlästa stationer. Namn, tillgänglig ort/kategori och
+separata val för uppspelning respektive kartfokus visas. Listan behåller
+gruppen från klickögonblicket, stöder Escape och städas vid avaktivering.
+Inga nya kataloganrop eller automatisk uppspelning sker när listan öppnas.
+55 befintliga radiotester, produktionsbygge och ett fixturebaserat
+webbläsarprov med 38 stationer passerar. Webbläsarprovet täcker bland annat
+etikettaktivering, kartklick, sökning, mobilbredd och borttagen station.
+
+Återkör med `node scripts/qa-radio-cluster.mjs --url http://127.0.0.1:4173`
+mot en lokal Vite-utvecklingsserver. Provet använder syntetiska stationer
+och gör inga externa radiokatalog- eller ljudanrop.
+
 ## 2026-10-25 – Swedavia klar för granskning
 
 Flygfrågor stöder idag, imorgon och ett angivet datum i svensk kalender.
