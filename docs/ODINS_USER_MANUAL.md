@@ -251,6 +251,33 @@ identifierare används när en post matchar; ingen gissad prefixöversättning g
 Utebliven träff betyder därför inte att
 flyget är inställt eller saknas, och verktyget ger inte tidtabellsstatus.
 
+### Öppna radiogrupper på kartan
+
+**Favoriter:** använd stjärnan vid en station i listan, eller **Spara vald kanal**
+i radiopanelen under Context. **Favoriter** i radiopanelen öppnar alla dina
+sparade kanaler oberoende av vilken kartgrupp du tittar på. Stjärnan tar också
+bort en favorit. Favoriter sparas i samma webbläsare och webbplatsadress,
+överlever omladdning och delas inte automatiskt mellan datorer eller mellan
+`localhost` och `127.0.0.1`. Rensad webbplatslagring tar bort dem.
+
+En favorit som inte längre finns i den inlästa katalogen visas fortfarande
+med sparat namn, men lyssning och kartval är avstängda tills stationen finns
+i underlaget igen. Upp till 200 favoriter kan sparas. Vid blockerad eller
+full lokal lagring visas ett felmeddelande. Att spara en favorit startar inte ljud.
+
+Klicka på en gruppetikett som **37 OTHER**, eller på gruppens samlade markör.
+Listan visar stationerna som ingick vid klicket; den byts inte ut när kartan
+rör sig. Sök på namn, kategori eller tillgänglig orts-/landsinformation.
+**Lyssna** begär uppspelning utan att flytta kartan. **Visa på kartan** väljer
+stationen och flyttar kartan utan att starta en ny ström. Uppspelningsstatus
+finns i radiopanelen under Context. Saknade orts-/kategoriuppgifter anges.
+
+Listan kan stängas med **Stäng** eller Escape och stängs även när radiolagret
+avaktiveras. Gruppetiketterna finns också i kartans tillgängliga åtgärdslista
+för tangentbordsanvändare. Om en station har försvunnit efter en uppdatering
+visas ett meddelande; öppna då gruppen igen. Listan använder redan inlästa
+stationer och gör inga nya kataloganrop.
+
 ## Spara egna platser och anteckningar
 
 POI betyder en sparad intressant plats eller kartnål.

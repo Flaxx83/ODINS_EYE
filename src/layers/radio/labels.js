@@ -114,6 +114,7 @@ export function createLabels({ state: layerState, services, parts, source }) {
     text,
     accent,
     stationCount,
+    stationIds = [],
   }) {
     if (!id || !position || !text) return null;
     return {
@@ -125,7 +126,9 @@ export function createLabels({ state: layerState, services, parts, source }) {
       priority: Math.max(1, Number(stationCount) || 1),
       title: text,
       accent: accent || RADIO_CATEGORY_COLORS.other,
-      interactive: false,
+      interactive: true,
+      accessibilityLabel: `Visa ${stationCount} radiokanaler i gruppen`,
+      activate: () => parts.clusterList.open(stationIds),
       anchorRadiusPx: Math.min(
         13,
         6 + Math.log2(Math.max(1, Number(stationCount) || 1)) * 0.8,

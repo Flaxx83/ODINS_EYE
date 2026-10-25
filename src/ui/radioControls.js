@@ -28,6 +28,28 @@ export class RadioControls {
     this._radioTunerBandPinnedForNavigation = false;
     this._refreshRadioTunerBand = null;
     bindRadioControls.call(this);
+    this.listen(
+      this._radioPanel?.querySelector('[data-radio-favorites]'),
+      'click',
+      () => this.radio.showFavorites?.(),
+    );
+    this.listen(
+      this._radioPanel?.querySelector('[data-radio-save-favorite]'),
+      'click',
+      () => {
+        const result = this.radio.toggleSelectedFavorite?.();
+        const status = this._radioPanel?.querySelector(
+          '[data-radio-favorite-status]',
+        );
+        if (status && result)
+          status.textContent =
+            result.error ||
+            (result.saved
+              ? 'Favoriten är sparad lokalt.'
+              : 'Favoriten är borttagen.');
+        this._syncFavoriteButton();
+      },
+    );
   }
 
   listen(target, type, handler, options = {}) {
@@ -48,6 +70,19 @@ export class RadioControls {
 
   _renderRadioState(state) {
     renderRadioState.call(this, state);
+    this._syncFavoriteButton();
+  }
+
+  _syncFavoriteButton() {
+    const button = this._radioPanel?.querySelector(
+      '[data-radio-save-favorite]',
+    );
+    if (!button) return;
+    const station = this._radioState?.selected;
+    button.disabled = !station;
+    const saved = !!station && this.radio.isFavorite?.(station.id);
+    button.textContent = saved ? '★ Ta bort favorit' : '☆ Spara vald kanal';
+    button.setAttribute('aria-pressed', String(!!saved));
   }
 
   /**
