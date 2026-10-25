@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { lookupSwedaviaFlight } from './swedavia-flights.js';
+import { lookupSwedaviaFlight, parseFlightDate } from './swedavia-flights.js';
 import { executeLocalQuery } from './local-ai-query.js';
 import {
   normalizeTravelMessage,
@@ -521,14 +521,26 @@ export function createLocalAiService({
           : /\bLandvetter\b|\bGOT\b/i.test(message)
             ? 'GOT'
             : undefined;
-        const flightInfo = await lookupFlight(query, { direction, airport });
+        const requestedDate = parseFlightDate(message, new Date(stamp));
+        if (requestedDate.error)
+          return finish({
+            answer: requestedDate.error,
+            needsClarification: true,
+            toolsUsed: ['find_flight'],
+          });
+        const flightInfo = await lookupFlight(query, {
+          direction,
+          airport,
+          date: requestedDate.date,
+        });
         return finish({
           answer:
             'Söker efter ' +
             query +
             ' i flyglagrets tillgängliga observationer…',
           ...(flightInfo ||
-            (direction
+            (direction ||
+            requestedDate.date !== parseFlightDate('', new Date(stamp)).date
               ? {
                   answer:
                     'Ankomst- och avgångstider är inte tillgängliga för denna sökning. En flygposition ger ingen verifierad ankomsttid.',

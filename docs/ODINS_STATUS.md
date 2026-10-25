@@ -1,6 +1,6 @@
 # Status för ODINS EYE
 
-## Aktuellt läge 2026-10-24
+## Aktuellt läge 2026-10-25
 
 - `main` är synkad till `7bb9cdc5d278dd1c88bf1641f904c97e682c30bf`.
   PR #11–#26 i den aktuella kedjan är merged; issue #2 och #6 är stängda.
@@ -10,9 +10,10 @@
 - Nyare arbete ligger fortsatt i öppna, staplade PR:er. Manualen finns i #52,
   järnvägsstilen i #53, fyrprofiljämförelsen i #54, färjepiloten i #59 och
   den exakta flygsökningen i #60. Det betyder inte att dessa finns på `main`.
-- [Swedavia-integrationen](ODINS_SWEDAVIA.md) är ett kodutkast under arbete.
-  API-åtkomst, klientvisning av rapporterade ankomsttider och grundläggande
-  fixturetester är verifierade. Datumval och bredare täckning återstår.
+- [Swedavia-integrationen](ODINS_SWEDAVIA.md) är implementerad och lokalt
+  verifierad med datumval, flera träffar, inställda flyg och bounded pagination.
+  212 integrationstester, bygge, modulgränser och webbläsarprov passerar.
+  PR #61 görs klar för granskning; den är inte sammanfogad med `main`.
 - [Arbetsinstruktionen för andra datorn](ODINS_SECOND_PC.md) finns nu även
   i repositoryt. Arbetet på den datorn är **inte påbörjat**.
 

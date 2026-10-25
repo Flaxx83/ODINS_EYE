@@ -25,6 +25,17 @@ etikettaktivering, kartklick, sökning, mobilbredd och borttagen station.
 mot en lokal Vite-utvecklingsserver. Provet använder syntetiska stationer
 och gör inga externa radiokatalog- eller ljudanrop.
 
+## 2026-10-25 – Swedavia klar för granskning
+
+Flygfrågor stöder idag, imorgon och ett angivet datum i svensk kalender.
+Flera träffar kan öppnas separat; inställda flyg märks och får ingen aktuell
+ankomstuppskattning eller kartknapp. Framtida/historiska poster kopplas inte
+till dagens flygobservationer. Pagination är begränsad och ofullständiga svar
+blir fel. Flygnummer med inledande nollor stöds utan gissning av anropssignal.
+212 integrationstester, bygge, modulgränser och fixturebaserat webbläsarprov
+passerar; liveprov skiljer SK1439 idag från imorgon. PR #61 är klar för
+granskning. Äldre daterade anteckningar om utkast beskriver tidigare lägen.
+
 ## 2026-10-24 – rapporterad ankomst i flygfrågor
 
 Ankomstfrågor besvaras med Swedavias planerade, beräknade och faktiska tider
