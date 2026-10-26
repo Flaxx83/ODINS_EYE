@@ -1,5 +1,16 @@
 # Ändringslogg för ODINS EYE
 
+## 2026-10-26 – kategorier i Data Layers
+
+Lagerlistan har utfällbara kategorier med aktiva räknare, sökning och
+Visa endast aktiva. Svenska lager är kategoriserade och nya okända lager
+finns under Övriga lager. Öppningsläget sparas lokalt; sökning visar träffar
+även i stängda kategorier utan att ändra sparade val. Befintliga lagerknappar
+och underkontroller behålls. Fokus och DOM-rader bevaras vid uppdateringar.
+Fem komponenttester, bygge och ett fixturebaserat webbläsarprov passerar.
+Återkör gränssnittsprovet med
+`node scripts/qa-layer-categories.mjs --url http://127.0.0.1:4173`.
+
 ## 2026-10-25 – lokala radiofavoriter
 
 Stationer kan sparas/tas bort med stjärnan i den sökbara grupplistan eller

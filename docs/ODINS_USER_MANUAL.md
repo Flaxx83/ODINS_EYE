@@ -317,6 +317,19 @@ Spårlagret visar kartunderlag och är inte en markerad resa eller aktuell tågr
 
 ## Visa datalager
 
+Lagren är samlade i utfällbara kategorier: **Trafik och resor**, **Flyg och
+sjöfart**, **Samhälle och infrastruktur**, **Väder, miljö och risker**,
+**Rymd** samt **Kartverktyg och radio**. Nytillkomna lager utan kategori
+visas under **Övriga lager**. Rubriken visar antalet aktiva lager i kategorin.
+
+Använd **Sök lager** för att hitta namn, källa eller kategori. Matchande
+kategorier öppnas under sökningen, även om de var stängda. **Visa endast
+aktiva** begränsar listan till påslagna lager och kan kombineras med sökning.
+Filtren ändrar inte vilka lager som är aktiva. Rensa sökningen och avmarkera
+filtret för att återgå till hela listan. Öppningsläget du väljer utan filter
+sparas lokalt i samma webbläsare; tillfällig öppning vid filtrering sparas inte.
+Med tangentbord kan du fokusera rubrikerna och använda Enter eller mellanslag.
+
 Öppna **Data Layers** och slå på det lager du vill undersöka. Klicka på ett
 kartobjekt när lagret erbjuder ett informationskort. Slå av lager som skymmer kartan.
 Tillgänglighet beror på datakälla, konfiguration och geografiskt område.

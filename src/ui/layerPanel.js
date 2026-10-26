@@ -18,39 +18,59 @@ const FEED_STATE_LABELS = Object.freeze({
 // Presentation order is independent of catalog registration and startup order.
 const PANEL_GROUPS = [
   {
-    label: 'Movement',
+    label: 'Trafik och resor',
     ids: [
-      'satellites',
-      'flights',
-      'military',
-      'local-adsb',
-      'ais-live-vessels',
       'traffic',
       'transit',
+      'sl-live',
+      'vasttrafik',
+      'sweden-stops',
+      'sweden-transit',
       'bikeshare',
+      'road-events',
+      'road-weather',
+      'cctv',
+      'directions',
     ],
   },
   {
-    label: 'Cameras',
-    ids: ['cctv', 'recent-imagery', 'street-level'],
+    label: 'Flyg och sjöfart',
+    ids: ['flights', 'military', 'local-adsb', 'ais-live-vessels'],
   },
   {
-    label: 'Infrastructure',
+    label: 'Samhälle och infrastruktur',
     ids: [
       'alpr-cameras',
       'military-installations',
       'local-datacenters',
       'telegeography-submarine-cables',
       'local-dams',
+      'polisen',
+      'liveuamap',
+      'military-awareness',
+      'mcf-shelters',
+      'mcf-stations',
+      'lm-administrativindelning',
+      'lm-kommunikation',
+      'lm-hydrografi',
     ],
   },
   {
-    label: 'Events',
-    ids: ['rocket-launches', 'earthquakes', 'local-firms', 'fire-perimeters'],
-  },
-  {
-    label: 'Weather',
+    label: 'Väder, miljö och risker',
     ids: [
+      'earthquakes',
+      'local-firms',
+      'fire-perimeters',
+      'gdacs',
+      'air-quality',
+      'smhi',
+      'smhi-observations',
+      'smhi-forecast',
+      'smhi-radar',
+      'kris-news',
+      'kris-vma',
+      'mcf-flood',
+      'mcf-fire',
       'wind',
       'weather-radar',
       'weather-satellite',
@@ -59,8 +79,20 @@ const PANEL_GROUPS = [
     ],
   },
   {
-    label: 'Utilities',
-    ids: ['directions', 'radio'],
+    label: 'Rymd',
+    ids: ['satellites', 'rocket-launches'],
+  },
+  {
+    label: 'Kartverktyg och radio',
+    ids: [
+      'local-ai',
+      'own-pois',
+      'reachability',
+      'place-labels',
+      'recent-imagery',
+      'street-level',
+      'radio',
+    ],
   },
 ];
 const PANEL_ORDER = PANEL_GROUPS.flatMap(({ label, ids }) =>
@@ -131,6 +163,18 @@ export class LayerPanel {
     this._cancelRowControlsRefresh = null;
     this._recentImageryFactory = null;
     this._recentImageryPanel = null;
+    this._layerQuery = '';
+    this._activeOnly = false;
+    this._openGroups = {};
+    try {
+      const saved = JSON.parse(
+        globalThis.localStorage?.getItem('odins-eye.layer-groups.v1') || '{}',
+      );
+      if (saved && typeof saved === 'object' && !Array.isArray(saved))
+        this._openGroups = saved;
+    } catch {
+      /* Storage is optional. */
+    }
   }
   mount(container) {
     if (this._destroyed) return;
@@ -186,6 +230,10 @@ export class LayerPanel {
     this._recentImageryPanel = null;
     this._recentImageryFactory = null;
     this._toggleContainer = null;
+    this._layerGroups?.clear();
+    this._layerRows?.clear();
+    this._layerSearch = null;
+    this._layerEmpty = null;
   }
   _renderToggles() {
     if (this._destroyed || !this._toggleContainer) return;
@@ -193,6 +241,38 @@ export class LayerPanel {
     this._toggleContainer.innerHTML = '';
 
     const generation = this._generation;
+    this._layerGroups = new Map();
+    this._layerRows = new Map();
+    const toolbar = document.createElement('div');
+    toolbar.className = 'data-layer-toolbar';
+    const search = document.createElement('input');
+    search.type = 'search';
+    search.placeholder = 'Sök lager…';
+    search.value = this._layerQuery;
+    search.setAttribute('aria-label', 'Sök datalager');
+    this._layerSearch = search;
+    const activeLabel = document.createElement('label');
+    const active = document.createElement('input');
+    active.type = 'checkbox';
+    active.checked = this._activeOnly;
+    const activeText = document.createElement('span');
+    activeText.textContent = 'Visa endast aktiva';
+    activeLabel.appendChild(active);
+    activeLabel.appendChild(activeText);
+    this._bind(search, 'input', () => {
+      this._layerQuery = search.value;
+      this._applyLayerFilters();
+    });
+    this._bind(active, 'change', () => {
+      this._activeOnly = active.checked;
+      this._applyLayerFilters();
+    });
+    toolbar.appendChild(search);
+    toolbar.appendChild(activeLabel);
+    this._toggleContainer.appendChild(toolbar);
+    this._layerEmpty = document.createElement('p');
+    this._layerEmpty.className = 'data-layer-empty';
+    this._layerEmpty.textContent = 'Inga lager matchar sökningen.';
     const layers = this.getAll()
       .slice()
       .sort(
@@ -200,18 +280,41 @@ export class LayerPanel {
           (PANEL_POSITIONS.get(a.id) ?? PANEL_ORDER.length) -
           (PANEL_POSITIONS.get(b.id) ?? PANEL_ORDER.length),
       );
-    let previousGroup = '';
     for (const layer of layers) {
       if (!layer.showInTogglePanel) continue;
       const group =
-        PANEL_ORDER[PANEL_POSITIONS.get(layer.id)]?.label ?? 'Other layers';
-      if (group && group !== previousGroup) {
-        const heading = document.createElement('h3');
-        heading.className = 'data-layer-group-heading';
-        heading.textContent = group;
-        this._toggleContainer.appendChild(heading);
+        PANEL_ORDER[PANEL_POSITIONS.get(layer.id)]?.label ?? 'Övriga lager';
+      if (!this._layerGroups.has(group)) {
+        const section = document.createElement('details');
+        section.className = 'data-layer-group';
+        const summary = document.createElement('summary');
+        summary.className = 'data-layer-group-heading';
+        const title = document.createElement('span');
+        title.textContent = group;
+        const count = document.createElement('span');
+        count.className = 'data-layer-group-count';
+        summary.appendChild(title);
+        summary.appendChild(count);
+        section.appendChild(summary);
+        this._layerGroups.set(group, { section, summary, count, ids: [] });
+        this._bind(summary, 'click', (event) => {
+          event.preventDefault();
+          section.open = !section.open;
+          if (!this._layerQuery.trim() && !this._activeOnly) {
+            this._openGroups[group] = section.open;
+            try {
+              globalThis.localStorage?.setItem(
+                'odins-eye.layer-groups.v1',
+                JSON.stringify(this._openGroups),
+              );
+            } catch {
+              /* Storage is optional. */
+            }
+          }
+        });
+        this._toggleContainer.appendChild(section);
       }
-      previousGroup = group;
+      this._layerGroups.get(group).ids.push(layer.id);
       const row = document.createElement('div');
       row.className = 'data-toggle-row';
       row.dataset.layerId = layer.id;
@@ -262,8 +365,10 @@ export class LayerPanel {
           console.warn(`[Data] ${layer.id} toggle error:`, error);
         } finally {
           const current = this.getAll().find(({ id }) => id === layer.id);
-          if (!this._destroyed && current && this._generation === generation)
+          if (!this._destroyed && current && this._generation === generation) {
             this._syncToggleButton(toggle, current);
+            this._applyLayerFilters();
+          }
         }
       });
 
@@ -328,9 +433,59 @@ export class LayerPanel {
         }
       }
 
-      this._toggleContainer.appendChild(row);
+      this._layerGroups.get(group).section.appendChild(row);
+      this._layerRows.set(layer.id, { row, group });
     }
+    this._toggleContainer.appendChild(this._layerEmpty);
+    this._applyLayerFilters();
     this._refreshWeatherPanel();
+  }
+
+  _applyLayerFilters() {
+    if (this._destroyed || !this._layerGroups) return;
+    const normalize = (value) =>
+      String(value || '')
+        .normalize('NFD')
+        .replace(/\p{M}/gu, '')
+        .toLocaleLowerCase('sv');
+    const query = normalize(this._layerQuery.trim());
+    const layers = new Map(this.getAll().map((layer) => [layer.id, layer]));
+    let visible = 0;
+    for (const [group, entry] of this._layerGroups) {
+      let active = 0,
+        shown = 0;
+      for (const id of entry.ids) {
+        const layer = layers.get(id);
+        const row = this._layerRows.get(id).row;
+        if (layer?.enabled) active++;
+        const matches =
+          !!layer &&
+          (!this._activeOnly || layer.enabled) &&
+          (!query ||
+            normalize(
+              [panelLabel(layer), layer.id, layer.source, group].join(' '),
+            ).includes(query));
+        if (!matches && row.contains?.(document.activeElement))
+          this._layerSearch.focus();
+        if (row.hidden !== !matches) row.hidden = !matches;
+        if (matches) shown++;
+      }
+      const countText = `${active} aktiva`;
+      if (entry.count.textContent !== countText)
+        entry.count.textContent = countText;
+      if (entry.section.hidden !== (shown === 0))
+        entry.section.hidden = shown === 0;
+      const open =
+        query || this._activeOnly
+          ? shown > 0
+          : typeof this._openGroups[group] === 'boolean'
+            ? this._openGroups[group]
+            : active > 0;
+      if (entry.section.open !== open) entry.section.open = open;
+      visible += shown;
+    }
+    if (this._layerEmpty.hidden !== visible > 0)
+      this._layerEmpty.hidden = visible > 0;
   }
 
   _scheduleRowControlsRefresh() {
@@ -515,6 +670,7 @@ export class LayerPanel {
         row.querySelector('.data-row-list'),
       );
     }
+    this._applyLayerFilters();
     this._refreshWeatherPanel();
   }
 

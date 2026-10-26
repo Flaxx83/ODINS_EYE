@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
-test('panel presentation places Transit between Street Traffic and Bike Share in Movement', () => {
+test('panel categories put public transport together and never duplicate a layer', () => {
   const source = readFileSync(
     new URL('./layerPanel.js', import.meta.url),
     'utf8',
@@ -16,19 +16,25 @@ test('panel presentation places Transit between Street Traffic and Bike Share in
     runInNewContext(`${declarations}\nJSON.stringify(PANEL_ORDER)`),
   );
   assert.deepEqual(
-    order.filter(({ label }) => label === 'Movement').map(({ id }) => id),
+    order
+      .filter(({ label }) => label === 'Trafik och resor')
+      .map(({ id }) => id),
     [
-      'satellites',
-      'flights',
-      'military',
-      'local-adsb',
-      'ais-live-vessels',
       'traffic',
       'transit',
+      'sl-live',
+      'vasttrafik',
+      'sweden-stops',
+      'sweden-transit',
       'bikeshare',
+      'road-events',
+      'road-weather',
+      'cctv',
+      'directions',
     ],
   );
   assert.equal(order.filter(({ id }) => id === 'transit').length, 1);
+  assert.equal(new Set(order.map((row) => row.id)).size, order.length);
 });
 
 test('partial feed controls distinguish incomplete records from stale data and outages', async () => {
